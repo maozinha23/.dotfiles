@@ -1,0 +1,123 @@
+* {
+  black: #000000;
+  blue: #0000AA;
+  green: #00AA00;
+  cyan: #00AAAA;
+  red: #AA0000;
+  magenta: #AA00AA;
+  brown: #AA5500;
+  light-gray: #AAAAAA;
+  gray: #555555;
+  light-blue: #5555FF;
+  light-green: #55FF55;
+  light-cyan: #55FFFF;
+  light-red: #FF5555;
+  light-magenta: #FF55FF;
+  yellow: #FFFF55;
+  white: #FFFFFF;
+}
+
+window {
+    width: 600px;
+    border: 4px;
+    border-color: @gray;
+}
+
+mainbox {
+    background-color: @black;
+    padding: 5px;
+}
+
+inputbar {
+    background-color: @gray;
+    text-color: @white;
+    foreground-color: @white;
+    border: 2px;
+    border-color: @light-gray;
+    padding: 5px;
+    children: [prompt, textbox-prompt-sep, entry, num-filtered-rows, textbox-num-sep, num-rows];
+}
+
+textbox-prompt-sep {
+    content: ":";
+    expand: false;
+}
+
+textbox-num-sep {
+    content: "/";
+    expand: false;
+}
+
+prompt, textbox-prompt-sep, entry, num-filtered-rows, textbox-num-sep, num-rows {
+    background-color: inherit;
+    text-color: inherit;
+}
+
+prompt {
+    font: "Cousine Nerd Font Mono bold 12";
+}
+
+listview {
+  lines: 10;
+  scrollbar: true;
+  background-color: @black;
+  margin: 5px 0 5px 0;
+  padding: 5px;
+  border: 2px;
+  border-color: @light-gray;
+}
+
+element {
+    padding: 5px;
+    spacing: 5px;
+    children: [element-icon, element-text];
+}
+
+element-text, element-icon {
+    background-color: inherit;
+    text-color: inherit;
+}
+
+element alternate.active, element normal.active, element selected.active {
+    background-color: @yellow;
+    text-color: @black;
+}
+
+element alternate.normal, element normal.normal {
+    background-color: @black;
+    text-color: @white;
+}
+
+element selected.normal {
+    background-color: @blue;
+    text-color: @white;
+}
+
+element alternate.urgent, element normal.urgent, element selected.urgent {
+    background-color: @red;
+    text-color: @white;
+}
+
+scrollbar {
+    background-color: @gray;
+    handle-color: @white;
+    handle-width: 12px;
+}
+
+mode-switcher {
+    background-color: @light-gray;
+    border: 2px;
+    border-color: @light-gray;
+}
+
+button {
+    background-color: @gray;
+    text-color: @white;
+    padding: 5px;
+    font: "Cousine Nerd Font bold 12";
+}
+
+button.selected {
+    background-color: @blue;
+    text-color: white;
+}

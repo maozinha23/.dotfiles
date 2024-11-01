@@ -1,0 +1,208 @@
+# feh key configuration.
+# Comments start with a # sign, do not use them mid-line.
+# Each line must be blank, a comment, or a key definition.
+#
+# key definition: <action name> <key1> [<key2> [<key3>]]
+#
+# Each <key> is an X11 keysym (as output by xev) with optional modifier.
+# For instance, C-x would be Ctrl+X, or 4-space Mod4+Space
+
+# Toggle actions display (see --draw-actions)
+toggle_actions a
+
+# Enable/Disable anti-aliasing
+toggle_aliasing A
+
+# Caption entry mode. If --caption-path has been specified, then this enables
+# caption editing. The caption at the bottom of the screen will turn yellow and
+# can be edited. Hit return to confirm and save the caption, or escape to cancel
+# editing. Note that you can insert an actual newline into the caption using
+# ⟨Ctrl+return⟩
+toggle_caption c
+
+# Toggle filename display (see --draw-filename)
+toggle_filenames d
+
+# Toggle EXIF tag display
+toggle_exif e
+
+# Toggle fullscreen
+toggle_fullscreen f
+
+# Enable/Disable automatic window resize when changing images
+toggle_fixed_geometry g
+
+# Pause/Continue the slideshow. When it is paused, it will not automatically
+# change slides based on --slideshow-delay
+toggle_pause h
+
+# Toggle info display (see --info)
+toggle_info i
+
+# Toggle zoom and viewport keeping. When enabled, feh will keep zoom and X, Y
+# offset when switching images
+toggle_keep_vp k
+
+# Save the current filelist as "feh_PID_ID_filelist". It is saved in the
+# directory specified by --output-dir, if set, and in the current working
+# directory otherwise
+#save_filelist L
+save_filelist
+
+# Show menu. Use the arrow keys and return to select items, and ⟨escape⟩ to
+# close the menu
+toggle_menu m
+
+# Show next image. Selects the next image in thumbnail mode
+next_img n space Right
+
+# Toggle pointer visibility
+toggle_pointer o
+
+# Show previous image. Selects the previous image in thumbnail mode
+prev_img p BackSpace Left
+
+# Quit feh
+quit q Escape
+
+# Reload current image. Useful for webcams
+reload_image r
+
+# Save the current image as "feh_PID_ID_FILENAME". It is saved in the directory
+# specified by --output-dir, if set, and in the current working directory
+# otherwise
+#save_image s
+save_image
+
+# Change window size to fit current image size (plus/minus zoom, if set). In
+# scale-down and fixed-geometry mode, this also updates the window size limits
+size_to_image w
+
+# Close current window
+close x
+
+# Jump to a random position in the current filelist
+jump_random z
+
+# Toggle auto-zoom
+toggle_auto_zoom Z
+
+# Jump to the first image of the previous or next sequence of images sharing a
+# directory name in the current filelist. Use --sort dirname if you would like
+# to ensure that all images in a directory are grouped together
+prev_dir braceleft
+next_dir braceright
+
+# Rotate the image 90 degrees (counter)clockwise. When --edit is used, this also
+# rotates the image in the underlying file. Rotation is lossless, but may
+# create artifacts in some image corners when used with JPEG images. Rotating
+# in the reverse direction will make them go away. See jpegtran(1) for more
+# about lossless JPEG rotation. Note: feh assumes that this feature is used to
+# normalize image orientation. For JPEG images, it will unconditionally set the
+# EXIF orientation tag to 1 ("0,0 is top left") after every rotation. See
+# jpegexiforient(1) for details on how to change this flag
+orient_3 less
+orient_1 greater
+
+# Vertically flip image. When --edit is used, this also flips the image in the
+# underlying file (see above)
+flip underscore
+
+# Horizontally flip image. When --edit is used, this also flips the image in
+# the underlying file (see above)
+mirror bar
+
+# Execute the corresponding action (0 = --action, 1 = --action1 etc.)
+#[action_0 .. action_9] 0 .. 9
+
+# Run the command defined by --action
+#[action_0] Return
+
+# Show first image
+jump_first Home
+
+# Show last image
+jump_last End
+
+# Go forward ~5% of the filelist
+jump_fwd Prior
+
+# Go backward ~5% of the filelist
+jump_back Next
+
+# Increase reload delay by 1 second
+reload_plus plus
+
+# Decrease reload delay by 1 second
+reload_minus minus
+
+# Remove current file from filelist
+#remove Delete
+remove
+
+# Remove current file from filelist and delete it
+#delete C-Delete
+delete
+
+# Scroll to the left
+scroll_left KP_Left C-Left
+
+# Scroll to the right
+scroll_right KP_Right C-Right
+
+# Scroll up
+scroll_up KP_Up C-Up
+
+# Scroll down. Note that the scroll keys work without anti-aliasing for
+# performance reasons; hit the render key after scrolling to anti-alias the
+# image
+scroll_down KP_Down C-Down
+
+# Scroll to the left by one page
+scroll_left_page 1-Left
+
+# Scroll to the right by one page
+scroll_right_page 1-Right
+
+# Scroll up by one page
+scroll_up_page 1-Up
+
+# Scroll down by one page
+scroll_down_page 1-Down
+
+# Anti-alias the image. Opens the currently selected image in thumbnail mode
+render R KP_Begin
+
+# Zoom in
+zoom_in KP_Add Up
+
+# Zoom out
+zoom_out KP_Subtract Down
+
+# Zoom to 100%
+zoom_default asterisk KP_Multiply
+
+# Zoom to fit the window size
+zoom_fit slash KP_Divide
+
+# Zoom to fill the window size like --bg-fill
+zoom_fill exclam
+
+# MENU KEYS
+# Close the menu
+menu_close Escape
+
+# Highlight previous menu item
+menu_up Up
+
+# Highlight next menu item
+menu_down Down
+
+# Highlight parent menu item
+menu_parent Left
+
+# Highlight child menu item
+menu_child Right
+
+# Select highlighted menu item
+menu_select Return space

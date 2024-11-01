@@ -1,0 +1,13 @@
+[user]
+	email = 20055270+maozinha23@users.noreply.github.com
+	name = maozinha23
+[init]
+	defaultBranch = main
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = git@github.com:maozinha23/.dotfiles.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
