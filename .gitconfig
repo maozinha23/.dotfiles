@@ -8,6 +8,3 @@
 	filemode = true
 	bare = false
 	logallrefupdates = true
-[remote "origin"]
-	url = git@github.com:maozinha23/.dotfiles.git
-	fetch = +refs/heads/*:refs/remotes/origin/*

@@ -24,9 +24,9 @@ set $WINDOW_RESIZE_HEIGHT 5
 set $WINDOW_RESIZE_WIDTH 5
 
 # Define border size and gaps
-set $WINDOW_BORDER_SIZE 3
-set $GAP_INNER 6
-set $GAP_OUTTER -6
+set $WINDOW_BORDER_SIZE 5
+set $GAP_INNER 10
+set $GAP_OUTTER -5
 
 # Define the volume change step
 set $VOLUME_CHANGE 1
@@ -34,27 +34,17 @@ set $VOLUME_CHANGE 1
 # Define the brightness change step
 set $BRIGHTNESS_CHANGE 1
 
-# Define signals for i3blocks
-#set $SIGNAL_AUDIO_OUTPUT 10
-#set $SIGNAL_AUDIO_INPUT 10
-#set $SIGNAL_BRIGHTNESS 11
-#set $SIGNAL_KEY_CAPSLOCK 12
-#set $SIGNAL_KEY_NUMLOCK 13
-
-# Define i3blocks script path
-#set $I3BLOCKS_SCRIPT "/$HOME/.config/i3blocks/scripts"
-
-# Define workspace minimal width for i3bar
-#set $WORKSPACE_WIDTH_MIN 32
-
 # Define i3lock image path
-set $I3LOCK_IMAGE "/$HOME/images/Debian.png"
+#set $I3LOCK_IMAGE "$HOME/___"
 
 # Define the default font
 set $FONT Cousine Nerd Font Mono bold 12
 
+# Define scrot custom launch script path
+set $SCROT $HOME/.config/scrot/launch.sh
+
 # Define wallpaper image path
-set $WALLPAPER /$HOME/images/Debian.png
+#set $WALLPAPER $HOME/___
 # ------------------------------------------------------------------------------
 # MODE
 # ------------------------------------------------------------------------------
@@ -81,46 +71,6 @@ mode "resize" {
   bindsym $MOD+r mode "default"
 }
 # ------------------------------------------------------------------------------
-# I3BAR
-# ------------------------------------------------------------------------------
-# Start i3bar to display a workspace bar
-#bar {
-#  # Display mode
-#  mode dock
-#  hidden_state hide
-#  modifier Mod4
-#
-#  # Bar ID
-#  id bar-0
-#
-#  # Position
-#  position bottom
-#
-#  # Workspace buttons
-#  workspace_buttons yes
-#
-#  # Minimal width for workspace buttons
-#  workspace_min_width $WORKSPACE_WIDTH_MIN
-#
-#  # Colors
-#  colors {
-#    background #000000
-#    statusline #ffffff
-#    separator  #555555
-#
-#    #<colorclass>       <border> <background> <text>
-#    focused_workspace   #5555ff  #0000aa      #ffffff
-#    active_workspace    #aaaaaa  #555555      #aaaaaa
-#    inactive_workspace  #aaaaaa  #555555      #aaaaaa
-#    urgent_workspace    #ff5555  #aa0000      #ffffff
-#    binding_mode        #ff5555  #aa0000      #ffffff
-#  }
-#
-#  # Start i3blocks to display system information
-#  # Send a variable to i3blocks with a path to the scripts location
-#  status_command SCRIPT_DIR=$I3BLOCKS_SCRIPT i3blocks
-#}
-# ------------------------------------------------------------------------------
 # STARTUP
 # ------------------------------------------------------------------------------
 # Start XDG autostart .desktop files using dex.
@@ -137,7 +87,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- \
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Start conky
-exec_always --no-startup-id $HOME/.config/conky/launch.sh
+#exec_always --no-startup-id $HOME/.config/conky/launch.sh
 
 # Start udiskie
 exec --no-startup-id udiskie
@@ -145,8 +95,8 @@ exec --no-startup-id udiskie
 # Set the wallpaper
 #exec_always --no-startup-id feh --bg-scale $WALLPAPER
 
-# Start default terminal application on ws2
-exec --no-startup-id i3-msg 'workspace $WORKSPACE2; exec i3-sensible-terminal'
+# Start default terminal application
+exec --no-startup-id i3-sensible-terminal'
 # ------------------------------------------------------------------------------
 # APPEARANCE
 # ------------------------------------------------------------------------------
@@ -162,12 +112,12 @@ title_align center
 
 # Set inner and outer gaps size
 # NOTE: negative values causes error in polybar i3 module
-#gaps inner $GAP_INNER
-#gaps outer $GAP_OUTTER
+gaps inner $GAP_INNER
+gaps outer $GAP_OUTTER
 #smart_gaps on
 
 # class                 border  background text    indicator child border
-client.focused          #0000AA #0000AA    #FFFFFF #FFFFFF   #0000AA
+client.focused          #0000AA #0000AA    #FFFFFF #FFFF55   #0000AA
 client.focused_inactive #555555 #555555    #AAAAAA #555555   #555555
 client.unfocused        #555555 #555555    #AAAAAA #555555   #555555
 client.urgent           #AA0000 #AA0000    #FFFFFF #FF5555   #FF5555
@@ -176,11 +126,7 @@ client.background       #FFFFFF
 
 floating_maximum_size $WINDOW_FLOAT_SIZE_MAX
 
-assign [class="(?i)chromium"] $WORKSPACE1
-assign [class="(?i)mpv"] $WORKSPACE7
-assign [class="(?i)code"] $WORKSPACE8
-assign [class="(?i)libreoffice"] $WORKSPACE9
-assign [class="(?i)pinta"] $WORKSPACE10
+#assign [class="(?i)APP"] $WORKSPACE_
 # ------------------------------------------------------------------------------
 # KEYBINDING
 # ------------------------------------------------------------------------------
@@ -242,47 +188,35 @@ tiling_drag modifier titlebar
 bindsym $MOD+Return exec i3-sensible-terminal
 
 # Start rofi (a program launcher)
-bindsym $MOD+d exec "rofi -modi run,window -show run"
+bindsym $MOD+d exec "rofi -modi run,drun,window -show run"
 
 # Use pactl to adjust volume in PulseAudio
 # Audio output
 bindsym XF86AudioRaiseVolume exec --no-startup-id \
   pactl set-sink-volume @DEFAULT_SINK@ +$VOLUME_CHANGE%
-  #&& exec pkill -SIGRTMIN+$SIGNAL_AUDIO_OUTPUT i3blocks
 
 bindsym XF86AudioLowerVolume exec --no-startup-id \
   pactl set-sink-volume @DEFAULT_SINK@ -$VOLUME_CHANGE%
-  #&& exec pkill -SIGRTMIN+$SIGNAL_AUDIO_OUTPUT i3blocks
 
 bindsym XF86AudioMute exec --no-startup-id \
   pactl set-sink-mute @DEFAULT_SINK@ toggle
-  #&& exec pkill -SIGRTMIN+$SIGNAL_AUDIO_OUTPUT i3blocks
 
 # Audio input
 bindsym Shift+XF86AudioRaiseVolume exec --no-startup-id \
   pactl set-source-volume @DEFAULT_SOURCE@ +$VOLUME_CHANGE%
-  #&& exec pkill -SIGRTMIN+$SIGNAL_AUDIO_INPUT i3blocks
 
 bindsym Shift+XF86AudioLowerVolume exec --no-startup-id \
   pactl set-source-volume @DEFAULT_SOURCE@ -$VOLUME_CHANGE%
-  #&& exec pkill -SIGRTMIN+$SIGNAL_AUDIO_INPUT i3blocks
 
 bindsym Shift+XF86AudioMute exec --no-startup-id \
   pactl set-source-mute @DEFAULT_SOURCE@ toggle
-  #&& exec pkill -SIGRTMIN+$SIGNAL_AUDIO_INPUT i3blocks
 
 # Use brightnessctl to adjust brightness
 bindsym XF86MonBrightnessUp exec --no-startup-id \
   brightnessctl --class=backlight set +$BRIGHTNESS_CHANGE%
-  #&& exec pkill -SIGRTMIN+$SIGNAL_BRIGHTNESS i3blocks
 
 bindsym XF86MonBrightnessDown exec --no-startup-id \
   brightnessctl --class=backlight set $BRIGHTNESS_CHANGE%-
-  #&& exec pkill -SIGRTMIN+$SIGNAL_BRIGHTNESS i3blocks
-
-# CAPS LOCK and NUM LOCK release send a signal to i3blocks
-#bindsym --release Caps_Lock exec pkill -SIGRTMIN+$SIGNAL_KEY_CAPSLOCK i3blocks
-#bindsym --release Num_Lock exec pkill -SIGRTMIN+$SIGNAL_KEY_NUMLOCK i3blocks
 
 # Suspend
 bindsym XF86Sleep exec --no-startup-id systemctl suspend
@@ -291,6 +225,11 @@ bindsym XF86Sleep exec --no-startup-id systemctl suspend
 bindsym XF86ScreenSaver exec --no-startup-id \
   i3lock --nofork --no-unlock-indicator --ignore-empty-password \
   --image=$I3LOCK_IMAGE
+
+# Screenshot
+bindsym Print exec $SCROT
+bindsym Shift+Print exec $SCROT --select
+bindsym Control+Print exec $SCROT --focused
 
 # Reload the i3 configuration file
 bindsym $MOD+Shift+c reload
@@ -316,16 +255,26 @@ bindsym $MOD+9 workspace number $WORKSPACE9
 bindsym $MOD+0 workspace number $WORKSPACE10
 
 # Move focused container to workspace
-bindsym $MOD+Shift+1 move container to workspace number $WORKSPACE1
-bindsym $MOD+Shift+2 move container to workspace number $WORKSPACE2
-bindsym $MOD+Shift+3 move container to workspace number $WORKSPACE3
-bindsym $MOD+Shift+4 move container to workspace number $WORKSPACE4
-bindsym $MOD+Shift+5 move container to workspace number $WORKSPACE5
-bindsym $MOD+Shift+6 move container to workspace number $WORKSPACE6
-bindsym $MOD+Shift+7 move container to workspace number $WORKSPACE7
-bindsym $MOD+Shift+8 move container to workspace number $WORKSPACE8
-bindsym $MOD+Shift+9 move container to workspace number $WORKSPACE9
-bindsym $MOD+Shift+0 move container to workspace number $WORKSPACE10
+bindsym $MOD+Shift+1 move container to workspace number $WORKSPACE1; \
+  workspace $WORKSPACE1
+bindsym $MOD+Shift+2 move container to workspace number $WORKSPACE2; \
+  workspace $WORKSPACE2
+bindsym $MOD+Shift+3 move container to workspace number $WORKSPACE3; \
+  workspace $WORKSPACE3
+bindsym $MOD+Shift+4 move container to workspace number $WORKSPACE4; \
+  workspace $WORKSPACE4
+bindsym $MOD+Shift+5 move container to workspace number $WORKSPACE5; \
+  workspace $WORKSPACE5
+bindsym $MOD+Shift+6 move container to workspace number $WORKSPACE6; \
+  workspace $WORKSPACE6
+bindsym $MOD+Shift+7 move container to workspace number $WORKSPACE7; \
+  workspace $WORKSPACE7
+bindsym $MOD+Shift+8 move container to workspace number $WORKSPACE8; \
+  workspace $WORKSPACE8
+bindsym $MOD+Shift+9 move container to workspace number $WORKSPACE9; \
+  workspace $WORKSPACE9
+bindsym $MOD+Shift+0 move container to workspace number $WORKSPACE10; \
+  workspace $WORKSPACE10
 
 # Switch to the next/previous workspace
 bindsym $MOD+Tab       workspace next

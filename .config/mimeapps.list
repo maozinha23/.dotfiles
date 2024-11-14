@@ -1,0 +1,10 @@
+[Default Applications]
+application/pdf=chromium.desktop
+application/vnd.ms-excel=libreoffice-calc.desktop
+application/vnd.openxmlformats-officedocument.wordprocessingml.document=libreoffice-writer.desktop
+audio/mpeg=mpv.desktop
+image/bmp=feh.desktop
+image/jpeg=feh.desktop
+image/svg+xml=feh.desktop
+text/plain=gvim.desktop
+video/mp4=mpv.desktop

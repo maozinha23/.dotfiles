@@ -4,5 +4,5 @@
 pkill polybar
 
 # Launch bar top and bar bottom
-#polybar top & disown
+polybar top & disown
 polybar bottom & disown
