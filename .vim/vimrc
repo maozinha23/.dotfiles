@@ -1,5 +1,3 @@
-language C.UTF-8
-
 set viminfo+=n~/.vim/viminfo
 
 filetype plugin indent on
@@ -67,6 +65,9 @@ set tabstop=2
 " Yank and paste the selection without prepending "* to commands
 set clipboard^=unnamed,unnamedplus
 
-highlight TrailingWhiteSpace ctermbg=red guibg=red
-match TrailingWhiteSpace /\s\+$/
+" Set colorscheme
+colorscheme maozinha
 
+" Highlight trailing white spaces
+highlight TrailingWhiteSpace ctermbg=darkred
+match TrailingWhiteSpace /\s\+$/

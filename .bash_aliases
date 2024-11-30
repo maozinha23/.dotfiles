@@ -3,8 +3,15 @@ alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
 
-# pacman -Syu
-alias atualizar='sudo pacman --sync --refresh --sysupgrade'
+# Edit configuration files
+alias config-alacritty='vim ~/.config/alacritty/alacritty.toml'
+alias config-lf='vim ~/.config/lf/lfrc'
+alias config-i3='vim ~/.config/i3/config'
+alias config-polybar='vim ~/.config/polybar/config.ini'
+alias config-vim='vim ~/.vim/vimrc'
 
-# pacman -Qdtq | pacman -Rns -
-alias remover='sudo pacman --query --deps --unrequired --quiet | sudo pacman --remove --nosave --recursive -'
+# Start SSH agent for github push
+alias ssh-github='eval $(ssh-agent -s); ssh-add ~/.ssh/github'
+
+# lf + ueberzugpp wrapper
+alias lf='~/.config/lf/lfub'

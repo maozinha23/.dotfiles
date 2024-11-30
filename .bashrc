@@ -6,18 +6,18 @@
 [[ $- != *i* ]] && return
 
 # Set LS_COLORS environment variable
-if [ -x /usr/bin/dircolors ]; then
+if [[ -x /usr/bin/dircolors ]]; then
   eval "$(dircolors --bourne-shell)"
 fi
 
 # Alias definitions
-if [ -f ~/.bash_aliases ]; then
+if [[ -f ~/.bash_aliases ]]; then
   source ~/.bash_aliases
 fi
 
 # Export environmental variables
-if [ -f ~/.env ]; then
-  export $(envsubst < .env)
+if [[ -f ~/.env ]]; then
+  export $(envsubst < $HOME/.env)
 fi
 
 # Prompt customization
@@ -27,7 +27,10 @@ PS1='\n[ \[\e[1;34m\]\w\[\e[0m\] ]: '
 # Auto "cd" when entering just a path
 shopt -s autocd
 
+# fzf integration
+eval "$(fzf --bash)"
+
 # Autostart X at login
-if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
+if [[ -z "$DISPLAY" ]] && [[ "$XDG_VTNR" = 1 ]]; then
   startx
 fi
