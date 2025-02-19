@@ -87,7 +87,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- \
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Start conky
-#exec_always --no-startup-id $HOME/.config/conky/launch.sh
+exec_always --no-startup-id $HOME/.config/conky/launch.sh
 
 # Start udiskie
 exec --no-startup-id udiskie
