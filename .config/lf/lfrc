@@ -219,10 +219,10 @@ map f find
 map F #find-back
 
 # (default ;)
-map ; #find-next
+map ; find-next
 
 # (default ,)
-map , #find-prev
+map , find-prev
 
 # Read a pattern to search for a file name match in the forward/backward
 # direction and jump to the next/previous match.
@@ -230,13 +230,13 @@ map , #find-prev
 map / search
 
 # (default ?)
-map ? search-back
+map ? #search-back
 
 # (default n)
-map n search-next
+map <gt> search-next
 
 # (default N)
-map N search-prev
+map <lt> search-prev
 
 # Command filter reads a pattern to filter out and only view files matching the
 # pattern. Command setfilter does the same but uses an argument to set the
@@ -875,7 +875,7 @@ cmd delete %{{
     fi
 
     read ans
-    [ "$ans" = "y" ] && trash "${files[@]}"
+    [[ "$ans" == "y" || "$ans" == "Y" ]] && trash "${files[@]}"
     printf "\n"
 }}
 
@@ -902,7 +902,7 @@ cmd extract %{{
     printf " %s - extract? [y/n]: " "$f"
     read ans
 
-    if [ "$ans" = "y" ]; then
+    if [[ "$ans" == "y" || "$ans" == "Y" ]]; then
         case "$f" in
             *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf "$f";;
             *.tar.gz|*.tgz) tar xzvf "$f";;
