@@ -27,6 +27,8 @@ set $WINDOW_RESIZE_WIDTH 5
 set $WINDOW_BORDER_SIZE 5
 set $GAP_INNER 10
 set $GAP_OUTTER -5
+set $GAP_OUTTER_VERTICAL -5
+set $GAP_OUTTER_HORIZONTAL -10
 
 # Define the volume change step
 set $VOLUME_CHANGE 1
@@ -34,11 +36,11 @@ set $VOLUME_CHANGE 1
 # Define the brightness change step
 set $BRIGHTNESS_CHANGE 1
 
-# Define i3lock image path
-#set $I3LOCK_IMAGE "$HOME/___"
-
 # Define the default font
 set $FONT Cousine Nerd Font Mono bold 12
+
+# Define i3lock-color custom launch script path
+set $I3LOCK-COLOR "$HOME/.config/i3lock-color/lock.sh"
 
 # Define scrot custom launch script path
 set $SCROT $HOME/.config/scrot/launch.sh
@@ -79,9 +81,7 @@ exec --no-startup-id dex --autostart --environment i3
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- \
-  i3lock --nofork --no-unlock-indicator --ignore-empty-password \
-  --image=$I3LOCK_IMAGE
+exec --no-startup-id xss-lock --transfer-sleep-lock $I3LOCK-COLOR
 
 # Start polybar
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
@@ -96,7 +96,7 @@ exec --no-startup-id udiskie
 #exec_always --no-startup-id feh --bg-scale $WALLPAPER
 
 # Start default terminal application
-exec --no-startup-id i3-sensible-terminal'
+#exec --no-startup-id i3-sensible-terminal
 # ------------------------------------------------------------------------------
 # APPEARANCE
 # ------------------------------------------------------------------------------
@@ -113,11 +113,12 @@ title_align center
 # Set inner and outer gaps size
 # NOTE: negative values causes error in polybar i3 module
 gaps inner $GAP_INNER
-gaps outer $GAP_OUTTER
+gaps vertical $GAP_OUTTER_VERTICAL
+gaps horizontal $GAP_OUTTER_HORIZONTAL
 #smart_gaps on
 
 # class                 border  background text    indicator child border
-client.focused          #0000AA #0000AA    #FFFFFF #FFFF55   #0000AA
+client.focused          #0000AA #0000AA    #FFFFFF #0000AA   #FFFFFF
 client.focused_inactive #555555 #555555    #AAAAAA #555555   #555555
 client.unfocused        #555555 #555555    #AAAAAA #555555   #555555
 client.urgent           #AA0000 #AA0000    #FFFFFF #FF5555   #FF5555
@@ -190,7 +191,7 @@ bindsym $MOD+Return exec i3-sensible-terminal
 # Start rofi (a program launcher)
 bindsym $MOD+d exec "rofi -modi run,drun,window -show run"
 
-# Use pactl to adjust volume in PulseAudio
+# Use pactl to adjust volume
 # Audio output
 bindsym XF86AudioRaiseVolume exec --no-startup-id \
   pactl set-sink-volume @DEFAULT_SINK@ +$VOLUME_CHANGE%
@@ -222,9 +223,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id \
 bindsym XF86Sleep exec --no-startup-id systemctl suspend
 
 # Lock the screen
-bindsym XF86ScreenSaver exec --no-startup-id \
-  i3lock --nofork --no-unlock-indicator --ignore-empty-password \
-  --image=$I3LOCK_IMAGE
+bindsym XF86ScreenSaver exec --no-startup-id $I3LOCK-COLOR
 
 # Screenshot
 bindsym Print exec $SCROT
