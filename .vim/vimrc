@@ -71,3 +71,6 @@ colorscheme maozinha
 " Highlight trailing white spaces
 highlight TrailingWhiteSpace ctermbg=darkred
 match TrailingWhiteSpace /\s\+$/
+
+" Determines the content of the status line
+set statusline=%m\ [%n]\ %<%f\ %y\ %=%-.([Linha:%l/Coluna:%v]%)\ [Posição:%p%%]
