@@ -97,6 +97,9 @@ exec --no-startup-id udiskie
 
 # Start default terminal application
 #exec --no-startup-id i3-sensible-terminal
+
+# Start calcurse
+exec --no-startup-id i3-msg "workspace 10; exec alacritty -e calcurse"
 # ------------------------------------------------------------------------------
 # APPEARANCE
 # ------------------------------------------------------------------------------
