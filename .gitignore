@@ -1,3 +1,2 @@
-# vim temp files
-.vim/.netrwhist
-.vim/viminfo
+# vim temp file
+config/vim/.netrwhist
