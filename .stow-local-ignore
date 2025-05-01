@@ -1,0 +1,10 @@
+# Scripts de instalação do Arch Linux
+arch-install-01.sh
+arch-install-02.sh
+
+# Arquivos de configuração do git
+.git
+.gitignore
+
+# Arquivo de configuração do SAMBA
+smb.conf
