@@ -1,11 +1,94 @@
-set viminfo+=n~/.vim/viminfo
+"###############################################################################
+" Functions
+"###############################################################################
+" Compile the source code of the open file
+function Compile()
+  let l:directory = expand('%:p:h:S')
+  let l:full_filename = expand('%:p:S')
+  let l:filename = expand('%:t:r:S')
+  let l:extension = expand('%:e')
 
+  let l:terminal = exists('$TERMINAL') ? $TERMINAL : 'alacritty'
+
+  let l:msg_success = 'echo -e \"\nProjeto compilado com sucesso!\n\"'
+  let l:msg_error = 'echo -e \"\nErro na compilação do projeto!\n\"'
+  let l:msg_wait = 'read -p \"Pressione ENTER para continuar...\"'
+
+  write
+
+  " Define the compiler command for different programming languages
+  " C and C++
+  if l:extension ==? 'c' || l:extension ==? 'cpp'
+    let l:compiler_cmd = 'g++ -Wextra ' . l:full_filename . ' -o ' . l:filename
+  " JAVA
+  elseif l:extension ==? 'java'
+    let l:compiler_cmd = 'javac ' . l:full_filename
+  else
+    let l:compiler_cmd = 'false'
+  endif
+
+  " Define the command to compile the source code and show success/error
+  " messages
+  let l:compile = l:terminal . ' -e sh -c "' . l:compiler_cmd .
+        \ ' && ( ' . l:msg_success . ' ; ' . l:msg_wait . ' )' .
+        \ ' || ( ' . l:msg_error  . ' ; ' . l:msg_wait . ' );"'
+
+  call system(l:compile . ' &')
+endfunction
+
+" Run the program corresponding to the source code of the open file
+function Run()
+  let l:directory = expand('%:p:h:S')
+  let l:full_filename = expand('%:p:S')
+  let l:filename = expand('%:t:r:S')
+  let l:extension = expand('%:e')
+
+  let l:terminal = exists('$TERMINAL') ? $TERMINAL : 'alacritty'
+
+  let l:msg_success = 'echo -e \"\nProjeto executado com sucesso!\n\"'
+  let l:msg_error = 'echo -e \"\nErro na execução do projeto!\n\"'
+  let l:msg_wait = 'read -p \"Pressione ENTER para continuar...\"'
+
+  write
+
+  " Define the run command for different programming languages
+  " C and C++
+  if l:extension ==? 'c' || l:extension ==? 'cpp'
+    let l:run_cmd = './' . l:filename
+  " JAVA
+  elseif l:extension ==? 'java'
+    let l:run_cmd = 'java -cp ' . l:directory . ' ' . l:filename
+  " Python
+  elseif l:extension ==? 'py'
+    let l:run_cmd = 'python ' . l:full_filename
+  else
+    let l:run_cmd = 'false'
+  endif
+
+  " Define the command to run the program and show success/error messages
+  let l:run = l:terminal . ' -e sh -c "' . l:run_cmd .
+        \ ' && ( ' . l:msg_success . ' ; ' . l:msg_wait . ' )' .
+        \ ' || ( ' . l:msg_error  . ' ; ' . l:msg_wait . ' );"'
+
+  call system(l:run . ' &')
+endfunction
+"###############################################################################
+" Config
+"###############################################################################
+" Enable loading the plugin and indent files for specific file types
 filetype plugin indent on
 
-syntax on
+" Switches on syntax highlighting
+syntax enable
+
+" Set colorscheme
+colorscheme maozinha
 
 " Copy indent from current line when starting a new line
 set autoindent
+
+" Yank and paste the selection without prepending "* to commands
+set clipboard^=unnamed,unnamedplus
 
 " List of screen columns that are highlighted
 set colorcolumn=81
@@ -33,6 +116,9 @@ set incsearch
 "		2: always
 set laststatus=2
 
+" Enable the use of the mouse in all modes
+set mouse=a
+
 " If the 'wrap' option is off, long lines will not wrap
 set nowrap
 
@@ -59,18 +145,23 @@ set smartcase
 " Number of spaces that a <Tab> counts for while performing editing operations
 set softtabstop=2
 
+" Specify the content of the status line
+set statusline=%m\ %r\ [%n]\ %<%f\ %y\ %=%-.([Linha:%l\ /\ Coluna:%v]%)\ [Posição:%p%%]
+
 " Number of spaces that a <Tab> in the file counts for
 set tabstop=2
 
-" Yank and paste the selection without prepending "* to commands
-set clipboard^=unnamed,unnamedplus
-
-" Set colorscheme
-colorscheme maozinha
-
-" Highlight trailing white spaces
+" Specify another viminfo file name
+set viminfo+=n~/.config/vim/viminfo
+"###############################################################################
+" Highlight
+"###############################################################################
+" Trailing white spaces
 highlight TrailingWhiteSpace ctermbg=darkred
 match TrailingWhiteSpace /\s\+$/
-
-" Determines the content of the status line
-set statusline=%m\ [%n]\ %<%f\ %y\ %=%-.([Linha:%l/Coluna:%v]%)\ [Posição:%p%%]
+"###############################################################################
+" Key mapping
+"###############################################################################
+nnoremap <Leader><F5> :call Compile() <CR>
+nnoremap <F5> :call Run() <CR>
+nnoremap <Leader>r :source $MYVIMRC <CR>
