@@ -3,9 +3,6 @@ alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
 
-# Links with enabled graphics
-alias xlinks='xlinks -g'
-
 # Edit configuration files
 alias config-alacritty='vim ~/.config/alacritty/alacritty.toml'
 alias config-conky='vim ~/.config/conky/conky-system.conf ~/.config/conky/conky-os.conf'
@@ -20,3 +17,9 @@ alias ssh-github='eval $(ssh-agent -s); ssh-add ~/.ssh/github'
 
 # lf + ueberzugpp wrapper
 alias lf='~/.config/lf/lfub'
+
+# Links with enabled graphics
+alias xlinks='xlinks -g'
+
+# start services and virt-manager
+ alias vm-start='~/.config/virt-manager/launch.sh'
