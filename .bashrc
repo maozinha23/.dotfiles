@@ -10,14 +10,14 @@ if [[ -x /usr/bin/dircolors ]]; then
   eval "$(dircolors --bourne-shell)"
 fi
 
-# Alias definitions
-if [[ -f ~/.bash_aliases ]]; then
-  source ~/.bash_aliases
-fi
-
 # Export environmental variables
 if [[ -f ~/.env ]]; then
   export $(envsubst < $HOME/.env)
+fi
+
+# Alias definitions
+if [[ -f ~/.bash_aliases ]]; then
+  source ~/.bash_aliases
 fi
 
 # Prompt customization
@@ -31,6 +31,6 @@ shopt -s autocd
 eval "$(fzf --bash)"
 
 # Autostart X at login
-if [[ -z "$DISPLAY" ]] && [[ "$XDG_VTNR" = 1 ]]; then
-  startx
-fi
+#if [[ -z "$DISPLAY" ]] && [[ "$XDG_VTNR" = 1 ]]; then
+#  startx
+#fi
