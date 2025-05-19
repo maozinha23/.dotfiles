@@ -5,11 +5,11 @@ alias ls='ls --color=auto'
 
 # Edit configuration files
 alias config-alacritty='$EDITOR ~/.config/alacritty/alacritty.toml'
-alias config-conky='$EDITOR ~/.config/conky/conky-system.conf ~/.config/conky/conky-os.conf'
-alias config-i3='$EDITOR ~/.config/i3/config'
-alias config-lf='$EDITOR ~/.config/lf/lfrc ~/.config/lf/preview ~/.config/lf/colors ~/.config/lf/icons'
+alias config-conky='$EDITOR ~/.config/conky/*.conf'
+alias config-i3='$EDITOR ~/.config/i3/config ~/.config/i3/*.conf'
+alias config-lf='$EDITOR ~/.config/lf/lfrc ~/.config/lf/preview'
 alias config-nvim='$EDITOR ~/.config/nvim/init.lua'
-alias config-polybar='$EDITOR ~/.config/polybar/config.ini ~/.config/polybar/modules-internal.ini ~/.config/polybar/modules-custom.ini ~/.config/polybar/constants.ini'
+alias config-polybar='$EDITOR ~/.config/polybar/*'
 alias config-rofi='$EDITOR ~/.config/rofi/config.rasi ~/.config/rofi/maozinha23-theme.rasi'
 alias config-vim='$EDITOR ~/.config/vim/vimrc'
 
