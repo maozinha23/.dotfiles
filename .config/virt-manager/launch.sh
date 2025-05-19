@@ -23,4 +23,4 @@ start_service libvirtd
 start_service smb
 
 echo "Abrindo virt-manager ..."
-virt-manager &
+command virt-manager &
