@@ -87,7 +87,8 @@ colorscheme maozinha
 " Copy indent from current line when starting a new line
 set autoindent
 
-" Yank and paste the selection without prepending "* to commands
+" Use the clipboard register * and/or + for yank, delete, change and put
+" operations
 set clipboard^=unnamed,unnamedplus
 
 " List of screen columns that are highlighted
