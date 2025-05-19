@@ -60,6 +60,7 @@
 # Blank space added around the window in pixels. This padding is scaled by DPI
 # and the specified value is always added at both opposing sides.
 # Default: { x = 0, y = 0 }
+#padding = { x = <integer>, y = <integer> }
 padding = { x = 5, y = 5 }
 
 # Spread additional padding evenly around the terminal content.
@@ -146,6 +147,7 @@ padding = { x = 5, y = 5 }
 #     Linux/BSD: { family = "monospace", style = "Regular" }
 #     Windows: { family = "Consolas", style = "Regular" }
 #     macOS: { family = "Menlo", style = "Regular" }
+#normal = { family = "<string>", style = "<string>" }
 normal = { family = "Cousine Nerd Font Mono", style = "Regular" }
 
 # If the family is not specified, it will fall back to the value specified for
@@ -165,7 +167,7 @@ normal = { family = "Cousine Nerd Font Mono", style = "Regular" }
 
 # Font size in points.
 # Default: 11.25
-size = 12.0
+#size = <float>
 
 # Offset is the extra space around each character. y can be thought of as
 # modifying the line spacing, and x as modifying the letter spacing.
@@ -235,9 +237,11 @@ size = 12.0
 #-------------------------------------------------------------------------------
     [colors.primary]
 #    Default: "#d8d8d8"
+#    foreground = "<string>"
     foreground = "#FFFFFF"
 
 #    Default: "#181818"
+#    background = "<string>"
     background = "#000000"
 
 #    If this is not set, the color is automatically calculated based on the
@@ -280,54 +284,70 @@ size = 12.0
 #-------------------------------------------------------------------------------
     [colors.normal]
 #    Default: "#181818"
+#    black = "<string>"
     black = "#000000"
 
 #    Default: "#ac4242"
+#    red = "<string>"
     red = "#AA0000"
 
 #    Default: "#90a959"
+#    green = "<string>"
     green = "#00AA00"
 
 #    Default: "#f4bf75"
+#    yellow = "<string>"
     yellow = "#AA5500"
 
 #    Default: "#6a9fb5"
+#    blue = "<string>"
     blue = "#0000AA"
 
 #    Default: "#aa759f"
+#    magenta = "<string>"
     magenta = "#AA00AA"
 
 #    Default: "#75b5aa"
+#    cyan = "<string>"
     cyan = "#00AAAA"
 
 #    Default: "#d8d8d8"
+#    white = "<string>"
     white = "#AAAAAA"
 #-------------------------------------------------------------------------------
 # COLORS - BRIGHT
 #-------------------------------------------------------------------------------
     [colors.bright]
 #    Default: "#6b6b6b"
+#    black = "<string>"
     black = "#555555"
 
 #    Default: "#c55555"
+#    red = "<string>"
     red = "#FF5555"
 
 #    Default: "#aac474"
+#    green = "<string>"
     green = "#55FF55"
 
 #    Default: "#feca88"
+#    yellow = "<string>"
     yellow = "#FFFF55"
 
 #    Default: "#82b8c8"
+#    blue = "<string>"
     blue = "#5555FF"
 
 #    Default: "#c28cb8"
+#    magenta = "<string>"
     magenta = "#FF55FF"
 
 #    Default: "#93d3c3"
+#    cyan = "<string>"
     cyan = "#55FFFF"
 
 #    Default: "#f8f8f8"
+#    white = "<string>"
     white = "#FFFFFF"
 #-------------------------------------------------------------------------------
 # COLORS - DIM
@@ -398,6 +418,7 @@ size = 12.0
 # CURSOR
 #-------------------------------------------------------------------------------
 [cursor]
+#style = { <shape>, <blinking> }
 style = { shape = "Block", blinking = "On" }
 #    Default: "Block"
 #    shape = "Block" | "Underline" | "Beam"
@@ -460,6 +481,7 @@ style = { shape = "Block", blinking = "On" }
 [mouse]
 # When this is true, the cursor is temporarily hidden when typing.
 # Default: false
+#hide_when_typing = true | false
 hide_when_typing = true
 
 # See keyboard.bindings for full documentation on mods, mode, command, chars,
