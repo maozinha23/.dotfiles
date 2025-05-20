@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Inicia serviço se ainda não estiver ativo
 start_service() {
