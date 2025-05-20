@@ -138,7 +138,7 @@ else
 fi
 
 pacstrap -K /mnt base base-devel linux linux-firmware "${cpu_microcode}" \
-  dosfstools e2fsprogs grub efibootmgr bash-completion networkmanager \
+  dosfstools ntfs-3g e2fsprogs grub efibootmgr bash-completion networkmanager \
   man-db man-pages
 ################################################################################
 # 3 - Configurar o sistema
