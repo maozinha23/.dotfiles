@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/sh
 pictures=$(xdg-user-dir PICTURES)
 cd ${pictures}
 scrot "$@"
