@@ -69,7 +69,7 @@ fi
 # Atualiza o sistema
 sudo pacman --sync --refresh --sysupgrade --noconfirm
 
-# Aplicações de terminal
+# Aplicações para terminal
 # 7zip : File archiver for extremely high compression
 # apache : A high performance Unix-based HTTP server
 # bridge-utils : Utilities for configuring the Linux ethernet bridge
@@ -87,12 +87,15 @@ sudo pacman --sync --refresh --sysupgrade --noconfirm
 # lf : A terminal file manager inspired by ranger
 # leiningen : Automate Clojure projects
 # libqalculate : Multi-purpose desktop calculator
-# links : A text WWW browser, similar to Lynx
 # lsof : Lists open files for running Unix processes
+# ly : TUI display manager
+# mariadb : Fast SQL database server, derived from MySQL
+# neovim : Fork of Vim aiming to improve user experience, plugins, and GUIs
 # openssh : SSH protocol implementation for remote login, command execution and file transfer
 # perl-image-exiftool : Reader and rewriter of EXIF information that supports raw files
 # php : A general-purpose scripting language that is especially suited to web development
 # php-apache : Apache SAPI for PHP
+# phpmyadmin : PHP web-based tool to administrate MySQL and MariaDB databases over the web
 # pipewire-jack : Low-latency audio/video router and processor - JACK replacement
 # pipewire-pulse : Low-latency audio/video router and processor - PulseAudio replacement
 # qemu-desktop : A QEMU setup for desktop environments
@@ -105,9 +108,10 @@ sudo pacman --sync --refresh --sysupgrade --noconfirm
 # trash-cli : Command line trashcan (recycle bin) interface
 # ueberzugpp : Command line utility which allows to display images in the terminal, written in C++
 # unarchiver : unar and lsar: Objective-C tools for uncompressing archive files
+# usbutils : A collection of USB tools to query connected USB devices
 # virt-manager : Desktop user interface for managing virtual machines
 # xdg-user-dirs : Manage user directories like ~/Desktop and ~/Music
-package_list="7zip apache bridge-utils brightnessctl btop dnsmasq docx2txt clojure ffmpegthumbnailer fuse3 fzf gdb git jdk-openjdk lf leiningen libqalculate links lsof openssh perl-image-exiftool php php-apache pipewire-jack pipewire-pulse qemu-desktop rclone rlwrap rust samba stow transmission-cli trash-cli ueberzugpp unarchiver virt-manager xdg-user-dirs"
+package_list="7zip apache bridge-utils brightnessctl btop dnsmasq docx2txt clojure ffmpegthumbnailer fuse3 fzf gdb git jdk-openjdk lf leiningen libqalculate lsof ly mariadb neovim openssh perl-image-exiftool php php-apache phpmyadmin pipewire-jack pipewire-pulse qemu-desktop rclone rlwrap rust samba stow transmission-cli trash-cli ueberzugpp unarchiver usbutils virt-manager xdg-user-dirs"
 
 # Window Manager e aplicações relacionadas
 # dex : Program to generate and execute DesktopEntry files of type Application
@@ -116,13 +120,14 @@ package_list="7zip apache bridge-utils brightnessctl btop dnsmasq docx2txt cloju
 # perl-json-xs : JSON::XS - JSON serialising/deserialising, done correctly and fast
 # polybar : A fast and easy-to-use status bar
 # rofi : A window switcher, application launcher and dmenu replacement
+# xclip : Command line interface to the X11 clipboard
 # xorg-server : xorg-server-common, xorg-server-devel, xorg-server-xephyr, xorg-server-xnest, xorg-server-xvfb
 # xorg-xev : Print contents of X events
 # xorg-xinit : X.Org initialisation program
 # xss-lock : Use external locker as X screen saver
-package_list="${package_list} dex i3-wm perl-anyevent-i3 perl-json-xs polybar rofi xorg-server xorg-xev xorg-xinit xss-lock"
+package_list="${package_list} dex i3-wm perl-anyevent-i3 perl-json-xs polybar rofi xclip xorg-server xorg-xev xorg-xinit xss-lock"
 
-# Aplicações com interface gráfica: Sistema
+# Aplicações para interface gráfica: Sistema
 # alacritty : A cross-platform, GPU-accelerated terminal emulator
 # arandr : Provide a simple visual front end for XRandR 1.2
 # blueman : GTK+ Bluetooth Manager
@@ -131,27 +136,28 @@ package_list="${package_list} dex i3-wm perl-anyevent-i3 perl-json-xs polybar ro
 # udiskie : Removable disk automounter using udisks
 package_list="${package_list} alacritty arandr blueman conky pavucontrol udiskie"
 
-# Aplicações com interface gráfica: Acessórios
-# gvim : Vi Improved, a highly configurable, improved version of the vi text editor (with advanced features, such as a GUI)
+# Aplicações para interface gráfica: Acessórios
+# neovide : No Nonsense Neovim Client in Rust
 # scrot : Simple command-line screenshot utility for X
 # xarchiver : GTK+ frontend to various command line archivers
-package_list="${package_list} gvim scrot xarchiver"
+package_list="${package_list} neovide scrot xarchiver"
 
-# Aplicações com interface gráfica: Internet
-# chromium : A web browser built for speed, simplicity, and security
+# Aplicações para interface gráfica: Internet
+# firefox : Fast, Private & Safe Web Browser
+# firefox-i18n : Portuguese (Brazilian) language pack for Firefox
 # transmission-gtk : Fast, easy, and free BitTorrent client (GTK+ GUI)
-package_list="${package_list} chromium transmission-gtk"
+package_list="${package_list} firefox firefox-i18 ntransmission-gtk"
 
-# Aplicações com interface gráfica: Imagem
+# Aplicações para interface gráfica: Imagem
 # feh : Fast and light imlib2-based image viewer
 package_list="${package_list} feh"
 
-# Aplicações com interface gráfica: Multimídia
+# Aplicações para interface gráfica: Multimídia
 # mpv : a free, open source, and cross-platform media player
 # obs-studio : Free, open source software for live streaming and recording
-package_list="${package_list} mpv obs-studio"
+package_list="${package_list} mpv" #obs-studio"
 
-# Aplicações com interface gráfica: Escritório
+# Aplicações para interface gráfica: Escritório
 # libreoffice-fresh : LibreOffice branch which contains new features and program enhancements
 # libreoffice-fresh-pt-br : Portuguese (Brasil) language pack for LibreOffice Fresh
 package_list="${package_list} libreoffice-fresh libreoffice-fresh-pt-br"
@@ -180,7 +186,7 @@ paru
 
 # i3lock-color : The world's most popular non-default computer lockscreen
 # visual-studio-code-bin : Visual Studio Code (vscode): Editor for building and debugging modern web and cloud applications (official binary version)
-package_list="i3lock-color visual-studio-code-bin"
+package_list="i3lock-color" #visual-studio-code-bin"
 
 # Instala a lista de pacotes da AUR
 paru --sync --noconfirm ${package_list}
@@ -216,11 +222,11 @@ sudo mv 00-touchpad.conf /etc/X11/xorg.conf.d/00-touchpad.conf
 # Define o layout e modelo do teclado
 sudo localectl --no-convert set-x11-keymap br pc105
 
+# Habilita indicação visual (*) ao digitar a senha com sudo
+sudo sed --in-place '110a ## Enable visual feedback (asterisks) when typing sudo password.\nDefaults pwfeedback\n' /etc/sudoers
+
 # Habilita saída de texto colorida para pacman
 sudo sed --in-place 's/#Color/Color/' /etc/pacman.conf
-
-# Desabilita a execução da aplicação blueman na inicialização do sistema
-sudo mv /etc/xdg/autostart/blueman.desktop /etc/xdg/autostart/blueman.desktop.disabled
 
 # Clona o repositório do Github que contém arquivos de configuração
 eval $(ssh-agent -s)
@@ -238,11 +244,18 @@ cd
 mkdir Documents Downloads Media
 xdg-user-dirs-update
 
+# Inicializa o serviço do display manager Ly
+sudo systemctl enable ly.service
+
 # Cria um link simbólico para a configuração do samba
-sudo ln --symbolic ~/.dotfiles/smb.conf /etc/samba/smb.conf
+sudo ln --symbolic ~/.dotfiles/etc/samba/smb.conf /etc/samba/smb.conf
 
 # Adiciona o usuário atual ao grupo libvirt
 sudo usermod -aG libvirt $(whoami)
+
+# Inicializa o banco de dados do mariadb e melhora a segurança
+sudo mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+sudo mariadb-secure-installation
 
 # Remove o script de instalação
 rm -- "$0"
