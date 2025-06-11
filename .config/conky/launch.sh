@@ -3,6 +3,8 @@
 # Terminate already running conky instances
 pkill conky
 
-# Launch two instances of conky, System and OS
-conky --config=$HOME/.config/conky/conky-system.conf &
-conky --config=$HOME/.config/conky/conky-os.conf &
+# Generate conky's config file
+$HOME/.config/conky/utils/gen-config.sh $HOME/.config/conky/config.lua
+
+# Launch conky
+conky --config=$HOME/.config/conky/config.lua &
