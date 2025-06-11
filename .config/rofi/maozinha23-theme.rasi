@@ -19,8 +19,8 @@
 
 window {
     width: 600px;
-    border: 4px;
-    border-color: @gray;
+    border: 3px;
+    border-color: @white;
 }
 
 mainbox {
@@ -34,7 +34,7 @@ inputbar {
     foreground-color: @white;
     border: 2px;
     border-color: @light-gray;
-    padding: 5px;
+    padding: 4px;
     children: [prompt, textbox-prompt-sep, entry, num-filtered-rows, textbox-num-sep, num-rows];
 }
 
@@ -54,7 +54,7 @@ prompt, textbox-prompt-sep, entry, num-filtered-rows, textbox-num-sep, num-rows 
 }
 
 prompt {
-    font: "Cousine Nerd Font Mono bold 12";
+    font: "Terminess Nerd Font Mono 12";
 }
 
 listview {
@@ -62,14 +62,14 @@ listview {
   scrollbar: true;
   background-color: @black;
   margin: 5px 0 5px 0;
-  padding: 5px;
+  padding: 4px;
   border: 2px;
   border-color: @light-gray;
 }
 
 element {
-    padding: 5px;
-    spacing: 5px;
+    padding: 4px;
+    spacing: 4px;
     children: [element-icon, element-text];
 }
 
@@ -113,8 +113,8 @@ mode-switcher {
 button {
     background-color: @gray;
     text-color: @white;
-    padding: 5px;
-    font: "Cousine Nerd Font bold 12";
+    padding: 4px;
+    font: "Terminess Nerd Font Mono 12";
 }
 
 button.selected {
