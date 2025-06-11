@@ -74,20 +74,18 @@ sudo pacman --sync --refresh --sysupgrade --noconfirm
 # apache : A high performance Unix-based HTTP server
 # bridge-utils : Utilities for configuring the Linux ethernet bridge
 # brightnessctl : Lightweight brightness control tool
-# btop: A monitor of system resources, bpytop ported to C++
 # clojure : Lisp dialect for the JVM
 # dnsmasq : Lightweight, easy to configure DNS forwarder and DHCP server
-# docx2txt : Recovers text from DOCX files, with good formatting
 # ffmpegthumbnailer : Lightweight video thumbnailer that can be used by file managers
 # fuse3 : Interface for userspace programs to export a filesystem to the Linux kernel
 # fzf : Command-line fuzzy finder
 # gdb : The GNU Debugger
 # git : the fast distributed version control system
+# imagemagick : An image viewing/manipulation program
 # jdk-openjdk : OpenJDK Java 24 development kit
 # lf : A terminal file manager inspired by ranger
 # leiningen : Automate Clojure projects
 # libqalculate : Multi-purpose desktop calculator
-# lsof : Lists open files for running Unix processes
 # ly : TUI display manager
 # mariadb : Fast SQL database server, derived from MySQL
 # neovim : Fork of Vim aiming to improve user experience, plugins, and GUIs
@@ -107,17 +105,14 @@ sudo pacman --sync --refresh --sysupgrade --noconfirm
 # transmission-cli : Fast, easy, and free BitTorrent client (CLI tools, daemon and web client)
 # trash-cli : Command line trashcan (recycle bin) interface
 # ueberzugpp : Command line utility which allows to display images in the terminal, written in C++
-# unarchiver : unar and lsar: Objective-C tools for uncompressing archive files
-# usbutils : A collection of USB tools to query connected USB devices
 # virt-manager : Desktop user interface for managing virtual machines
 # xdg-user-dirs : Manage user directories like ~/Desktop and ~/Music
-package_list="7zip apache bridge-utils brightnessctl btop dnsmasq docx2txt clojure ffmpegthumbnailer fuse3 fzf gdb git jdk-openjdk lf leiningen libqalculate lsof ly mariadb neovim openssh perl-image-exiftool php php-apache phpmyadmin pipewire-jack pipewire-pulse qemu-desktop rclone rlwrap rust samba stow transmission-cli trash-cli ueberzugpp unarchiver usbutils virt-manager xdg-user-dirs"
+package_list="7zip apache bridge-utils brightnessctl dnsmasq clojure ffmpegthumbnailer fuse3 fzf gdb git imagemagick jdk-openjdk lf leiningen libqalculate ly mariadb neovim openssh perl-image-exiftool php php-apache phpmyadmin pipewire-jack pipewire-pulse qemu-desktop rclone rlwrap rust samba stow transmission-cli trash-cli ueberzugpp virt-manager xdg-user-dirs"
 
 # Window Manager e aplicações relacionadas
 # dex : Program to generate and execute DesktopEntry files of type Application
 # i3-wm : Improved dynamic tiling window manager
-# perl-anyevent-i3 : Communicate with the i3 window manager
-# perl-json-xs : JSON::XS - JSON serialising/deserialising, done correctly and fast
+# picom : Lightweight compositor for X11
 # polybar : A fast and easy-to-use status bar
 # rofi : A window switcher, application launcher and dmenu replacement
 # xclip : Command line interface to the X11 clipboard
@@ -125,7 +120,7 @@ package_list="7zip apache bridge-utils brightnessctl btop dnsmasq docx2txt cloju
 # xorg-xev : Print contents of X events
 # xorg-xinit : X.Org initialisation program
 # xss-lock : Use external locker as X screen saver
-package_list="${package_list} dex i3-wm perl-anyevent-i3 perl-json-xs polybar rofi xclip xorg-server xorg-xev xorg-xinit xss-lock"
+package_list="${package_list} dex i3-wm perl-anyevent-i3 perl-json-xs picom polybar rofi xclip xorg-server xorg-xev xorg-xinit xss-lock"
 
 # Aplicações para interface gráfica: Sistema
 # alacritty : A cross-platform, GPU-accelerated terminal emulator
@@ -150,12 +145,13 @@ package_list="${package_list} firefox firefox-i18 ntransmission-gtk"
 
 # Aplicações para interface gráfica: Imagem
 # feh : Fast and light imlib2-based image viewer
-package_list="${package_list} feh"
+# gimp : GNU Image Manipulation Program
+package_list="${package_list} feh gimp"
 
 # Aplicações para interface gráfica: Multimídia
 # mpv : a free, open source, and cross-platform media player
 # obs-studio : Free, open source software for live streaming and recording
-package_list="${package_list} mpv" #obs-studio"
+package_list="${package_list} mpv obs-studio"
 
 # Aplicações para interface gráfica: Escritório
 # libreoffice-fresh : LibreOffice branch which contains new features and program enhancements
@@ -163,12 +159,13 @@ package_list="${package_list} mpv" #obs-studio"
 package_list="${package_list} libreoffice-fresh libreoffice-fresh-pt-br"
 
 # Temas, ícones e fontes
-# gnome-themes-extra : Extra Themes for GNOME Applications
-# gnu-free-fonts : A free family of scalable outline fonts
+# adw-gtk-theme : Unofficial GTK 3 port of the libadwaita theme
 # papirus-icon-theme : Papirus icon theme
-# ttf-cousine-nerd : Patched font Cousine from nerd fonts library
+# terminus-font : Monospace bitmap font (for X11 and console)
+# ttf-liberation : Font family which aims at metric compatibility with Arial, Times New Roman, and Courier New
+# ttf-terminus-nerd : Patched font Terminus (Terminess) from nerd fonts library
 # xcursor-vanilla-dmz : Vanilla DMZ cursor theme
-package_list="${package_list} gnome-themes-extra gnu-free-fonts papirus-icon-theme ttf-cousine-nerd xcursor-vanilla-dmz"
+package_list="${package_list} adw-gtk-theme papirus-icon-theme terminus-font ttf-liberation ttf-terminus-nerd xcursor-vanilla-dmz"
 
 # Instala a lista de pacotes
 sudo pacman --sync --noconfirm ${package_list}
@@ -237,7 +234,7 @@ git clone git@github.com:maozinha23/.dotfiles.git
 # Cria links simbólicos para os arquivos de configuração
 rm .bashrc
 cd .dotfiles
-stow --no-folding .
+stow .
 
 # Cria os diretórios de usuário em $HOME
 cd
