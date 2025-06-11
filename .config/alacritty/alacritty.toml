@@ -148,7 +148,7 @@ padding = { x = 5, y = 5 }
 #     Windows: { family = "Consolas", style = "Regular" }
 #     macOS: { family = "Menlo", style = "Regular" }
 #normal = { family = "<string>", style = "<string>" }
-normal = { family = "Cousine Nerd Font Mono", style = "Regular" }
+normal = { family = "Terminess Nerd Font Mono", style = "Regular" }
 
 # If the family is not specified, it will fall back to the value specified for
 # the normal font.
