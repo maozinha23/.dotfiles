@@ -21,7 +21,7 @@ set $WINDOW_RESIZE_HEIGHT 5
 set $WINDOW_RESIZE_WIDTH 5
 
 # Define border size and gaps
-set $WINDOW_BORDER_SIZE 5
+set $WINDOW_BORDER_SIZE 2
 set $GAP_INNER 10
 set $GAP_OUTTER -5
 set $GAP_OUTTER_VERTICAL -5
@@ -34,7 +34,7 @@ set $VOLUME_CHANGE 1
 set $BRIGHTNESS_CHANGE 1
 
 # Define the default font
-set $FONT Cousine Nerd Font Mono bold 12
+set $FONT Terminess Nerd Font Mono bold 12
 
 # Define i3lock-color custom launch script path
 set $I3LOCK-COLOR "$HOME/.config/i3lock-color/lock.sh"
