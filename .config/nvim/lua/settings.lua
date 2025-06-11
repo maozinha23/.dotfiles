@@ -14,14 +14,17 @@ vim.opt.cursorline = true
 -- Use the appropriate number of spaces to insert a <Tab>
 vim.opt.expandtab = true
 
+-- The kind of folding used for the current window
+vim.opt.foldmethod = "marker"
+
 -- When there is a previous search pattern, highlight all its matches.
 vim.opt.hlsearch = true
 
 -- Ignore case in search patterns
 vim.opt.ignorecase = true
 
--- While typing a search command, show where the pattern, as it was typed so far,
--- matches. The matched string is highlighted
+-- While typing a search command, show where the pattern, as it was typed so
+-- far, matches. The matched string is highlighted
 vim.opt.incsearch = true
 
 -- The value of this option influences when the last window will have a status
