@@ -9,7 +9,13 @@ if vim.fn.exists("syntax_on") then
   vim.cmd.syntax("reset")
 end
 
+-- Colorscheme name
 vim.g.colors_name = "maozinha23"
+-- -----------------------------------------------------------------------------
+-- Trailing white spaces.
+-- -----------------------------------------------------------------------------
+util.highlight("TrailingWhiteSpace", { bg = palette.red })
+vim.fn.matchadd("TrailingWhiteSpace", [[\s\+$]])
 -- -----------------------------------------------------------------------------
 -- Any comment.
 -- -----------------------------------------------------------------------------
