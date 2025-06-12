@@ -1,3 +1,2 @@
-# vim temp file
-.config/vim/.netrwhist
-.config/vim/viminfo
+# conky config file
+.config/conky/config.lua
