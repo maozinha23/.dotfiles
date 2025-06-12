@@ -220,10 +220,10 @@ sudo mv 00-touchpad.conf /etc/X11/xorg.conf.d/00-touchpad.conf
 sudo localectl --no-convert set-x11-keymap br pc105
 
 # Habilita indicação visual (*) ao digitar a senha com sudo
-sudo sed --in-place '110a ## Enable visual feedback (asterisks) when typing sudo password.\nDefaults pwfeedback\n' /etc/sudoers
+#sudo sed --in-place '110a ## Enable visual feedback (asterisks) when typing sudo password.\nDefaults pwfeedback\n' /etc/sudoers
 
 # Habilita saída de texto colorida para pacman
-sudo sed --in-place 's/#Color/Color/' /etc/pacman.conf
+#sudo sed --in-place 's/#Color/Color/' /etc/pacman.conf
 
 # Clona o repositório do Github que contém arquivos de configuração
 eval $(ssh-agent -s)
