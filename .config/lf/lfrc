@@ -401,7 +401,7 @@ set borderfmt "\033[0m"
 # (6) next file name to be previewed respectively. Preview cleaning is disabled
 # when the value of this option is left empty.
 # (string) (default ``) (not called if empty)
-set cleaner '/home/ricardo/.config/lf/cleaner'
+set cleaner '~/.config/lf/cleaner'
 
 # Format string of the indicator for files to be copied.
 # (string) (default \033[7;33m)
@@ -620,7 +620,7 @@ set preview true
 # again. Preview filtering is disabled and files are displayed as they are when
 # the value of this option is left empty.
 # (string) (default ``) (not filtered if empty)
-set previewer '/home/ricardo/.config/lf/preview'
+set previewer '~/.config/lf/previewer'
 
 # Format string of the prompt shown in the top line. Special expansions are
 # provided, %u as the user name, %h as the hostname, %w as the working
@@ -827,12 +827,15 @@ map <space> :toggle; down
 #-------------------------------------------------------------------------------
 # CUSTOM
 #-------------------------------------------------------------------------------
+map S %du --human-readable --summarize | awk '{ print "Size:", $1 }'
+map g. cd ~/.dotfiles
 map gc cd ~/.config
-map ga cd ~/AUR
 map gd cd ~/Documents
 map gD cd ~/Downloads
+map ge cd /etc
 map gm cd ~/Media
 map gp cd ~/Projects
+map gu cd /usr
 
 # Define a custom 'open' command
 # This command is called when current file is not a directory.
@@ -848,7 +851,7 @@ map gp cd ~/Projects
 cmd mkdir %{{
     printf " new directory: "
     read dir
-    mkdir -p -- "$dir"
+    mkdir --parents -- "$dir"
     lf -remote "send $id select \"$(printf '%s' "$dir" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
 }}
 
@@ -907,8 +910,7 @@ cmd extract %{{
             *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf "$f";;
             *.tar.gz|*.tgz) tar xzvf "$f";;
             *.tar.xz|*.txz) tar xJvf "$f";;
-            *.zip|*.7z) 7z x "$f";;
-            *.rar) unar -force-directory "$f";;
+            *.zip|*.7z|*.rar) 7z x "$f";;
         esac
     fi
 
