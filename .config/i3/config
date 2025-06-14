@@ -39,8 +39,8 @@ set $FONT Terminess Nerd Font Mono bold 12
 # Define i3lock-color custom launch script path
 set $I3LOCK-COLOR "$HOME/.config/i3lock-color/lock.sh"
 
-# Define scrot custom launch script path
-set $SCROT $HOME/.config/scrot/launch.sh
+# Define scrot filename pattern
+set $SCROT_FILENAME "$(xdg-user-dir PICTURES)/%Y-%m-%d_%H-%M-%S_$(cat /etc/hostname)_$(whoami).png"
 
 # Define wallpaper image path
 #set $WALLPAPER $HOME/___
