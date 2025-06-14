@@ -5,17 +5,16 @@ program_options:
                             # means auto-hide the tray icon when
                             # there are no handled devices.
 
-  #menu:             flat    # ["flat" | "nested"] Set the
+  menu:             flat    # ["flat" | "nested"] Set the
                             # systray menu behaviour.
 
   automount:        true    # [bool] Enable automatic mounting.
 
-  notify:           false   # [bool] Enable notifications.
+  notify:           true    # [bool] Enable notifications.
 
   password_cache:   false   # [int] Password cache in minutes. Caching is
                             # disabled by default. It can be disabled
                             # explicitly by setting it to false
-  appindicator:     false
 
   file_manager:     'alacritty --command lf'
     # [string] Set program to open directories. It will be invoked
@@ -34,7 +33,7 @@ program_options:
     # "builtin:gui" and "builtin:tty" signify to use udiskie's
     # builtin password prompt.
 
-  #notify_command: "zenity --info --text '{event}: {device_presentation}'"
+  #event_hook: "zenity --info --text '{event}: {device_presentation}'"
     # [string|list] Set command to be executed on any device event.
     # This is specified like `password_prompt`.
 
@@ -47,10 +46,14 @@ program_options:
   # The rules defined here are simply prepended to the builtin device rules,
   # so that it is possible to completely overwrite the defaults by specifying
   # a catch-all rule (i.e. a rule without device attributes).
+  # Filter rules can be passed a list of values, in which case the rule is matched
+  # if the attribute matches any of the values in the list.
 
 #- device_file: /dev/dm-5    # [filter]
 #  ignore:      false        # [action] never ignore this device
-#- id_uuid: 9d53-13ba        # [filter] match by device UUID
+#- id_uuid:                  # [filter] match by device UUID
+#  - 9d53-13ba               # This rule matches on either of these uids
+#  - 8675-309a
 #  options: [noexec, nodev]  # [action] mount options can be given as list
 #  ignore:  false            # [action] never ignore this device (even if fs=FAT)
 #  automount: false          # [action] do not automount this device
@@ -59,61 +62,61 @@ program_options:
 #
 #- id_type: ntfs             # [filter] (optional)
 #  skip: true                # [action] skip all further (even builtin) rules
-#                            # for all matched devices, and resolve action result
-#                            # on parent device
-#
+                            # for all matched devices, and resolve action result
+                            # on parent device
+
 #- ignore:    True           # never mount/unmount or even show this in the GUI
 #  automount: False          # show but do not automount this device
 #  options: []               # additional options to be passed when mounting
-#
+
 #mount_options:              # [deprecated] do not use
 #ignore_device:              # [deprecated] do not use
-#
+
 #notifications:
-#  # Customize which notifications are shown for how long. Possible
-#  # values are:
-#  #   positive number         timeout in seconds
-#  #   false                   disable
-#  #   -1                      use the libnotify default timeout
-#
-#  timeout:          1.5     # set the default for all notifications
-#
-#  # Specify only if you want to overwrite the default:
-#  device_mounted:   5       # mount notification
-#  device_unmounted: false   # unmount notification
-#  device_added:     false   # device has appeared
-#  device_removed:   false   # device has disappeared
-#  device_unlocked:  -1      # encrypted device was unlocked
-#  device_locked:    -1      # encrypted device was locked
-#  job_failed:       -1      # mount/unlock/.. has failed
-#
+  # Customize which notifications are shown for how long. Possible
+  # values are:
+  #   positive number         timeout in seconds
+  #   false                   disable
+  #   -1                      use the libnotify default timeout
+
+  #timeout:          1.5     # set the default for all notifications
+
+  # Specify only if you want to overwrite the default:
+  #device_mounted:   5       # mount notification
+  #device_unmounted: false   # unmount notification
+  #device_added:     false   # device has appeared
+  #device_removed:   false   # device has disappeared
+  #device_unlocked:  -1      # encrypted device was unlocked
+  #device_locked:    -1      # encrypted device was locked
+  #job_failed:       -1      # mount/unlock/.. has failed
+
 #quickmenu_actions: [mount, unmount, unlock, terminal, detach, delete]
-#  # List of actions to be shown in the quickmenu or the special value 'all'.
-#  # The quickmenu is shown on left-click if using flat menu type.
-#
+  # List of actions to be shown in the quickmenu or the special value 'all'.
+  # The quickmenu is shown on left-click if using flat menu type.
+
 #notification_actions:
-#  # Define which actions should be shown on notifications. Note that there
-#  # are currently only a limited set of actions available for each
-#  # notification. Events that are not explicitly specified show the default
-#  # set of actions. Specify an empty list if you don't want to see any
-#  # notification for the specified event:
-#
-#  device_mounted:   [browse]
-#  device_added:     [mount]
-#
+  # Define which actions should be shown on notifications. Note that there
+  # are currently only a limited set of actions available for each
+  # notification. Events that are not explicitly specified show the default
+  # set of actions. Specify an empty list if you don't want to see any
+  # notification for the specified event:
+
+  #device_mounted:   [browse]
+  #device_added:     [mount]
+
 #icon_names:
-#  # Customize the icon set used by the tray widget. Each entry
-#  # specifies a list of icon names. The first installed icon from
-#  # that list will be used.
-#
-#  media:   [drive-removable-media, media-optical]
-#  browse:  [document-open, folder-open]
-#  terminal: [terminal, terminator, xfce-terminal]
-#  mount:   [udiskie-mount]
-#  unmount: [udiskie-unmount]
-#  unlock:  [udiskie-unlock]
-#  lock:    [udiskie-lock]
-#  eject:   [udiskie-eject, media-eject]
-#  detach:  [udiskie-detach]
-#  delete:  [udiskie-eject]
-#  quit:    [application-exit]
+  # Customize the icon set used by the tray widget. Each entry
+  # specifies a list of icon names. The first installed icon from
+  # that list will be used.
+
+  #media:   [drive-removable-media, media-optical]
+  #browse:  [document-open, folder-open]
+  #terminal: [terminal, terminator, xfce-terminal]
+  #mount:   [udiskie-mount]
+  #unmount: [udiskie-unmount]
+  #unlock:  [udiskie-unlock]
+  #lock:    [udiskie-lock]
+  #eject:   [udiskie-eject, media-eject]
+  #detach:  [udiskie-detach]
+  #delete:  [udiskie-eject]
+  #quit:    [application-exit]
