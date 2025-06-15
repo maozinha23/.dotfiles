@@ -1,0 +1,23 @@
+[branch]
+  sort = -committerdate
+[column]
+  ui = auto
+[commit]
+  verbose = true
+[core]
+  bare = false
+  filemode = true
+  logallrefupdates = true
+  repositoryformatversion = 0
+[diff]
+  algorithm = histogram
+  colorMoved = plain
+  mnemonicPrefix = true
+  renames = true
+[init]
+  defaultBranch = main
+[push]
+  autoSetupRemote = true
+[user]
+  email = 20055270+maozinha23@users.noreply.github.com
+  name = maozinha23
