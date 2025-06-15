@@ -12,7 +12,7 @@ fi
 
 # Export environmental variables
 if [[ -f ~/.env ]]; then
-  export $(envsubst < $HOME/.env)
+  export $(envsubst < ~/.env)
 fi
 
 # Alias definitions
@@ -31,6 +31,6 @@ shopt -s autocd
 eval "$(fzf --bash)"
 
 # Autostart X at login
-#if [[ -z "$DISPLAY" ]] && [[ "$XDG_VTNR" = 1 ]]; then
-#  startx
-#fi
+if [[ -z "$DISPLAY" ]] && [[ "$XDG_VTNR" = 1 ]]; then
+  startx
+fi
