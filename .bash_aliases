@@ -3,6 +3,9 @@ alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias ls='ls --color=auto'
 
+# Supresses output messages when initializing X
+alias startx='startx >/dev/null 2>&1'
+
 # Output the MIME type of a file
 alias mimetype='xdg-mime query filetype'
 
