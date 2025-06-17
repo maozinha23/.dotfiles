@@ -14,7 +14,7 @@ set $WORKSPACE9 "9"
 set $WORKSPACE10 "10"
 
 # Define floating window maximum size
-set $WINDOW_FLOAT_SIZE_MAX 1280 x 720
+set $WINDOW_FLOAT_SIZE_MAX 1200 x 600
 
 # Define window resize step
 set $WINDOW_RESIZE_HEIGHT 5
