@@ -42,6 +42,9 @@ set $I3LOCK-COLOR "$HOME/.config/i3lock-color/lock.sh"
 # Define scrot filename pattern
 set $SCROT_FILENAME "$(xdg-user-dir PICTURES)/%Y-%m-%d_%H-%M-%S_$(cat /etc/hostname)_$(whoami).png"
 
+# Define scrot notification message
+set $SCROT_NOTIFICATION 'SCROT' 'Screenshot has been taken'
+
 # Define wallpaper image path
 #set $WALLPAPER $HOME/___
 
