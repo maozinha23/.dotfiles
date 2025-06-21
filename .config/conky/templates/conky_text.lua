@@ -1,10 +1,10 @@
 conky.text = [[
 ${template0 @T.SYSTEM.LABEL.POS@ @T.SYSTEM.LABEL@}${template0 @T.OS.LABEL.POS@ @T.OS.LABEL@}
 ${template3 Chassis: @T.SYSTEM.CHASSIS@ Vendor: @T.SYSTEM.VENDOR@ Model: @T.SYSTEM.MODEL@}${template6 Name: @T.OS.NAME@ Kernel: @T.OS.KERNEL@ Update: @T.OS.UPDATE@}
-${template0 @T.CPU.LABEL.POS@ @T.CPU.LABEL@}${template4 Uptime: @T.OS.UPTIME@}
+${template0 @T.CPU.LABEL.POS@ @T.CPU.LABEL@}${template6 Host: @T.OS.HOST@ User: @T.OS.USER@ Uptime: @T.OS.UPTIME@}
 ${template2 Vendor: @T.CPU.VENDOR@ Model: @T.CPU.MODEL@}${template5 SHELL: @T.OS.SHELL@ TERM: @T.OS.TERM@}
 ${template3 Cores: @T.CPU.CORES@ Threads: @T.CPU.THREADS@ Cache: @T.CPU.CACHE@}${template6 EDITOR: @T.OS.EDITOR@ PAGER: @T.OS.PAGER@ VISUAL: @T.OS.VISUAL@}
-${template3 Frequency: @T.CPU.FREQUENCY@ Base: @T.CPU.FREQUENCY.BASE@ Turbo: @T.CPU.FREQUENCY.TURBO@}${template6 Display\ Manager: @T.OS.DISPLAY_MANAGER@ Window\ System: @T.OS.WIN_SYSTEM@ Window\ Manager: @T.OS.WIN_MANAGER@}
+${template3 Frequency: @T.CPU.FREQUENCY@ Base: @T.CPU.FREQUENCY.BASE@ Turbo: @T.CPU.FREQUENCY.TURBO@}${template5 Window\ System: @T.OS.WIN_SYSTEM@ Window\ Manager: @T.OS.WIN_MANAGER@}
 ${template1 Usage: @T.CPU.USAGE@}
 ${template0 @T.MEMORY.LABEL.POS@ @T.MEMORY.LABEL@}
 ${template3 0)\ Vendor: @T.MEMORY0.VENDOR@ Size: @T.MEMORY0.SIZE@ Type: @T.MEMORY0.TYPE@}
@@ -31,7 +31,7 @@ ${template0 @T.DISPLAY.LABEL.POS@ @T.DISPLAY.LABEL@}${template7 2}
 ${template1 Connection: @T.DISPLAY.CONNECTION@}${template7 3}
 ${template3 Size: @T.DISPLAY.SIZE@ Resolution: @T.DISPLAY.RESOLUTION@ Refresh\ rate: @T.DISPLAY.REFRESH_RATE@}${template7 4}
 ${template0 @T.THERMAL.LABEL.POS@ @T.THERMAL.LABEL@}${template7 5}
-${template3 ACPI\ temp: @T.THERMAL.ACPI@ Core\ temp: @T.THERMAL.CORE@ CPU\ fan: @T.THERMAL.FAN@}${template7 6}
+${template3 ACPI\ temp: @T.THERMAL.ACPI.TEMP@ Core\ temp: @T.THERMAL.CPU.TEMP@ CPU\ fan: @T.THERMAL.CPU.FAN.SPEED@\ -\ @T.THERMAL.CPU.FAN.PERCENT@}${template7 6}
 ${template0 @T.POWER.LABEL.POS@ @T.POWER.LABEL@}${template7 7}
 ${template1 AC\ adapter: @T.POWER.AC.CONNECTED@}${template7 8}
 ${template3 Battery: @T.POWER.BAT.CONNECTED@ Status: @T.POWER.BAT.STATUS@ Health: @T.POWER.BAT.HEALTH@}${template7 9}
