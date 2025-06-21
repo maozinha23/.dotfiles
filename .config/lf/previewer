@@ -9,71 +9,92 @@ PREVIEW_7Z_HEADER=19
 PREVIEW_EXIFTOOL_HEADER=9
 
 draw() {
-  local path="$1"
-  local max_width=$(("$PREVIEW_WIDTH" - 1))
-  local max_height="$PREVIEW_HEIGHT"
-  ueberzugpp cmd -s "$UB_SOCKET" -a add -i PREVIEW -x "$PREVIEW_ROW" -y "$PREVIEW_COLUMN" --max-width "$max_width" --max-height "$max_height" -f "$path"
+  path="$1"
+  max_width=$(("${PREVIEW_WIDTH}" - 1))
+  max_height="${PREVIEW_HEIGHT}"
+  ueberzugpp cmd \
+    -s "${UB_SOCKET}" \
+    -a add \
+    -i PREVIEW \
+    -x "${PREVIEW_ROW}" \
+    -y "${PREVIEW_COLUMN}" \
+    --max-width "${max_width}" \
+    --max-height "${max_height}" \
+    -f "${path}"
+
   exit 1
 }
 
 CACHE_DIR="${HOME}/.cache/lf/"
-CACHE_FILE="${CACHE_DIR}thumbnail.$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' -- "$(readlink --canonicalize "$PREVIEW_FILE")" | sha256sum | awk '{ print $1 }')"
+CACHE_FILE="${CACHE_DIR}thumbnail.$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' \
+  -- "$(readlink --canonicalize "${PREVIEW_FILE}")" \
+  | sha256sum \
+  | awk '{ print $1 }')"
 
-mime_type="$(file --dereference --brief --mime-type "$PREVIEW_FILE")"
+mime_type="$(file --dereference --brief --mime-type "${PREVIEW_FILE}")"
 
 case $mime_type in
   audio/*)
-    exiftool "$PREVIEW_FILE" | tail --lines=+"$PREVIEW_EXIFTOOL_HEADER"
+    exiftool "${PREVIEW_FILE}" | tail --lines=+"${PREVIEW_EXIFTOOL_HEADER}"
     ;;
   image/svg+xml)
-    [ ! -f "${CACHE_FILE}.jpg" ] && magick "$PREVIEW_FILE" "${CACHE_FILE}.jpg"
-    draw "${CACHE_FILE}.jpg"
-    ;;
-  image/vnd.microsoft.icon | image/x-ico)
-    [ ! -f "${CACHE_FILE}.png" ] && magick "$PREVIEW_FILE"[0] -resize 64x64 "${CACHE_FILE}.png"
-    draw "${CACHE_FILE}.png"
-    ;;
-  image/*)
-    draw "$PREVIEW_FILE"
-    ;;
-  video/*)
-    [ ! -f "${CACHE_FILE}.jpg" ] && ffmpegthumbnailer -i "$PREVIEW_FILE" -o "${CACHE_FILE}.jpg" -s 0 -q 5
-    draw "${CACHE_FILE}.jpg"
-    ;;
-  *ms-word | *msword | *rtf | *ms-excel | *msexcel | *ms-powerpoint | *mspowerpoint)
-    if [ ! -f "${CACHE_FILE}.jpg" ]; then
-      libreoffice --headless --convert-to jpg --outdir "${CACHE_DIR}" "$PREVIEW_FILE" > /dev/null \
-        && mv "$CACHE_DIR"$(basename "$PREVIEW_FILE" | sed 's/\.[^.]*$//')'.jpg' "${CACHE_FILE}.jpg"
-    fi
+    [ ! -f "${CACHE_FILE}.jpg" ] && magick "${PREVIEW_FILE}" "${CACHE_FILE}.jpg"
 
     draw "${CACHE_FILE}.jpg"
     ;;
-  *opendocument.text | *spreadsheet* | *opendocument.presentation)
-    if [ ! -f "${CACHE_FILE}.jpg" ]; then
-      libreoffice --headless --convert-to jpg --outdir "${CACHE_DIR}" "$PREVIEW_FILE" > /dev/null \
-        && mv "$CACHE_DIR"$(basename "$PREVIEW_FILE" | sed 's/\.[^.]*$//')'.jpg' "${CACHE_FILE}.jpg"
-    fi
+  image/vnd.microsoft.icon | image/x-ico)
+    [ ! -f "${CACHE_FILE}.png" ] \
+      && magick "${PREVIEW_FILE}"[0] -resize 64x64 "${CACHE_FILE}.png"
+
+    draw "${CACHE_FILE}.png"
+    ;;
+  image/*)
+    draw "${PREVIEW_FILE}"
+    ;;
+  video/*)
+    [ ! -f "${CACHE_FILE}.jpg" ] \
+      && ffmpegthumbnailer -i "${PREVIEW_FILE}" -o "${CACHE_FILE}.jpg" -s 0 -q 5
+
+    draw "${CACHE_FILE}.jpg"
+    ;;
+  *rtf \
+    | *ms-word | *msword | *opendocument.text \
+    | *ms-excel | *msexcel | *spreadsheet* \
+    | *ms-powerpoint | *mspowerpoint | *opendocument.presentation)
+
+    [ ! -f "${CACHE_FILE}.jpg" ] \
+      && libreoffice \
+        --headless \
+        --convert-to jpg \
+        --outdir "${CACHE_DIR}" \
+        "${PREVIEW_FILE}" \
+        > /dev/null \
+      && mv "${CACHE_DIR}$(basename "${PREVIEW_FILE}" \
+        | sed 's/\.[^.]*$//').jpg" \
+        "${CACHE_FILE}.jpg"
 
     draw "${CACHE_FILE}.jpg"
     ;;
   *zip* | *7z* | *tar* | *rar)
-    7z l "$PREVIEW_FILE" | tail --lines=+"$PREVIEW_7Z_HEADER"
+    7z l "${PREVIEW_FILE}" | tail --lines=+"${PREVIEW_7Z_HEADER}"
     ;;
   application/pdf)
-    [ ! -f "${CACHE_FILE}.jpg" ] && pdftoppm -jpeg -f 1 -singlefile "$PREVIEW_FILE" "$CACHE_FILE"
+    [ ! -f "${CACHE_FILE}.jpg" ] \
+      && pdftoppm -jpeg -f 1 -singlefile "${PREVIEW_FILE}" "${CACHE_FILE}"
+
     draw "${CACHE_FILE}.jpg"
     ;;
   application/x-bittorrent)
-    exec transmission-show "$PREVIEW_FILE"
+    exec transmission-show "${PREVIEW_FILE}"
     ;;
   application/vnd.efi.iso)
-    exec iso-info --no-header --iso9660 "$PREVIEW_FILE"
+    exec iso-info --no-header --iso9660 "${PREVIEW_FILE}"
     ;;
   text/* | application/json)
-    exec cat "$PREVIEW_FILE"
+    exec cat "${PREVIEW_FILE}"
     ;;
   *)
-    exec xdg-mime query filetype "$PREVIEW_FILE"
+    exec xdg-mime query filetype "${PREVIEW_FILE}"
     ;;
 esac
 
