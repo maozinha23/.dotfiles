@@ -48,6 +48,9 @@ set $SCROT_NOTIFICATION 'SCROT' 'Screenshot has been taken'
 # Define wallpaper image path
 set $FEH_WALLPAPER "$(xdg-user-dir PICTURES)/wallpaper.png"
 
+# Define the internet browser
+set $INTERNET_BROWSER firefox
+
 # Define script path to toggle the background between conky and wallpaper (using
 # feh)
 set $TOGGLE_BACKGROUND ${HOME}/.config/i3/toggle-bg.sh
