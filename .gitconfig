@@ -6,6 +6,7 @@
   verbose = true
 [core]
   bare = false
+  editor = nvim
   filemode = true
   logallrefupdates = true
   repositoryformatversion = 0
