@@ -1,7 +1,0 @@
-# Arquivos de configuração do git
-.git
-.gitconfig
-.gitignore
-
-# Scripts de instalação do Arch Linux
-arch-install
