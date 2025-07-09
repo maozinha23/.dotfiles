@@ -11,7 +11,8 @@ XINITRC=$HOME/.config/X11/xinitrc
 XSERVERRC=$HOME/.config/X11/xserverrc
 XAUTHORITY=$XDG_RUNTIME_DIR/Xauthority
 XCURSOR_PATH=$HOME/.local/share/icons:/usr/share/icons
-HISTCONTROL=erasedups
+HISTCONTROL=ignoreboth:erasedups
+HISTFILE=$HOME/.local/state/bash/history
 CARGO_HOME=$HOME/.local/share/cargo
 MARIADB_HISTFILE=/dev/null
 FZF_DEFAULT_OPTS=--color=fg:#555555,bg:#000000,hl:#FFFF55,fg+:#FFFFFF,bg+:#0000AA,hl+:#FFFF55,info:#FFFFFF,border:#FFFFFF,prompt:#FFFFFF,pointer:#FFFF55
