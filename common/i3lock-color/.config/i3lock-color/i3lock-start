@@ -1,5 +1,7 @@
 #!/bin/sh
 
+BLUR=5
+
 INDICATOR_RADIUS=100
 
 INSIDE_COLOR='#000000'
@@ -23,9 +25,9 @@ TEXT_GREETER=''
 TIME='%H:%M:%S'
 DATE='%d/%m/%Y'
 
-i3lock \
+i3lock --ignore-empty-password \
   --nofork \
-  --blur=sigma \
+  --blur="${BLUR}" \
   --clock \
   --indicator \
   --radius="${INDICATOR_RADIUS}" \
