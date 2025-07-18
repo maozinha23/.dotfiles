@@ -11,12 +11,12 @@
     #   keyboard: follow window with keyboard focus
     #   none: don't follow anything
     #
-    # "keyboard" needs a window manager that exports the
-    # _NET_ACTIVE_WINDOW property.
+    # "keyboard" needs a window manager that exports the _NET_ACTIVE_WINDOW
+    # property.
     # This should be the case for almost all modern window managers.
     #
-    # If this option is set to mouse or keyboard, the monitor option
-    # will be ignored.
+    # If this option is set to mouse or keyboard, the monitor option will be
+    # ignored.
     follow = none
 
     ### Geometry ###
@@ -26,7 +26,7 @@
     # width = (0, 300)
     # constant width of 300
     #width = 300
-    width = (848, 848)
+    width = (830, 830)
 
     # The height of a single notification, excluding the frame.
     # dynamic height from 0 to 300
@@ -35,7 +35,7 @@
     # height = 300
     # NOTE: Dunst from version 1.11 and older don't support dynamic height
     #       and the given value is treated as the maximum height
-    height = (21, 21)
+    height = (22, 22)
 
     # Position the notification in the top right corner
     #origin = top-right
@@ -45,7 +45,7 @@
     # NOTE: Dunst from version 1.11 and older use this alternative notation
     # offset = 10x50
     #offset = (10, 50)
-    offset = (258, 0)
+    offset = (260, 0)
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 0
@@ -59,8 +59,8 @@
     # for example dunstify -h int:value:12
     progress_bar = true
 
-    # Set the progress bar height. This includes the frame, so make sure
-    # it's at least twice as big as the frame width.
+    # Set the progress bar height. This includes the frame, so make sure it's at
+    # least twice as big as the frame width.
     progress_bar_height = 10
 
     # Set the frame width of the progress bar
@@ -75,15 +75,15 @@
     # Corner radius for the progress bar. 0 disables rounded corners.
     progress_bar_corner_radius = 0
 
-    # Define which corners to round when drawing the progress bar. If progress_bar_corner_radius
-    # is set to 0 this option will be ignored.
+    # Define which corners to round when drawing the progress bar. If
+    # progress_bar_corner_radius is set to 0 this option will be ignored.
     progress_bar_corners = all
 
     # Corner radius for the icon image.
     icon_corner_radius = 0
 
-    # Define which corners to round when drawing the icon image. If icon_corner_radius
-    # is set to 0 this option will be ignored.
+    # Define which corners to round when drawing the icon image. If
+    # icon_corner_radius is set to 0 this option will be ignored.
     #icon_corners = all
 
     # Show how many messages are currently hidden (because of
@@ -91,12 +91,11 @@
     indicate_hidden = yes
 
     # The transparency of the window.  Range: [0; 100].
-    # This option will only work if a compositing window manager is
-    # present (e.g. xcompmgr, compiz, etc.). (X11 only)
+    # This option will only work if a compositing window manager is present
+    # (e.g. xcompmgr, compiz, etc.). (X11 only)
     transparency = 0
 
-    # Draw a line of "separator_height" pixel height between two
-    # notifications.
+    # Draw a line of "separator_height" pixel height between two notifications.
     # Set to 0 to disable.
     # If gap_size is greater than 0, this setting will be ignored.
     separator_height = 2
@@ -155,8 +154,8 @@
     #font = Monospace 8
     font = Terminess Nerd Font Mono 12
 
-    # The spacing between lines.  If the height is smaller than the
-    # font height, it will get raised to the font height.
+    # The spacing between lines.  If the height is smaller than the font height,
+    # it will get raised to the font height.
     line_height = 0
 
     # Possible values are:
@@ -234,22 +233,24 @@
 
     # Set icon theme (only used for recursive icon lookup)
     icon_theme = Adwaita
-    # You can also set multiple icon themes, with the leftmost one being used first.
+    # You can also set multiple icon themes, with the leftmost one being used
+    # first.
     # icon_theme = "Adwaita, breeze"
 
     # Align icons left/right/top/off
     #icon_position = left
     icon_position = off
 
-    # Scale small icons up to this size, set to 0 to disable. Helpful
-    # for e.g. small files or high-dpi screens. In case of conflict,
-    # max_icon_size takes precedence over this.
+    # Scale small icons up to this size, set to 0 to disable. Helpful for e.g.
+    # small files or high-dpi screens. In case of conflict, max_icon_size takes
+    # precedence over this.
     min_icon_size = 32
 
     # Scale larger icons down to this size, set to 0 to disable
     max_icon_size = 128
 
-    # Paths to default icons (only necessary when not using recursive icon lookup)
+    # Paths to default icons (only necessary when not using recursive icon
+    # lookup)
     icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
 
     ### History ###
@@ -278,24 +279,24 @@
     # Define the class of the windows spawned by dunst (X11 only)
     class = Dunst
 
-    # Define the corner radius of the notification window
-    # in pixel size. If the radius is 0, you have no rounded
-    # corners.
+    # Define the corner radius of the notification window in pixel size. If the
+    # radius is 0, you have no rounded corners.
     # The radius will be automatically lowered if it exceeds half of the
     # notification height to avoid clipping text and/or icons.
     corner_radius = 0
 
-    # Define which corners to round when drawing the window. If the corner radius
-    # is set to 0 this option will be ignored.
+    # Define which corners to round when drawing the window. If the corner
+    # radius is set to 0 this option will be ignored.
     #
-    # Comma-separated list of the corners. The accepted corner values are bottom-right,
-    # bottom-left, top-right, top-left, top, bottom, left, right or all.
+    # Comma-separated list of the corners. The accepted corner values are
+    # bottom-right, bottom-left, top-right, top-left, top, bottom, left, right
+    # or all.
     #corners = all
 
     # Ignore the dbus closeNotification message.
     # Useful to enforce the timeout set by dunst configuration. Without this
-    # parameter, an application may close the notification sent before the
-    # user defined timeout.
+    # parameter, an application may close the notification sent before the user
+    # defined timeout.
     ignore_dbusclose = false
 
     ### Wayland ###
@@ -325,10 +326,10 @@
     # Defines list of actions for each mouse event
     # Possible values are:
     # * none: Don't do anything.
-    # * do_action: Invoke the action determined by the action_name rule. If there is no
-    #              such action, open the context menu.
-    # * open_url: If the notification has exactly one url, open it. If there are multiple
-    #             ones, open the context menu.
+    # * do_action: Invoke the action determined by the action_name rule. If
+    #              there is no such action, open the context menu.
+    # * open_url: If the notification has exactly one url, open it. If there are
+    #             multiple ones, open the context menu.
     # * close_current: Close current notification.
     # * close_all: Close all notifications.
     # * context: Open context menu for the notification.
@@ -420,23 +421,28 @@
 #
 # Shell-like globbing will get expanded.
 #
-# Instead of the appname filter, it's recommended to use the desktop_entry filter.
-# GLib based applications export their desktop-entry name. In comparison to the appname,
-# the desktop-entry won't get localized.
+# Instead of the appname filter, it's recommended to use the desktop_entry
+# filter.
+# GLib based applications export their desktop-entry name. In comparison to the
+# appname, the desktop-entry won't get localized.
 #
-# You can also allow a notification to appear even when paused. Notification will appear whenever notification's override_pause_level >= dunst's paused level.
-# This can be used to set partial pause modes, where more urgent notifications get through, but less urgent stay paused. To do that, you can override the following in the rules:
+# You can also allow a notification to appear even when paused. Notification
+# will appear whenever notification's override_pause_level >= dunst's paused
+# level.
+# This can be used to set partial pause modes, where more urgent notifications
+# get through, but less urgent stay paused. To do that, you can override the
+# following in the rules:
 # override_pause_level = X
 
 # SCRIPTING
-# You can specify a script that gets run when the rule matches by
-# setting the "script" option.
+# You can specify a script that gets run when the rule matches by setting the
+# "script" option.
 # The script will be called as follows:
 #   script appname summary body icon urgency
 # where urgency can be "LOW", "NORMAL" or "CRITICAL".
 #
-# NOTE: It might be helpful to run dunst -print in a terminal in order
-# to find fitting options for rules.
+# NOTE: It might be helpful to run dunst -print in a terminal in order to find
+# fitting options for rules.
 
 # Disable the transient hint so that idle_threshold cannot be bypassed from the
 # client
@@ -451,11 +457,13 @@
 #    history_ignore = yes
 
 # fullscreen values
-# show: show the notifications, regardless if there is a fullscreen window opened
+# show: show the notifications, regardless if there is a fullscreen window
+#       opened
 # delay: displays the new notification, if there is no fullscreen window active
 #        If the notification is already drawn, it won't get undrawn.
-# pushback: same as delay, but when switching into fullscreen, the notification will get
-#           withdrawn from screen again and will get delayed like a new notification
+# pushback: same as delay, but when switching into fullscreen, the notification
+#           will get withdrawn from screen again and will get delayed like a new
+#           notification
 #[fullscreen_delay_everything]
 #    fullscreen = delay
 #[fullscreen_show_critical]
@@ -481,7 +489,8 @@
 #    history_ignore = yes
 
 #[skip-display]
-#    # This notification will not be displayed, but will be included in the history
+#    # This notification will not be displayed, but will be included in the
+#    # history
 #    summary = "foobar"
 #    skip_display = yes
 
