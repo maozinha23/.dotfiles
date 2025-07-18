@@ -16,7 +16,7 @@ alias config-i3='$EDITOR ~/.config/i3/*'
 alias config-lf='$EDITOR ~/.config/lf/lfrc ~/.config/lf/preview'
 alias config-nvim='$EDITOR ~/.config/nvim/init.lua'
 alias config-polybar='$EDITOR ~/.config/polybar/*'
-alias config-rofi='$EDITOR ~/.config/rofi/*.rasi'
+alias config-rofi='$EDITOR ~/.config/rofi/*.rasi ~/.config/rofi/scripts/*'
 alias config-vim='$EDITOR ~/.config/vim/vimrc'
 
 # Start SSH agent for github push
@@ -26,4 +26,4 @@ alias ssh-github='eval $(ssh-agent -s); ssh-add ~/.ssh/github'
 alias lf='~/.config/lf/lfub'
 
 # start libvirtd/smb services and virt-manager
-alias virt-manager='~/.config/virt-manager/launch.sh'
+alias virt-manager='~/.config/virt-manager/vm-start'
