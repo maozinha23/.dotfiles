@@ -39,7 +39,7 @@ configuration {
 /*	filter: ;*/
 /*	dpi: -1;*/
 /*	threads: 0;*/
-/*	scroll-method: 0;*/
+    scroll-method: 1;
     window-format: "{w} - {t}";
 /*	click-to-exit: true;*/
 /*	max-history-size: 25;*/
@@ -54,14 +54,16 @@ configuration {
 /*	steal-focus: false;*/
 /*	application-fallback-icon: ;*/
 /*	pid: "/run/user/1000/rofi.pid";*/
-    display-window: "WINDOW";
-/*	display-windowcd: ;*/
+    display-combi: "COMBI";
+    display-drun: "APPLICATIONS";
+    display-filebrowser: "FILE BROWSER";
+    display-keys: "KEYS";
     display-run: "RUN";
-/*	display-ssh: ;*/
-    display-drun: "DRUN";
-/*	display-combi: ;*/
-/*	display-keys: ;*/
-/*	display-filebrowser: ;*/
+    display-power: "POWER";
+    display-ssh: "SSH";
+    display-wallpaper: "WALLPAPER";
+    display-window: "WINDOW";
+    display-windowcd: "WINDOWCD";
 /*	kb-primary-paste: "Control+V,Shift+Insert";*/
 /*	kb-secondary-paste: "Control+v,Insert";*/
 /*	kb-clear-line: "Control+w";*/
@@ -141,8 +143,24 @@ configuration {
       delay:  0;
   }
   filebrowser {
+      /** Directory the file browser starts in. */
+      directory: ".";
+      /**
+        * Sorting method. Can be set to:
+        *   - "name"
+        *   - "mtime" (modification time)
+        *   - "atime" (access time)
+        *   - "ctime" (change time)
+        */
+      sorting-method: "name";
+      /** Group directories before files. */
       directories-first: true;
-      sorting-method:    "name";
+      /** Show hidden files. */
+      show-hidden: true;
+      /** return 1 on cancel. */
+      cancel-returns-1: true;
+      /** command */
+      command: "xdg-open";
   }
 }
 
