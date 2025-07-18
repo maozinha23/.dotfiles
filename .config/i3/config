@@ -13,47 +13,13 @@ set $WORKSPACE8 "8"
 set $WORKSPACE9 "9"
 set $WORKSPACE10 "10"
 
-# Define floating window maximum size
-set $WINDOW_FLOAT_SIZE_MAX 1200 x 600
-
-# Define window resize step
-set $WINDOW_RESIZE_HEIGHT 5
-set $WINDOW_RESIZE_WIDTH 5
-
-# Define border size and gaps
-set $WINDOW_BORDER_SIZE 2
-set $GAP_INNER 10
-set $GAP_OUTTER -5
-set $GAP_OUTTER_VERTICAL -5
-set $GAP_OUTTER_HORIZONTAL -10
-
-# Define the volume change step
-set $VOLUME_CHANGE 1
-
-# Define the brightness change step
-set $BRIGHTNESS_CHANGE 1
-
-# Define the default font
-set $FONT Terminess Nerd Font Mono bold 12
-
-# Define i3lock-color custom launch script path
-set $I3LOCK-COLOR "${HOME}/.config/i3lock-color/lock.sh"
-
-# Define scrot filename pattern
-set $SCROT_FILENAME "$(xdg-user-dir PICTURES)/%Y-%m-%d_%H-%M-%S_$(cat /etc/hostname)_$(whoami).png"
-
-# Define scrot notification message
-set $SCROT_NOTIFICATION 'SCROT' 'Screenshot has been taken'
-
-# Define wallpaper image path
-set $FEH_WALLPAPER "$(xdg-user-dir PICTURES)/wallpaper.png"
-
-# Define the internet browser
+# Set default applications
+set $APP_LAUNCHER "rofi -modi drun,power -show drun"
+set $FILE_EXPLORER alacritty --command "${HOME}/.config/lf/lfub"
 set $INTERNET_BROWSER firefox
-
-# Define script path to toggle the background between conky and wallpaper (using
-# feh)
-set $TOGGLE_BACKGROUND ${HOME}/.config/i3/toggle-bg.sh
+set $SCREEN_LOCKER "${HOME}/.config/i3lock-color/i3lock-start"
+set $TERMINAL alacritty
+set $TEXT_EDITOR ${TERM} --command ${EDITOR}
 
 # Include configuration files
 include ${HOME}/.config/i3/*.conf
