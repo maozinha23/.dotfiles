@@ -19,23 +19,27 @@
 
 window {
     width: 600px;
-    border: 3px;
+    border: 2px;
     border-color: @white;
 }
 
 mainbox {
     background-color: @black;
-    padding: 5px;
+    padding: 4px;
 }
 
 inputbar {
-    background-color: @gray;
+    background-color: @black;
     text-color: @white;
     foreground-color: @white;
     border: 2px;
     border-color: @light-gray;
-    padding: 4px;
+    padding: 2px;
     children: [prompt, textbox-prompt-sep, entry, num-filtered-rows, textbox-num-sep, num-rows];
+}
+
+textbox {
+    margin: 2px 4px 2px 4px;
 }
 
 textbox-prompt-sep {
@@ -54,21 +58,23 @@ prompt, textbox-prompt-sep, entry, num-filtered-rows, textbox-num-sep, num-rows 
 }
 
 prompt {
-    font: "Terminess Nerd Font Mono 12";
+    font: "Terminess Nerd Font Mono Bold 12";
 }
 
 listview {
-  lines: 10;
+  fixed-height: false;
+  dynamic: false;
+  lines: 15;
   scrollbar: true;
   background-color: @black;
-  margin: 5px 0 5px 0;
-  padding: 4px;
+  margin: 2px 0 2px 0;
+  padding: 2px;
   border: 2px;
   border-color: @light-gray;
 }
 
 element {
-    padding: 4px;
+    padding: 2px;
     spacing: 4px;
     children: [element-icon, element-text];
 }
@@ -76,6 +82,7 @@ element {
 element-text, element-icon {
     background-color: inherit;
     text-color: inherit;
+    vertical-align: 0.5;
 }
 
 element alternate.active, element normal.active, element selected.active {
@@ -113,8 +120,8 @@ mode-switcher {
 button {
     background-color: @gray;
     text-color: @white;
-    padding: 4px;
-    font: "Terminess Nerd Font Mono 12";
+    padding: 2px;
+    font: "Terminess Nerd Font Mono Bold 12";
 }
 
 button.selected {
