@@ -64,7 +64,7 @@ vim.opt.smartcase = true
 vim.opt.softtabstop = 2
 
 -- Specify the content of the status line
-vim.opt.statusline = "%m%r [Buffer:%n]%< [Tipo:%Y] %=%-.([Linha:%l / Coluna:%v]%) [Posição:%p%%]"
+vim.opt.statusline = "%m%r%< [Tipo:%Y] %=%-.([Linha:%l / Coluna:%v]%) [Posição:%p%%]"
 
 -- Number of spaces that a <Tab> in the file counts for
 vim.opt.tabstop = 2
