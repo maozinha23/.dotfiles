@@ -1,4 +1,5 @@
-require("settings")
-require("keymaps")
+require("config.settings")
+require("config.keymaps")
+require("config.neovide")
+require("config.lazy")
 require("colors.maozinha23")
-require("neovide")
