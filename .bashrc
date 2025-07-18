@@ -11,13 +11,13 @@ if [[ -x /usr/bin/dircolors ]]; then
 fi
 
 # Export environmental variables
-if [[ -f ~/.env ]]; then
-  export $(envsubst < ~/.env)
+if [[ -f ~/.config/shell/env ]]; then
+  export $(envsubst < ~/.config/shell/env)
 fi
 
 # Alias definitions
-if [[ -f ~/.bash_aliases ]]; then
-  source ~/.bash_aliases
+if [[ -f ~/.config/shell/aliases ]]; then
+  source ~/.config/shell/aliases
 fi
 
 # Prompt customization
