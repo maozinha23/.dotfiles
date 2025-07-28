@@ -1,10 +1,13 @@
 #!/bin/sh
+NOTIFICATION_TITLE="FEH"
+NOTIFICATION_MESSAGE="Wallpaper changed"
 
 wallpaper="$1"
 
 # Set the wallpaper with feh
 if [ -n "${wallpaper}" ]; then
   feh --bg-scale --no-fehbg "${wallpaper}"
+  notify-send "${NOTIFICATION_TITLE}" "${NOTIFICATION_MESSAGE}"
   exit 0
 fi
 
