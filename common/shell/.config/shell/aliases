@@ -11,13 +11,12 @@ alias mimetype='xdg-mime query filetype'
 
 # Edit configuration files
 alias config-alacritty='$EDITOR ~/.config/alacritty/alacritty.toml'
-alias config-conky='$EDITOR ~/.config/conky/*.conf'
-alias config-i3='$EDITOR ~/.config/i3/*'
-alias config-lf='$EDITOR ~/.config/lf/lfrc ~/.config/lf/preview'
+alias config-conky='$EDITOR ~/.config/conky/conky-start'
+alias config-i3='$EDITOR ~/.config/i3/config'
+alias config-lf='$EDITOR ~/.config/lf/lfrc'
 alias config-nvim='$EDITOR ~/.config/nvim/init.lua'
-alias config-polybar='$EDITOR ~/.config/polybar/*'
-alias config-rofi='$EDITOR ~/.config/rofi/*.rasi ~/.config/rofi/scripts/*'
-alias config-vim='$EDITOR ~/.config/vim/vimrc'
+alias config-polybar='$EDITOR ~/.config/polybar/polybar-start'
+alias config-rofi='$EDITOR ~/.config/rofi/config.rasi'
 
 # Start SSH agent for github push
 alias ssh-github='eval $(ssh-agent -s); ssh-add ~/.ssh/github'
