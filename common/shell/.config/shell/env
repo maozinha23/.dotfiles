@@ -15,4 +15,4 @@ HISTCONTROL=ignoreboth:erasedups
 HISTFILE=$HOME/.local/state/bash/history
 CARGO_HOME=$HOME/.local/share/cargo
 MARIADB_HISTFILE=/dev/null
-FZF_DEFAULT_OPTS=--color=fg:#555555,bg:#000000,hl:#FFFF55,fg+:#FFFFFF,bg+:#0000AA,hl+:#FFFF55,info:#FFFFFF,border:#FFFFFF,prompt:#FFFFFF,pointer:#FFFF55
+FZF_DEFAULT_OPTS_FILE=$HOME/.config/fzf/fzfrc
