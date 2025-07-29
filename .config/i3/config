@@ -1,25 +1,5 @@
-# Set the Win key as $MOD
-set $MOD Mod4
-
-# Define names for default workspaces
-set $WORKSPACE1 "1"
-set $WORKSPACE2 "2"
-set $WORKSPACE3 "3"
-set $WORKSPACE4 "4"
-set $WORKSPACE5 "5"
-set $WORKSPACE6 "6"
-set $WORKSPACE7 "7"
-set $WORKSPACE8 "8"
-set $WORKSPACE9 "9"
-set $WORKSPACE10 "10"
-
-# Set default applications
-set $APP_LAUNCHER "rofi -modi drun,power -show drun"
-set $FILE_EXPLORER alacritty --command "${HOME}/.config/lf/lfub"
-set $INTERNET_BROWSER firefox
-set $SCREEN_LOCKER "${HOME}/.config/i3lock-color/i3lock-start"
-set $TERMINAL alacritty
-set $TEXT_EDITOR ${TERM} --command ${EDITOR}
-
 # Include configuration files
 include ${HOME}/.config/i3/*.conf
+
+# Set specific workspaces for the applications
+#assign [class="(?i)APP"] $WORKSPACE_
