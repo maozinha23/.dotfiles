@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if pgrep --exact conky; then
+  "${HOME}"/.config/conky/conky-stop
+else
+  "${HOME}"/.config/conky/conky-start
+fi

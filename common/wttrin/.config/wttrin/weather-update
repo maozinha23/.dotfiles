@@ -1,0 +1,46 @@
+#!/bin/sh
+
+# CONSTANTS {{{
+CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/wttrin"
+CACHE_FILE_LOG="${CACHE_DIR}/update.log"
+CACHE_FILE_WEATHER="${CACHE_DIR}/weather.json"
+
+# .env file contains the location to be used:
+# LOCATION="SOME+PLACE"
+ENV_FILE="${HOME}/.config/wttrin/.env"
+
+# Format j1: JSON
+URL_FORMAT="j1"
+
+# Portuguese-Brazil
+URL_LANG="pt-br"
+
+# metric (SI)
+URL_UNIT="m"
+# }}}
+
+# SCRIPT {{{
+# Create the cache directory, if it doesn't exist
+[ ! -f "${CACHE_FILE_WEATHER}" ] && mkdir --parents "${CACHE_DIR}"
+
+# Source the .env file
+[ -f "${ENV_FILE}" ] && . "${ENV_FILE}"
+
+# Fetch the weather information from wttr.in
+# If the variable LOCATION is empty, get information based on IP address
+url="wttr.in/${LOCATION}?${URL_UNIT}&format=${URL_FORMAT}&lang=${URL_LANG}"
+weather=$(curl --silent "${url}")
+
+# If the weather information was fetched successfully, save it to the cache file
+[ -n "${weather}" ] && printf "%s\n" "${weather}" > "${CACHE_FILE_WEATHER}"
+
+# Write the log file
+printf "# UPDATE\n\
+Time: %s\n\
+.env file used: %s\n\
+Success: %s\n" \
+  "$(date "+%x - %X")" \
+  "$([ -n "${LOCATION}" ] && printf "true\n" || printf "false\n")" \
+  "$([ -n "${weather}" ] && printf "true\n" || printf "false\n")" \
+  > "${CACHE_FILE_LOG}"
+# }}}

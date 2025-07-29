@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# CONSTANTS {{{
+CACHE_FILE="${XDG_CACHE_HOME:-$HOME/.cache}/wttrin/weather.json"
+
+# Icon mapping based on WorldWeatherOnline weather code and condition
+ICON_FILE="${HOME}/.config/wttrin/icon-map.txt"
+ICON_ERROR=""
+
+TEMP_UNIT="°C"
+# }}}
+
+# Load the cache file or exit on error
+# Possible error: file not found
+[ -f "${CACHE_FILE}" ] && cache=$(cat "${CACHE_FILE}") || exit 1
+# Possible error: empty file
+[ -z "${cache}" ] && exit 1
+
+# weather_code; WorldWeatherOnline weather code
+# temp: an integer with the temperature value
+{
+read -r weather_code
+read -r temp
+} <<JSON
+$(printf "%s\n" "${cache}" \
+  | jq -r '.current_condition[].weatherCode, .current_condition[].temp_C')
+JSON
+
+# Set the weather condition icon based on the weather code
+# If there was an error, set an ERROR icon
+weather_icon=$(awk -v code="${weather_code}" '$0 ~ code { print $3; exit }' \
+  "${ICON_FILE}")
+
+[ -z "${weather_icon}" ] && weather_icon="${ICON_ERROR}"
+
+# Format the output text with a fixed length
+printf "%s%3.3s%s\n" "${weather_icon}" "${temp}" "${TEMP_UNIT}"
+# }}}
