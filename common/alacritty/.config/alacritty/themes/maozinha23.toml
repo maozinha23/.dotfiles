@@ -1,0 +1,77 @@
+# Colors are specified using their hexadecimal values with a # prefix: #RRGGBB.
+[colors]
+[colors.primary]
+# foreground = "<string>"
+# Default: "#d8d8d8"
+foreground = "#FFFFFF"
+
+#background = "<string>"
+# Default: "#181818"
+background = "#000000"
+
+[colors.normal]
+#black = "<string>"
+# Default: "#181818"
+black = "#000000"
+
+#red = "<string>"
+# Default: "#ac4242"
+red = "#AA0000"
+
+#green = "<string>"
+# Default: "#90a959"
+green = "#00AA00"
+
+#yellow = "<string>"
+# Default: "#f4bf75"
+yellow = "#AA5500"
+
+#blue = "<string>"
+# Default: "#6a9fb5"
+blue = "#0000AA"
+
+#magenta = "<string>"
+# Default: "#aa759f"
+magenta = "#AA00AA"
+
+#cyan = "<string>"
+# Default: "#75b5aa"
+cyan = "#00AAAA"
+
+#white = "<string>"
+# Default: "#d8d8d8"
+white = "#AAAAAA"
+# }}}
+
+[colors.bright]
+#black = "<string>"
+# Default: "#6b6b6b"
+black = "#555555"
+
+#red = "<string>"
+# Default: "#c55555"
+red = "#FF5555"
+
+#green = "<string>"
+# Default: "#aac474"
+green = "#55FF55"
+
+#yellow = "<string>"
+# Default: "#feca88"
+yellow = "#FFFF55"
+
+#blue = "<string>"
+# Default: "#82b8c8"
+blue = "#5555FF"
+
+#magenta = "<string>"
+# Default: "#c28cb8"
+magenta = "#FF55FF"
+
+#cyan = "<string>"
+# Default: "#93d3c3"
+cyan = "#55FFFF"
+
+#white = "<string>"
+# Default: "#f8f8f8"
+white = "#FFFFFF"
