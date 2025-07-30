@@ -1,28 +1,37 @@
 #!/bin/sh
 
-# Inicia serviço se ainda não estiver ativo
-start_service() {
-  service="$1"
+OPT_TURNON_ALL=3
+OPT_TURNON_LIBVIRTD=1
+OPT_TURNON_SMB=2
+OPT_TURNOFF_ALL=6
+OPT_TURNOFF_LIBVIRTD=4
+OPT_TURNOFF_SMB=5
 
-  if systemctl is-active --quiet "${service}"; then
-    echo "Serviço '${service}' já está ativo."
-  else
-    echo "Iniciando serviço '${service}' ..."
-    sudo systemctl start "${service}"
+printf "SERVICES\n\
+%s) Start libvirtd\n\
+%s) Start smb\n\
+%s) Start both\n\
+%s) Stop libvirtd\n\
+%s) Stop smb\n\
+%s) Stop both\n\n" \
+"${OPT_TURNON_LIBVIRTD}" \
+"${OPT_TURNON_SMB}" \
+"${OPT_TURNON_ALL}" \
+"${OPT_TURNOFF_LIBVIRTD}" \
+"${OPT_TURNOFF_SMB}" \
+"${OPT_TURNOFF_ALL}"
 
-    if systemctl is-active --quiet "${service}"; then
-        echo "Serviço '${service}' iniciado com sucesso."
-    else
-        echo "Falha ao iniciar o serviço '${service}'."
-        exit 1
-    fi
-  fi
-}
+printf "Option: "
+read -r option
 
-echo 'Verificando serviços necessários ...'
+case "${option}" in
+  "${OPT_TURNON_LIBVIRTD}") systemctl start libvirtd ;;
+  "${OPT_TURNON_SMB}") systemctl start smb ;;
+  "${OPT_TURNON_ALL}") systemctl start libvirtd smb ;;
+  "${OPT_TURNOFF_LIBVIRTD}") systemctl stop libvirtd* ;;
+  "${OPT_TURNOFF_SMB}") systemctl stop smb ;;
+  "${OPT_TURNOFF_ALL}") systemctl stop libvirtd smb;;
+  *) exit 1 ;;
+esac
 
-start_service libvirtd
-start_service smb
-
-echo 'Abrindo virt-manager ...'
-command virt-manager &
+exit 0
