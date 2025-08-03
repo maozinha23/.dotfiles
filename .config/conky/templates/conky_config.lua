@@ -34,6 +34,17 @@ conky.config = {
   -- The number of samples to average for CPU monitoring.
   cpu_avg_samples = @C.CPU_AVG_SAMPLES@,
 
+  -- Specify a default height for bars.
+  -- Default: 6
+  default_bar_height = @C.DEFAULT.BAR_HEIGHT@,
+
+  -- Specify a default width for bars. If not specified, the default value is 0,
+  -- which causes the bar to expand to fit the width of your Conky window. If
+  -- you set out_to_console = true, the default value will be 10 for the text
+  -- version of the bar.
+  -- Default: 0
+  default_bar_width = @C.DEFAULT_BAR_WIDTH@,
+
   -- Default color and border color.
   default_color = @C.DEFAULT_COLOR@,
 
@@ -129,6 +140,7 @@ conky.config = {
   template5 = @C.TEMPLATE5@,
   template6 = @C.TEMPLATE6@,
   template7 = @C.TEMPLATE7@,
+  template8 = @C.TEMPLATE8@,
 
   -- Width for $top name value (defaults to 15 characters).
   top_name_width = @TOP_NAME_WIDTH@,
