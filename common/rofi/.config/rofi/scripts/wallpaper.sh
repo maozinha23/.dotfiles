@@ -1,12 +1,20 @@
 #!/bin/sh
+
+ICON_REMOVE="window-close"
 NOTIFICATION_TITLE="FEH"
 NOTIFICATION_MESSAGE="Wallpaper changed"
+TEXT_REMOVE="REMOVE"
 
 wallpaper="$1"
 
 # Set the wallpaper with feh
 if [ -n "${wallpaper}" ]; then
-  feh --bg-scale --no-fehbg "${wallpaper}"
+  if [ "${wallpaper}" = "${TEXT_REMOVE}" ]; then
+    hsetroot -solid black
+  else
+    feh --bg-scale --no-fehbg "${wallpaper}"
+  fi
+
   notify-send "${NOTIFICATION_TITLE}" "${NOTIFICATION_MESSAGE}"
   exit 0
 fi
@@ -29,6 +37,9 @@ img_path=$(find "${img_dir}"/ -type f \( \
   -o -iname "*.jpg" \
   -o -iname "*.png" \) \
   | sort --ignore-case)
+
+# Add an option to remove the wallpaper (set the background black)
+printf "%s\0icon\x1f%s\n" "${TEXT_REMOVE}" "${ICON_REMOVE}"
 
 while IFS= read -r img; do
   # rofi entry with an icon thumbnail using gdk_pixbuff_thumbnailer
