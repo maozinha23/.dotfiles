@@ -28,7 +28,7 @@ normal = { family = "Terminess Nerd Font Mono", style = "Regular" }
 #size = <float>
 # Font size in points.
 # Default: 11.25
-size = 11.25
+size = 10.50
 
 [cursor]
 # style = { <shape>, <blinking> }
