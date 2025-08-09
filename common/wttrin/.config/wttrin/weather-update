@@ -1,6 +1,7 @@
 #!/bin/sh
-
-# CONSTANTS {{{
+#-------------------------------------------------------------------------------
+# CONSTANTS
+#-------------------------------------------------------------------------------
 CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/wttrin"
 CACHE_FILE_LOG="${CACHE_DIR}/update.log"
 CACHE_FILE_WEATHER="${CACHE_DIR}/weather.json"
@@ -17,9 +18,7 @@ URL_LANG="pt-br"
 
 # metric (SI)
 URL_UNIT="m"
-# }}}
-
-# SCRIPT {{{
+#-------------------------------------------------------------------------------
 # Create the cache directory, if it doesn't exist
 [ ! -f "${CACHE_FILE_WEATHER}" ] && mkdir --parents "${CACHE_DIR}"
 
@@ -43,4 +42,3 @@ Success: %s\n" \
   "$([ -n "${LOCATION}" ] && printf "true\n" || printf "false\n")" \
   "$([ -n "${weather}" ] && printf "true\n" || printf "false\n")" \
   > "${CACHE_FILE_LOG}"
-# }}}
