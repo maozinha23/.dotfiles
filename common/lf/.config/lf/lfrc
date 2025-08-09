@@ -1,44 +1,41 @@
+# lf documentation:
+# https://github.com/gokcehan/lf/blob/master/doc.md
 #-------------------------------------------------------------------------------
 # COMMANDS
 #-------------------------------------------------------------------------------
-# Quit lf and return to the shell.
-# (default q)
-map q quit
-
 # Move/scroll the current file selection upwards/downwards by one/half a
 # page/full page.
 # (default k and <up>)
 map k #up
-map <up> up
 
 # (default <c-u>)
 map <c-u> #half-up
+map <c-left> half-up
 
 # (default <c-b> and <pgup>)
 map <c-b> #page-up
-map <pgup> page-up
+map <c-up> page-up
 
 # (default <c-y>)
-map <c-y> scroll-up
+map <c-y> #scroll-up
 
 # (default j and <down>)
 map j #down
-map <down> down
 
 # (default <c-d>)
 map <c-d> #half-down
+map <c-right> half-down
 
 # (default <c-f> and <pgdn>)
 map <c-f> #page-down
-map <pgdn> page-down
+map <c-down> page-down
 
 # (default <c-e>)
-map <c-e> scroll-down
+map <c-e> #scroll-down
 
 # Change the current working directory to the parent directory.
 # (default h and <left>)
 map h #updir
-map <left> updir
 
 # If the current file is a directory, then change the current directory to it,
 # otherwise, execute the open command. A default open command is provided to
@@ -77,157 +74,27 @@ map M #middle
 # (default L)
 map L #low
 
-# Toggle the selection of the current file or files given as arguments.
-#toggle
+# Switch to Visual mode. If already in Visual mode, discard the visual selection
+# and stay in Visual mode.
+# visual (default V)
+map v visual
 
 # Reverse the selection of all files in the current directory (i.e. toggle all
 # files). Selections in other directories are not affected by this command. You
 # can define a new command to select all files in the directory by combining
 # invert with unselect (i.e. cmd select-all :unselect; invert), though this will
 # also remove selections in other directories.
-# (default v)
-map v invert
-
-# Reverse the selection (i.e. toggle) of all files at or after the current file
-# in the current directory.
-# To select a contiguous block of files, use this command on the first file you
-# want to select. Then, move down to the first file you do not want to select
-# (the one after the end of the desired selection) and use this command again.
-# This achieves an effect similar to the visual mode in Vim.
-# This command is experimental and may be removed once a better replacement for
-# the visual mode is implemented in lf. If you'd like to experiment with using
-# this command, you should bind it to a key (e.g. V) for a better experience.
-#invert-below
-
-# Remove the selection of all files in all directories.
-# (default u)
-map u unselect
-
-# Select/unselect files that match the given glob.
-#glob-select
-#glob-unselect
-
-# Calculate the total size for each of the selected directories. Option info
-# should include size and option dircounts should be disabled to show this size.
-# If the total size of a directory is not calculated, it will be shown as -.
-#calcdirsize
-
-# Remove all keybindings associated with the map command. This command can be
-# used in the config file to remove the default keybindings. For safety
-# purposes, : is left mapped to the read command, and cmap keybindings are
-# retained so that it is still possible to exit lf using :quit.
-#clearmaps
-
-# If there are no selections, save the path of the current file to the copy
-# buffer, otherwise, copy the paths of selected files.
-# (default y)
-map y copy
-
-# If there are no selections, save the path of the current file to the cut
-# buffer, otherwise, copy the paths of selected files.
-# (default d)
-map d cut
-
-# Copy/Move files in the copy/cut buffer to the current working directory. A
-# custom paste command can be defined to override this default.
-# (default p)
-map p paste
-
-# Clear file paths in copy/cut buffer.
-# (default c)
-map c clear
-
-# Synchronize copied/cut files with the server. This command is automatically
-# called when required.
-#sync
-
-# Draw the screen. This command is automatically called when required.
-#draw
+# invert (default v)
+map i invert
 
 # Synchronize the terminal and redraw the screen.
 # (default <c-l>)
 map <c-l> #redraw
 
-# Load modified files and directories. This command is automatically called when
-# required.
-#load
-
-# Flush the cache and reload all files and directories.
-# (default <c-r>)
-map <c-r> reload
-
-# Print the given arguments to the message line at the bottom.
-#echo
-
-# Print the given arguments to the message line at the bottom and also to the
-# log file.
-#echomsg
-
-# Print given arguments to the message line at the bottom as errorfmt and also
-# to the log file.
-#echoerr
-
-# Change the working directory to the given argument.
-#cd
-
-# Change the current file selection to the given argument.
-#select
-
 # Remove the current file or selected file(s). A custom delete command can be
 # defined to override this default.
 # (modal)
-map <delete> delete
-
-# Rename the current file using the built-in method. A custom rename command can
-# be defined to override this default.
-# (modal) (default r)
-map r rename
-
-# Read the configuration file given in the argument.
-#source
-
-# Simulate key pushes given in the argument.
-#push
-
-# Read a command to evaluate.
-# (modal) (default :)
-#read
-
-# Read a shell command to execute.
-# (modal) (default $)
-#shell
-
-# Read a shell command to execute piping its standard I/O to the bottom
-# statline.
-# (modal) (default %)
-#shell-pipe
-
-# Read a shell command to execute and wait for a key press in the end.
-# (modal) (default !)
-#shell-wait
-
-# Read a shell command to execute asynchronously without standard I/O.
-# (modal) (default &)
-#shell-async
-
-# Read key(s) to find the appropriate file name match in the forward/backward
-# direction and jump to the next/previous match.
-# (modal) (default f)
-map f find
-
-# (modal) (default F)
-map F #find-back
-
-# (default ;)
-map ; find-next
-
-# (default ,)
-map , find-prev
-
-# Read a pattern to search for a file name match in the forward/backward
-# direction and jump to the next/previous match.
-# (default /)
-map / search
+map <delete> #delete
 
 # (default ?)
 map ? #search-back
@@ -238,161 +105,27 @@ map <gt> search-next
 # (default N)
 map <lt> search-prev
 
-# Command filter reads a pattern to filter out and only view files matching the
-# pattern. Command setfilter does the same but uses an argument to set the
-# filter immediately. You can supply an argument to filter to use as the
-# starting prompt.
-# (modal)
-#filter
-
-#setfilter
-
 # Save the current directory as a bookmark assigned to the given key.
 # (modal) (default m)
-map ms mark-save
+map m #mark-save
 
 # Change the current directory to the bookmark assigned to the given key. A
 # special bookmark ' holds the previous directory after a mark-load, cd, or
 # select command.
 # (modal) (default ')
-map ml mark-load
+map "'" #mark-load
 
 # Remove a bookmark assigned to the given key.
 # (modal) (default ")
-map mr mark-remove
-
-# Tag a file with * or a single-width character given in the argument. You can
-# define a new tag-clearing command by combining tag with tag-toggle (i.e. cmd
-# tag-clear :tag; tag-toggle).
-#tag
+map '"' #mark-remove
 
 # Tag a file with * or a single width character given in the argument if the
 # file is untagged, otherwise remove the tag.
 # (default t)
 map t #tag-toggle
 #-------------------------------------------------------------------------------
-# COMMAND LINE COMMANDS
-#-------------------------------------------------------------------------------
-# Quit command line mode and return to normal mode.
-# (default <esc>)
-#cmd-escape
-
-# Autocomplete the current word.
-# (default <tab>)
-#cmd-complete
-
-# Autocomplete the current word with the menu selection. You need to assign keys
-# to these commands (e.g.
-# cmap <tab> cmd-menu-complete; cmap <backtab> cmd-menu-complete-back). You can
-# use the assigned keys to display the menu and then cycle through completion
-# options.
-#cmd-menu-complete
-
-#cmd-menu-complete-back
-
-# Accept the currently selected match in menu completion and close the menu.
-#cmd-menu-accept
-
-# Execute the current line.
-# (default <c-j> and <enter>)
-#cmd-enter
-
-# Interrupt the current shell-pipe command and return to the normal mode.
-# (default <c-c>)
-#cmd-interrupt
-
-# Go to the next/previous item in the history.
-# (default <c-n> and <down>)
-#cmd-history-next
-
-# (default <c-p> and <up>)
-#cmd-history-prev
-
-# Move the cursor to the left/right.
-# (default <c-b> and <left>)
-#cmd-left
-
-# (default <c-f> and <right>)
-#cmd-right
-
-# Move the cursor to the beginning/end of the line.
-# (default <c-a> and <home>)
-#cmd-home
-
-# (default <c-e> and <end>)
-#cmd-end
-
-# Delete the next character.
-# (default <c-d> and <delete>)
-#cmd-delete
-
-# Delete the previous character. When at the beginning of a prompt, returns
-# either to normal mode or to : mode.
-# (default <backspace> and <backspace2>)
-#cmd-delete-back
-
-# Delete everything up to the beginning/end of the line.
-# (default <c-u>)
-#cmd-delete-home
-
-# (default <c-k>)
-#cmd-delete-end
-
-# Delete the previous unix word.
-# (default <c-w>)
-#cmd-delete-unix-word
-
-# Paste the buffer content containing the last deleted item.
-# (default <c-y>)
-#cmd-yank
-
-# Transpose the positions of the last two characters/words.
-# (default <c-t>)
-#cmd-transpose
-
-# (default <a-t>)
-#cmd-transpose-word
-
-# Move the cursor by one word in the forward/backward direction.
-# (default <a-f>)
-#cmd-word
-
-# (default <a-b>)
-#cmd-word-back
-
-# Delete the next word in the forward direction.
-# (default <a-d>)
-#cmd-delete-word
-
-# Delete the previous word in the backward direction.
-# (default <a-backspace> and <a-backspace2>)
-#cmd-delete-word-back
-
-# Capitalize/uppercase/lowercase the current word and jump to the next word.
-# (default <a-c>)
-#cmd-capitalize-word
-
-# (default <a-u>)
-#cmd-uppercase-word
-
-# (default <a-l>)
-#cmd-lowercase-word
-#-------------------------------------------------------------------------------
 # OPTIONS
 #-------------------------------------------------------------------------------
-# When this option is enabled, the find command starts matching patterns from
-# the beginning of file names, otherwise, it can match at an arbitrary position.
-# (bool) (default true)
-set anchorfind true
-
-# Automatically quit the server when there are no clients left connected.
-# (bool) (default true)
-set autoquit true
-
-# Format string of the box drawing characters enabled by the drawbox option.
-# (string) (default \033[0m)
-set borderfmt "\033[0m"
-
 # Set the path of a cleaner file. The file should be executable. This file is
 # called if previewing is enabled, the previewer is set, and the previously
 # selected file has its preview cache disabled. The following arguments are
@@ -407,60 +140,6 @@ set cleaner '~/.config/lf/cleaner'
 # (string) (default \033[7;33m)
 set copyfmt "\033[7;32m"
 
-# Format strings for highlighting the cursor. cursoractivefmt applies in the
-# current directory pane, cursorparentfmt applies in panes that show parents of
-# the current directory, and cursorpreviewfmt applies in panes that preview
-# directories.
-# The default is to make the active cursor and the parent directory cursor
-# inverted. The preview cursor is underlined.
-# Some other possibilities to consider for the preview or parent cursors: an
-# empty string for no cursor, \033[7;2m for dimmed inverted text (visibility
-# varies by terminal), \033[7;90m for inverted text with grey (aka
-# "brightblack") background.
-# If the format string contains the characters %s, it is interpreted as a
-# format string for fmt.Sprintf. Such a string should end with the terminal
-# reset sequence. For example, \033[4m%s\033[0m has the same effect as \033[4m.
-# (string) (default \033[7m)
-set cursoractivefmt "\033[7m"
-
-# string (default \033[7m)
-set cursorparentfmt "\033[7m"
-
-# string (default \033[4m)
-set cursorpreviewfmt "\033[4m"
-
-# Format string of the indicator for files to be cut.
-# (string) (default \033[7;31m)
-set cutfmt "\033[7;31m"
-
-# Cache directory contents.
-# (bool) (default true)
-set dircache true
-
-# When this option is enabled, directory sizes show the number of items inside
-# instead of the total size of the directory, which needs to be calculated for
-# each directory using calcdirsize. This information needs to be calculated by
-# reading the directory and counting the items inside. Therefore, this option is
-# disabled by default for performance reasons. This option only has an effect
-# when info has a size field and the pane is wide enough to show the
-# information. 999 items are counted per directory at most, and bigger
-# directories are shown as 999+.
-# (bool) (default false)
-set dircounts false
-
-# Show directories first above regular files.
-# (bool) (default true)
-set dirfirst true
-
-# Show only directories.
-# (bool) (default false)
-set dironly false
-
-# If enabled, directories will also be passed to the previewer script. This
-# allows custom previews for directories.
-# (bool) (default false)
-set dirpreviews false
-
 # Draw boxes around panes with box drawing characters.
 # (bool) (default false)
 set drawbox true
@@ -473,77 +152,19 @@ set drawbox true
 # (string) (default %f.~%n~)
 set dupfilefmt '%b~%n%e'
 
-# Format string of error messages shown in the bottom message line.
-# If the format string contains the characters %s, it is interpreted as a format
-# string for fmt.Sprintf. Such a string should end with the terminal reset
-# sequence. For example, \033[4m%s\033[0m has the same effect as \033[4m.
-# (string) (default \033[7;31;47m)
-set errorfmt "\033[7;31;47m"
-
-# File separator used in environment variables fs and fx.
-# (string) (default \n)
-set filesep "\n"
-
-# Number of characters prompted for the find command. When this value is set to
-# 0, find command prompts until there is only a single match left.
-# (int) (default 1)
-set findlen 1
-
-# Patterns are treated as globs for the filter command, see globsearch for more
-# details.
-# (bool) (default false)
-set globfilter false
-
-# When this option is enabled, search command patterns are considered as globs,
-# otherwise, they are literals. With globbing, * matches any sequence, ? matches
-# any character, and [...] or [^...] matches character sets or ranges.
-# Otherwise, these characters are interpreted as they are.
-# (bool) (default false)
-set globsearch false
-
 # Show hidden files. On Unix systems, hidden files are determined by the value
 # of hiddenfiles. On Windows, files with hidden attributes are also considered
 # hidden files.
 # (bool) (default false)
 set hidden true
 
-# List of hidden file glob patterns. Patterns can be given as relative or
-# absolute paths. Globbing supports the usual special characters, * to match any
-# sequence, ? to match any character, and [...] or [^...] to match character
-# sets or ranges. In addition, if a pattern starts with !, then its matches are
-# excluded from hidden files. To add multiple patterns, use : as a separator.
-# Example: .*:lost+found:*.bak
-# ([]string) (default .* for Unix and `` for Windows)
-set hiddenfiles '.*'
-
 # Save command history.
 # (bool) (default true)
-set history true
+set history false
 
 # Show icons before each item in the list.
 # (bool) (default false)
 set icons true
-
-# Sets IFS variable in shell commands. It works by adding the assignment to the
-# beginning of the command string as IFS=...; .... The reason is that IFS
-# variable is not inherited by the shell for security reasons. This method
-# assumes a POSIX shell syntax so it can fail for non-POSIX shells. This option
-# has no effect when the value is left empty. This option does not have any
-# effect on Windows.
-# (string) (default ``)
-set ifs ''
-
-# Ignore case in sorting and search patterns.
-# (bool) (default true)
-set ignorecase true
-
-# Ignore diacritics in sorting and search patterns.
-# (bool) (default true)
-set ignoredia true
-
-# Apply filter pattern after each keystroke during filtering.
-# (bool) (default false)
-set incfilter false
 
 # Jump to the first match after each keystroke during searching.
 # (bool) (default false)
@@ -566,13 +187,6 @@ set infotimefmtnew '02/01/2006'
 # (string) (default Jan _2  2006)
 set infotimefmtold '02/01/2006'
 
-# An IETF BCP 47 language tag (e.g. zh-CN) for specifying the locale used when
-# using sort type natural and name.
-# An empty string means disable locale ordering, and the special value * is used
-# to indicate reading the locale setting from the system environment.
-# (string) (default ``)
-#set locale ''
-
 # Send mouse events as input.
 # (bool) (default false)
 set mouse true
@@ -586,29 +200,6 @@ set number true
 # Format string of the position number for each line.
 # (string) (default \033[33m)
 set numberfmt "\033[97m"
-
-# Set the interval in seconds for periodic checks of directory updates. This
-# works by periodically calling the load command. Note that directories are
-# already updated automatically in many cases. This option can be useful when
-# there is an external process changing the displayed directory and you are not
-# doing anything in lf. Periodic checks are disabled when the value of this
-# option is set to zero.
-# (int) (default 0)
-set period 0
-
-# List of attributes that are preserved when copying files. Currently supported
-# attributes are mode (i.a. access mode) and timestamps (i.e. modification time
-# and access time). Note that preserving other attributes like ownership of
-# change/birth timestamp is desirable, but not portably supported in Go.
-# ([]string) (default mode)
-set preserve "mode"
-
-# Show previews of files and directories at the rightmost pane. If the file has
-# more lines than the preview pane, the rest of the lines are not read. Files
-# containing the null character (U+0000) in the read portion are considered
-# binary files and displayed as binary.
-# (bool) (default true)
-set preview true
 
 # Set the path of a previewer file to filter the content of regular files for
 # previewing. The file should be executable. The following arguments are passed
@@ -633,25 +224,6 @@ set previewer '~/.config/lf/previewer'
 # (string) (default \033[32;1m%u@%h\033[0m:\033[34;1m%d\033[0m\033[1m%f\033[0m)
 set promptfmt "[ %d%f ]"
 
-# List of ratios of pane widths. Number of items in the list determines the
-# number of panes in the UI. When the preview option is enabled, the rightmost
-# number is used for the width of the preview pane.
-# ([]int) (default 1:2:3)
-set ratios '1:2:3'
-
-# Show the position number relative to the current line. When number is enabled,
-# the current line shows the absolute position, otherwise nothing is shown.
-# (bool) (default false)
-set relativenumber false
-
-# Reverse the direction of sort.
-# (bool) (default false)
-set reverse false
-
-# Draw rounded outer corners when the drawbox option is enabled.
-# (bool) (default false)
-set roundbox false
-
 # Format string of the ruler shown in the bottom right corner. Special
 # expansions are provided, %a as the pressed keys, %p as the progress of file
 # operations, %m as the number of files to be cut (moved), %c as the number of
@@ -668,14 +240,6 @@ set roundbox false
 # (string) (default   %a|  %p|  \033[7;31m %m \033[0m|  \033[7;33m %c \033[0m|  \033[7;35m %s \033[0m|  \033[7;34m %f \033[0m|  %i/%t)
 set rulerfmt "  %a|  %p|  \033[7;31m %m \033[0m|  \033[7;32m %c \033[0m|  \033[7;93m %s \033[0m|  \033[7;34m %f \033[0m|  %i/%t"
 
-# Minimum number of offset lines shown at all times at the top and bottom of the
-# screen when scrolling. The current line is kept in the middle when this option
-# is set to a large value that is bigger than the half of number of lines. A
-# smaller offset can be used when the current file is close to the beginning or
-# end of the list to show the maximum number of items.
-# (int) (default 0)
-set scrolloff 0
-
 # Format string of the indicator for files that are selected.
 # (string) (default \033[7;35m)
 set selectfmt "\033[7;93m"
@@ -685,42 +249,6 @@ set selectfmt "\033[7;93m"
 # the current directory.
 # (string) (default all)
 set selmode 'dir'
-
-# Shell executable to use for shell commands. Shell commands are executed as
-# shell shellopts shellflag command -- arguments.
-# (string) (default sh for Unix and cmd for Windows)
-set shell 'sh'
-
-# Command line flag used to pass shell commands.
-# (string) (default -c for Unix and /c for Windows)
-set shellflag '-c'
-
-# List of shell options to pass to the shell executable.
-# ([]string) (default ``)
-set shellopts ''
-
-# Show bindings associated with pressed keys.
-# (bool) (default true)
-set showbinds true
-
-# Render sixel images in preview.
-# (bool) (default false)
-set sixel false
-
-# Override ignorecase option when the pattern contains an uppercase character.
-# This option has no effect when ignorecase is disabled.
-# (bool) (default true)
-set smartcase true
-
-# Override ignoredia option when the pattern contains a character with
-# diacritic. This option has no effect when ignoredia is disabled.
-# (bool) (default false)
-set smartdia false
-
-# Sort type for directories. Currently supported sort types are natural, name,
-# size, time, ctime, atime, and ext.
-# (string) (default natural)
-set sortby 'natural'
 
 # Format string of the file info shown in the bottom left corner. Special
 # expansions are provided, %p as the file permissions, %c as the link count, %u
@@ -732,189 +260,211 @@ set sortby 'natural'
 # (string) (default \033[36m%p\033[0m| %c| %u| %g| %S| %t| -> %l)
 set statfmt "\033[36m%p\033[0m| / %u| / %g| / %S| / %t| / -> %l"
 
-# Number of space characters to show for horizontal tabulation (U+0009)
-# character.
-# (int) (default 8)
-set tabstop 8
-
-# Format string of the tags.
-# If the format string contains the characters %s, it is interpreted as a format
-# string for fmt.Sprintf. Such a string should end with the terminal reset
-# sequence. For example, \033[4m%s\033[0m has the same effect as \033[4m.
-# (string) (default \033[31m)
-set tagfmt "\033[31m"
-
-# Marks to be considered temporary (e.g. abc refers to marks a, b, and c). These
-# marks are not synced to other clients and they are not saved in the bookmarks
-# file. Note that the special bookmark ` is always treated as temporary and it
-# does not need to be specified.
-# (string) (default ``)
-set tempmarks ''
-
 # Format string of the file modification time shown in the bottom line.
 # (string) (default Mon Jan _2 15:04:05 2006)
 set timefmt '02/01/2006 15:04:05'
 
-# The truncate character that is shown at the end when the file name does not
-# fit into the pane.
-# (string) (default ~)
-set truncatechar '~'
-
-# When a filename is too long to be shown completely, the available space is
-# partitioned into two pieces. truncatepct defines a fraction (in percent
-# between 0 and 100) for the size of the first piece, which will show the
-# beginning of the filename. The second piece will show the end of the filename
-# and will use the rest of the available space. Both pieces are separated by the
-# truncation character (truncatechar). A value of 100 will only show the
-# beginning of the filename, while a value of 0 will only show the end of the
-# filename, e.g.:
-# set truncatepct 100 -> very-long-filename-tr~ (default)
-# set truncatepct 50 -> very-long-f~-truncated
-# set truncatepct 0 -> ~ng-filename-truncated
-# (int) (default 100)
-set truncatepct 100
-
-# String shown after commands of shell-wait type.
-# (string) (default Press any key to continue)
-set waitmsg 'Press any key to continue'
-
-# Watch the filesystem for changes using fsnotify to automatically refresh file
-# information. FUSE is currently not supported due to limitations in fsnotify.
-# (bool) (default false)
-set watch false
-
-# Searching can wrap around the file list.
-# (bool) (default true)
-set wrapscan true
-
-# Scrolling can wrap around the file list.
-# (bool) (default false)
-set wrapscroll false
-
-# Any option that is prefixed with user_ is a user-defined option and can be set
-# to any string. Inside a user-defined command, the value will be provided in
-# the lf_user_{option} environment variable. These options are not used by lf
-# and are not persisted.
-# (string) (default none)
-set user_{option} none
+# Format string of the indicator for files that are visually selected.
+# visualfmt (string) (default \033[7;36m)
+set visualfmt "\033[7;34m"
 #-------------------------------------------------------------------------------
-# DEFAULTS
+# FUNCTIONS
 #-------------------------------------------------------------------------------
-cmd open &$OPENER "$f"
-map e $$EDITOR "$f"
-map i $$PAGER "$f"
-map w $$SHELL
-cmd doc $$lf -doc | $PAGER
-map <f-1> doc
-cmd maps $lf -remote "query $id maps" | $PAGER
-cmd cmaps $lf -remote "query $id cmaps" | $PAGER
-cmd cmds $lf -remote "query $id cmds" | $PAGER
-
-map zh set hidden!
-map zr set reverse!
-map zn set info
-map zs set info size
-map zt set info time
-map za set info size:time
-map sn :set sortby natural; set info
-map ss :set sortby size; set info size
-map st :set sortby time; set info time
-map sa :set sortby atime; set info atime
-map sc :set sortby ctime; set info ctime
-map se :set sortby ext; set info
-map gh cd ~
-map <space> :toggle; down
-#-------------------------------------------------------------------------------
-# CUSTOM
-#-------------------------------------------------------------------------------
-map S %du --human-readable --summarize | awk '{ print "Size:", $1 }'
-map g. cd ~/.dotfiles
-map gc cd ~/.config
-map gd cd ~/Documents
-map gD cd ~/Downloads
-map ge cd /etc
-map gm cd ~/Media
-map gp cd ~/Projects
-map gu cd /usr
-
-# Define a custom 'open' command
-# This command is called when current file is not a directory.
-# Uses an editor for text files and a file opener for the rest.
-#cmd open &{{
-#    case $(file --mime-type -Lb $f) in
-#        text/*) lf -remote "send $id \$$EDITOR \$fx";;
-#        *) for f in $fx; do $OPENER $f > /dev/null 2> /dev/null & done;;
-#    esac
-#}}
-
-# Create new directories
-cmd mkdir %{{
-    printf " new directory: "
-    read dir
-    mkdir --parents -- "$dir"
-    lf -remote "send $id select \"$(printf '%s' "$dir" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+# Create a new directory
+cmd create_dir %{{
+  printf " new directory: "
+  read -r dir
+  mkdir --parents -- "${dir}"
+  lf -remote "send ${id} select \"$(printf '%s' "${dir}" \
+    | sed 's/\\/\\\\/g;s/"/\\"/g')\""
 }}
 
-map N mkdir
-
-# Create new files
-cmd touch %{{
-    printf " new file: "
-    read file
-    touch -- "$file"
-    lf -remote "send $id select \"$(printf '%s' "$file" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+# Create a new file
+cmd create_file %{{
+  printf " new file: "
+  read -r file
+  touch -- "${file}"
+  lf -remote "send ${id} select \"$(printf '%s' "${file}" \
+    | sed 's/\\/\\\\/g;s/"/\\"/g')\""
 }}
-
-map n touch
 
 # Define a custom 'delete' command
-cmd delete %{{
-    readarray -t files < <(echo "$fx")
+cmd delete_custom %{{
+  # Single file
+  if [ -z "$fs" ]; then
+    printf " %s - delete? [y/n]: " "$f"
+    read -r answer
 
-    if [ -z "$fs" ]; then
-        printf " %s - delete? [y/n]: " "$f"
-    else
-        printf " delete the %s selected files? [y/n]: " "${#files[@]}"
+    [ "${answer}" = "y" ] || [ "${answer}" = "Y" ] && trash "$f"
+
+  # Selection
+  else
+    num_files=$(printf "%s\n" "$fs" | wc --lines)
+
+    [ "${num_files}" -gt 1 ] \
+      && printf " delete the %s selected files? [y/n]: " "${num_files}" \
+      || printf " %s - delete? [y/n]: " "$fs"
+
+    read -r answer
+
+    if [ "${answer}" = "y" ] || [ "${answer}" = "Y" ]; then
+      printf "%s\n" "$fs" | while IFS= read -r -- file; do
+        trash "${file}"
+      done
     fi
+  fi
 
-    read ans
-    [[ "$ans" == "y" || "$ans" == "Y" ]] && trash "${files[@]}"
-    printf "\n"
+  lf -remote "send ${id} :reload"
 }}
 
-# Follow symbolic links
-cmd follow-link %{{
-    lf -remote "send $id select \"$(readlink -- "$f" | sed 's/\\/\\\\/g;s/"/\\"/g')\""
-}}
+# Remove execute permission from the selected files
+cmd disable_exec %{{
+  # Single file
+  if [ -z "$fs" ]; then
+    printf " %s - remove execute permission? [y/n]: " "$f"
+    read -r answer
 
-map gl follow-link
+    [ "${answer}" = "y" ] || [ "${answer}" = "Y" ] && chmod -x "$f"
 
-# Toggle the preview column
-cmd toggle-preview %{{
-    if [ "$lf_preview" = true ]; then
-        lf -remote "send $id :set preview false; set ratios 1:5"
-    else
-        lf -remote "send $id :set preview true; set ratios 1:2:3"
+  # Selection
+  else
+    num_files=$(printf "%s\n" "$fs" | wc --lines)
+
+    [ "${num_files}" -gt 1 ] \
+      && printf " remove execute permission from the %s selected files? [y/n]: " "${num_files}" \
+      || printf " %s - remove execute permission? [y/n]: " "$fs"
+
+    read -r answer
+
+    if [ "${answer}" = "y" ] || [ "${answer}" = "Y" ]; then
+      printf "%s\n" "$fs" | while IFS= read -r -- file; do
+        chmod -x "${file}"
+      done
     fi
+  fi
+
+  # Update statusfmt
+  lf -remote "send ${id} :reload"
+  lf -remote "send ${id} :reload"
 }}
 
-map zp toggle-preview
+# Give execute permission to the selected files
+cmd enable_exec %{{
+  # Single file
+  if [ -z "$fs" ]; then
+    printf " %s - add execute permission? [y/n]: " "$f"
+    read -r answer
+
+    [ "${answer}" = "y" ] || [ "${answer}" = "Y" ] && chmod +x "$f"
+
+  # Selection
+  else
+    num_files=$(printf "%s\n" "$fs" | wc --lines)
+
+    [ "${num_files}" -gt 1 ] \
+      && printf " add execute permission to the %s selected files? [y/n]: " "${num_files}" \
+      || printf " %s - add execute permission? [y/n]: " "$fs"
+
+    read -r answer
+
+    if [ "${answer}" = "y" ] || [ "${answer}" = "Y" ]; then
+      printf "%s\n" "$fs" | while IFS= read -x -- file; do
+        chmod +r "${file}"
+      done
+    fi
+  fi
+
+  # Update statusfmt
+  lf -remote "send ${id} :reload"
+  lf -remote "send ${id} :reload"
+}}
 
 # Extract the current file with the right command
 cmd extract %{{
-    printf " %s - extract? [y/n]: " "$f"
-    read ans
+  printf " %s - extract? [y/n]: " "$f"
+  read -r answer
 
-    if [[ "$ans" == "y" || "$ans" == "Y" ]]; then
-        case "$f" in
-            *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf "$f";;
-            *.tar.gz|*.tgz) tar xzvf "$f";;
-            *.tar.xz|*.txz) tar xJvf "$f";;
-            *.zip|*.7z|*.rar) 7z x "$f";;
-        esac
-    fi
+  if [ "${answer}" = "y" ] || [ "${answer}" = "Y" ]; then
+    case "$f" in
+      *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf "$f" ;;
+      *.tar.gz|*.tgz) tar xzvf "$f" ;;
+      *.tar.xz|*.txz) tar xJvf "$f" ;;
+      *.zip|*.7z|*.rar) 7z x "$f" ;;
+      *) printf " not a valid archive file" ;;
+    esac
+  fi
 
-    printf "\n"
+  printf "\n"
 }}
 
+# Fuzzy find files and directories
+cmd fuzzy_find ${{
+  selection=$(fzf --border-label=' FIND ' --preview='cat {}')
+
+  [ -n "${selection}" ] \
+    && lf -remote "send ${id} select \"$(printf '%s' "${selection}" \
+      | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+
+  exit 0
+}}
+
+# Follow symbolic links
+cmd follow_link %{{
+  lf -remote "send ${id} select \"$(readlink -- "$f" \
+    | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+}}
+
+# Calculate the size of selected files or the current directory
+cmd size %{{
+  # Selection
+  if [ -n "$fs" ]; then
+    size=$(printf "%s" "$fs" \
+      | xargs du --total --human-readable \
+      | tail --lines=1 \
+      | awk '{ print $1 }')
+
+    printf " size (selection): %s\n" "${size}"
+
+  # Current directory
+  else
+    size=$(du --separate-dirs --human-readable --summarize | awk '{ print $1 }')
+    printf " size (current directory): %s\n" "${size}"
+  fi
+}}
+
+# Calculate the size of the current and sub directories
+cmd size_total %{{
+  size=$(du --human-readable --summarize | awk '{ print $1 }')
+  printf " size (total): %s\n" "${size}"
+}}
+
+# Toggle the preview column
+cmd toggle_preview %{{
+  [ "${lf_preview}" = 'true' ] \
+    && lf -remote "send ${id} :set preview false; set ratios 1:5" \
+    || lf -remote "send ${id} :set preview true; set ratios 1:2:3"
+}}
+#-------------------------------------------------------------------------------
+# MAPPING
+#-------------------------------------------------------------------------------
+map CX disable_exec
+map Cx enable_exec
+map <c-f> fuzzy_find
+map D delete_custom
+map <delete> delete_custom
+map g. cd ~/.dotfiles
+map gc cd ~/.config
+map gd cd ~/Downloads
+map gD cd ~/Documents
+map ge cd /etc
+map gl follow_link
+map gm cd ~/Media
+map gM cd /run/media
+map gp cd ~/Projects
+map gu cd /usr
+map N create_dir
+map n create_file
+map Ss size
+map SS size_total
 map x extract
+map zp toggle_preview
