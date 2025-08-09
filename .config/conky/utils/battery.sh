@@ -1,38 +1,28 @@
 #!/bin/sh
 
+# ------------------------------------------------------------------------------
 # Conky: POWER category - Battery
 # ------------------------------------------------------------------------------
-# Source {{{
-# ------------------------------------------------------------------------------
 . "${HOME}/.config/conky/utils/validate.sh"
-# }}}
-# ------------------------------------------------------------------------------
-# Constants {{{
-# ------------------------------------------------------------------------------
+
 PATH_BAT='/sys/class/power_supply/BAT0'
 FILE_BAT_CAPACITY="${PATH_BAT}/capacity"
 FILE_BAT_ENERGY_FULL="${PATH_BAT}/energy_full"
 FILE_BAT_ENERGY_FULL_DESIGN="${PATH_BAT}/energy_full_design"
 FILE_BAT_PRESENT="${PATH_BAT}/present"
+FILE_BAT_PRESENT_TRUE='1'
 FILE_BAT_STATUS="${PATH_BAT}/status"
 BAT_OPTIONS='capacity connected health status'
 BAT_CONNECTED='ON'
 BAT_DISCONNECTED='OFF'
-# }}}
-# ------------------------------------------------------------------------------
-# Arguments {{{
-# ------------------------------------------------------------------------------
-option="$1"
-# }}}
-# ------------------------------------------------------------------------------
-# Functions {{{
-# ------------------------------------------------------------------------------
+BAT_INVALID='-'
+
 get_capacity() {
   connected=$(get_connected)
 
   [ "${connected}" = "${BAT_CONNECTED}" ] \
     && capacity=$(cat "${FILE_BAT_CAPACITY}") \
-    || capacity='-'
+    || capacity="${BAT_INVALID}"
 
   validate_result "${capacity}"
 }
@@ -40,7 +30,7 @@ get_capacity() {
 get_connected() {
   connected=$(cat "${FILE_BAT_PRESENT}")
 
-  [ "${connected}" = '1' ] \
+  [ "${connected}" = "${FILE_BAT_PRESENT_TRUE}" ] \
     && connected="${BAT_CONNECTED}" \
     || connected="${BAT_DISCONNECTED}"
 
@@ -64,24 +54,19 @@ get_status() {
 
   [ "${connected}" = "${BAT_CONNECTED}" ] \
     && status=$(cat "${FILE_BAT_STATUS}") \
-    || status='-'
+    || status="${BAT_INVALID}"
 
   validate_result "${status}"
 }
-# }}}
-# ------------------------------------------------------------------------------
-# Validation {{{
-# ------------------------------------------------------------------------------
-validate_files "${FILE_BAT_CAPACITY} ${FILE_BAT_ENERGY_FULL}
+
+option="$1"
+
+validate_files "${FILE_BAT_CAPACITY} ${FILE_BAT_ENERGY_FULL} \
 ${FILE_BAT_ENERGY_FULL_DESIGN} ${FILE_BAT_PRESENT} ${FILE_BAT_STATUS}" \
-  && validate_option "${option}" "${BAT_OPTIONS}"\
+  && validate_option "${option}" "${BAT_OPTIONS}" \
   && validate_function "${option}" \
   || exit 1
-# }}}
-# ------------------------------------------------------------------------------
-# Main {{{
-# ------------------------------------------------------------------------------
+
 get_"${option}"
 
 exit 0
-# }}}
