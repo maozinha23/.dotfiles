@@ -1,24 +1,18 @@
 #!/bin/sh
 #
-# Validate the output of conky scripts
 # ------------------------------------------------------------------------------
-# Constants {{{
+# Validate the output of conky scripts
 # ------------------------------------------------------------------------------
 ERROR_FILE_NOT_FOUND='Error: file not found:'
 ERROR_FUNCTION_NOT_FOUND='Error: not implemented yet'
 ERROR_OPTION_INVALID='Error: not a valid argument\nOptions:'
 ERROR_OPTION_MISSING='Error: missing argument\nOptions:'
 ERROR_RESULT='Error: unable to get the value of selected option'
-# }}}
-# ------------------------------------------------------------------------------
-# Functions {{{
-# ------------------------------------------------------------------------------
-# Prints an error message.
+
 err() {
   printf '%b' "$*" >&2
 }
 
-# Checks if the option is invalid.
 is_invalid_option() {
   option="$1"
   valid_options="$2"
@@ -39,7 +33,6 @@ is_invalid_option() {
   return 0
 }
 
-# Checks if the option is missing.
 is_missing_option() {
   option="$1"
   valid_options="$2"
@@ -52,7 +45,6 @@ is_missing_option() {
   return 0
 }
 
-# Checks if the files exist.
 validate_files() {
   files="$1"
 
@@ -66,40 +58,36 @@ validate_files() {
   return 0
 }
 
-# Checks if the functions exist.
 validate_function() {
   option="$1"
 
   if ! type get_"${option}" >/dev/null 2>&1; then
-    err "${ERROR_FUNCTION_NOT_FOUND} "
+    err "${ERROR_FUNCTION_NOT_FOUND}"
     return 1
   fi
 
   return 0
 }
 
-# Checks if the option is present and it is valid.
 validate_option() {
   option="$1"
   valid_options="$2"
 
   is_missing_option "${option}" "${valid_options}"
   return_status="$?"
-  [ "${return_status}" -gt 0 ] && return "${return_status}"
+  [ "${return_status}" -eq 1 ] && return 1
 
   is_invalid_option "${option}" "${valid_options}"
   return_status="$?"
-  [ "${return_status}" -gt 0 ] && return "${return_status}"
 
-  return 0
+  return "${return_status}"
 }
 
-# Checks if there is a result.
 validate_result() {
   result="$1"
 
   if [ -n "${result}" ]; then
-    echo "${result}"
+    printf '%s\n' "${result}"
   else
     err "${ERROR_RESULT}"
     return 1
@@ -107,4 +95,3 @@ validate_result() {
 
   return 0
 }
-# }}}
