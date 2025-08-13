@@ -1,24 +1,24 @@
-#
-# ~/.bashrc
-#
+#!/usr/bin/bash
 
 # If not running interactively, don't do anything
-[[ $- != *i* ]] && return
-
-# Set LS_COLORS environment variable
-if [[ -x /usr/bin/dircolors ]]; then
-  eval "$(dircolors --bourne-shell)"
-fi
+case $- in
+  *i*) ;;
+  *) return ;;
+esac
 
 # Export environmental variables
-if [[ -f ~/.config/shell/env ]]; then
-  export $(envsubst < ~/.config/shell/env)
-fi
+[ -f "${HOME}"/.config/shell/env.sh ] && . "${HOME}"/.config/shell/env.sh
+
+# Set LS_COLORS environment variable
+[ -x /usr/bin/dircolors ] && eval "$(dircolors --bourne-shell)"
 
 # Alias definitions
-if [[ -f ~/.config/shell/aliases ]]; then
-  source ~/.config/shell/aliases
-fi
+[ -f "${XDG_CONFIG_HOME}"/shell/aliases ] \
+  && . "${XDG_CONFIG_HOME}"/shell/aliases
+
+# History configuration
+export HISTFILE="${XDG_STATE_HOME}/bash/history"
+export HISTCONTROL='ignoreboth:erasedups'
 
 # Prompt customization
 # Format: new line[ current directory (in blue) ]:space
@@ -31,6 +31,4 @@ shopt -s autocd
 eval "$(fzf --bash)"
 
 # Autostart X at login
-if [[ -z "$DISPLAY" ]] && [[ "$XDG_VTNR" = 1 ]]; then
-  startx
-fi
+[ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ] && startx
