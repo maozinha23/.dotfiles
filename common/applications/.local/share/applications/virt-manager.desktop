@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Virtual Machine Manager
+#Name[pt_BR]=Gerenciador de máquinas virtuais
+Comment=Manage virtual machines
+Comment[pt_BR]=Gerenciar máquinas virtuais
+Icon=virt-manager
+Exec=virt-manager
+Type=Application
+Terminal=false
+Keywords=vmm;
+Keywords[pt_BR]=vmm;
+Categories=System;

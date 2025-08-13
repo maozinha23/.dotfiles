@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=lf
+Comment=Launches the lf file manager
+Icon=system-file-manager
+Terminal=true
+Exec=/bin/sh -c "$HOME/.config/lf/lfub"
+Categories=ConsoleOnly;System;FileTools;FileManager
+MimeType=inode/directory;

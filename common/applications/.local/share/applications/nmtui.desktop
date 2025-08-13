@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=NetworkManager TUI
+Icon=network-wireless
+Terminal=true
+Exec=nmtui

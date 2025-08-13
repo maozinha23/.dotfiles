@@ -1,0 +1,15 @@
+[Desktop Entry]
+Name=Bluetooth Adapters
+Name[pt_BR]=Adaptadores de Bluetooth
+Comment=Set Bluetooth Adapter Properties
+Comment[pt_BR]=Definir as Propriedades do Adaptador de Bluetooth
+Exec=blueman-adapters
+Icon=blueman-device
+Terminal=false
+Type=Application
+Categories=X-XFCE;Settings;HardwareSettings;X-XFCE-SettingsDialog;GTK;
+StartupNotify=true
+OnlyShowIn=XFCE;MATE;
+NoDisplay=true
+X-XfceSettingsName=Bluetooth
+X-XfcePluggable=true

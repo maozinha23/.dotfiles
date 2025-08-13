@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=conky
+Exec=/bin/sh -c "$HOME/.config/conky/conky-toggle"
+StartupNotify=false
+Terminal=false
+Icon=conky-logomark-violet
+Categories=System;Monitor;

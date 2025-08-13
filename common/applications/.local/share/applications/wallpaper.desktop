@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Wallpaper
+Icon=preferences-desktop-wallpaper
+Terminal=false
+Exec=rofi -modi wallpaper -show wallpaper -theme-str 'listview { lines: 3; } element-icon { size: 100px; }'

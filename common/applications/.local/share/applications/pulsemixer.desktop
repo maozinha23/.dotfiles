@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Pulsemixer
+Icon=multimedia-volume-control
+Terminal=true
+Exec=pulsemixer

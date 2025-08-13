@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=paru (system update)
+Icon=system-software-update
+Terminal=true
+Exec=paru
