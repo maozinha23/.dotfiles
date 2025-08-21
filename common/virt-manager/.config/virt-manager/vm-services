@@ -28,9 +28,9 @@ case "${option}" in
   "${OPT_TURNON_LIBVIRTD}") systemctl start libvirtd ;;
   "${OPT_TURNON_SMB}") systemctl start smb ;;
   "${OPT_TURNON_ALL}") systemctl start libvirtd smb ;;
-  "${OPT_TURNOFF_LIBVIRTD}") systemctl stop libvirtd* ;;
+  "${OPT_TURNOFF_LIBVIRTD}") systemctl stop libvirtd.* ;;
   "${OPT_TURNOFF_SMB}") systemctl stop smb ;;
-  "${OPT_TURNOFF_ALL}") systemctl stop libvirtd smb;;
+  "${OPT_TURNOFF_ALL}") systemctl stop libvirtd.* smb ;;
   *) exit 1 ;;
 esac
 
