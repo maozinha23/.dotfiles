@@ -1,5 +1,26 @@
+# ------------------------------------------------------------------------------
+# CONSTANTS
+# ------------------------------------------------------------------------------
+# Define names for default workspaces
+set $WORKSPACE1 "1"
+set $WORKSPACE2 "2"
+set $WORKSPACE3 "3"
+set $WORKSPACE4 "4"
+set $WORKSPACE5 "5"
+# ------------------------------------------------------------------------------
+# CONFIG
+# ------------------------------------------------------------------------------
 # Include configuration files
 include ${HOME}/.config/i3/*.conf
 
-# Set specific workspaces for the applications
-#assign [class="(?i)APP"] $WORKSPACE_
+# Set workspaces for some applications
+assign [class="(?i)alacritty"] $WORKSPACE1
+assign [class="(?i)firefox"] $WORKSPACE2
+assign [class="(?i)feh"] $WORKSPACE3
+assign [class="(?i)mpv"] $WORKSPACE3
+assign [class="(?i)gimp"] $WORKSPACE4
+assign [class="(?i)libreoffice-*"] $WORKSPACE4
+assign [class="(?i)arandr"] $WORKSPACE5
+assign [class="(?i)blueman-manager"] $WORKSPACE5
+assign [class="(?i)virt-manager"] $WORKSPACE5
+assign [class="(?i)xarchiver"] $WORKSPACE5
