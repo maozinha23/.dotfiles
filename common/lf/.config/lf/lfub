@@ -5,7 +5,7 @@
 # lf-cleaner script.
 set -e
 
-LF_CACHE="${XDG_CACHE_HOME:-${HOME}/.cache}/lf"
+LF_CACHE="${XDG_CACHE_HOME:-${HOME}/.cache}/thumbnails/large"
 UB_PID=0
 UB_SOCKET=""
 UB_TMP_DIR="/tmp"
