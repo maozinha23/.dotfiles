@@ -28,8 +28,8 @@ draw() {
   exit 1
 }
 
-CACHE_DIR="${XDG_CACHE_HOME:-${HOME}/.cache}/lf"
-CACHE_FILE="${CACHE_DIR}/thumbnail.$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' \
+CACHE_DIR="${XDG_CACHE_HOME:-${HOME}/.cache}/thumbnails/large"
+CACHE_FILE="${CACHE_DIR}/lf-$(stat --printf '%n\0%i\0%F\0%s\0%W\0%Y' \
 -- "$(readlink --canonicalize "${PREVIEW_FILE}")" \
 | sha256sum \
 | awk '{ print $1 }')"
