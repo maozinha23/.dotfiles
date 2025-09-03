@@ -14,7 +14,7 @@ require("colors.maozinha23.groups.diagnostic")
 -- require("colors.maozinha23.groups.custom")
 
 -- Plugins
--- require("colors.maozinha23.groups.lazy")
+require("colors.maozinha23.groups.lazy")
 require("colors.maozinha23.groups.oil")
 require("colors.maozinha23.groups.mini")
 -- require("colors.maozinha23.groups.fzf-lua")
