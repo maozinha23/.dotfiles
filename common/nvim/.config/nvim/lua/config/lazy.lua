@@ -16,13 +16,24 @@ vim.opt.runtimepath:prepend(lazypath)
 
 require("lazy").setup({
   spec = {
-    -- add LazyVim and import its plugins
-    --{ "LazyVim/LazyVim", import = "lazyvim.plugins" },
-    -- import/override with your plugins
-    { import = "plugins" }
+    { import = "plugins.fzf-lua" },
+    -- { import = "plugins.mini-completion" },
+    { import = "plugins.mini-move" },
+    -- { import = "plugins.mini-snippets" },
+    { import = "plugins.mini-surround" },
+    { import = "plugins.mini-trailspace" },
+    { import = "plugins.oil" },
   },
+
+  rocks = {
+      enabled = false,
+  },
+
   checker = {
-    enabled = true, -- check for plugin updates periodically
-    notify = true, -- notify on update
-  }, -- automatically check for plugin updates
+    enabled = true,
+  },
+
+  ui = {
+    border = "single",
+  },
 })
