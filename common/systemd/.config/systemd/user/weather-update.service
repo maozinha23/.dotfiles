@@ -1,0 +1,6 @@
+[Unit]
+Description=Update the weather cache file (JSON) fetched from wttr.in
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/wttrin/weather-update
