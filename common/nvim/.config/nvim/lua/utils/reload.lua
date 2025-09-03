@@ -1,9 +1,9 @@
 local M = {}
 
 local modules_to_reload = {
+  "config.options",
   "config.keymaps",
   "config.neovide",
-  "config.settings",
 }
 
 function M.reload_config()
