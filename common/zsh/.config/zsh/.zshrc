@@ -1,31 +1,39 @@
 #!/usr/bin/zsh
 
+#-------------------------------------------------------------------------------
 # If not running interactively, don't do anything
+#-------------------------------------------------------------------------------
 [[ $- != *i* ]] && return
-
-# Alias definitions
+#-------------------------------------------------------------------------------
+# Alias
+#-------------------------------------------------------------------------------
 [ -f "${XDG_CONFIG_HOME}"/shell/aliases ] \
   && . "${XDG_CONFIG_HOME}"/shell/aliases
-
+#-------------------------------------------------------------------------------
 # Set LS_COLORS environment variable
+#-------------------------------------------------------------------------------
 [ -x /usr/bin/dircolors ] && eval "$(dircolors --bourne-shell)"
-
-# Use XDG dirs for completion and history files
+#-------------------------------------------------------------------------------
+# History
+#-------------------------------------------------------------------------------
 [ -d "${XDG_STATE_HOME}"/zsh ] || mkdir -p "${XDG_STATE_HOME}"/zsh
 
 HISTFILE="${XDG_STATE_HOME}"/zsh/histfile
 HISTSIZE=1000
 SAVEHIST=1000
-
+#-------------------------------------------------------------------------------
+# Completion system
+#-------------------------------------------------------------------------------
 [ -d "${XDG_CACHE_HOME}"/zsh ] || mkdir --parents "${XDG_CACHE_HOME}"/zsh
-
-zstyle ':completion:*' cache-path "${XDG_CACHE_HOME}"/zsh/zcompcache
-zstyle ':completion:*' menu select
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 
 autoload -Uz compinit
 compinit -d "${XDG_CACHE_HOME}"/zsh/zcompdump-"${ZSH_VERSION}"
-
+zstyle ':completion:*' cache-path "${XDG_CACHE_HOME}"/zsh/zcompcache
+zstyle ':completion:*' menu select
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+#-------------------------------------------------------------------------------
+# Options
+#-------------------------------------------------------------------------------
 # If a command is issued that can’t be executed as a normal command, and the
 # command is the name of a directory, perform the cd command to that directory.
 # This option is only applicable if the option SHIN_STDIN is set, i.e. if
@@ -53,12 +61,27 @@ setopt incappendhistory
 # available at the command line in interactive shells
 setopt printexitvalue
 
-# Prompt customization
-# Format: new line[ current directory (in bold blue) ]:space
-PROMPT=$'\n[ %B%F{blue}%~%f%b ]: '
+# If set, parameter expansion, command substitution and arithmetic expansion are
+# performed in prompts. Substitutions within prompts do not affect the command
+# status
+setopt prompt_subst
+#-------------------------------------------------------------------------------
+# Prompt
+#-------------------------------------------------------------------------------
+# Load git information
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
 
+# Format:
+# new line[ current directory (bold blue) ]: [ git branch (yellow) ]:space
+PROMPT=$'\n[ %B%F{blue}%~%f%b ]: ${vcs_info_msg_0_}'
+zstyle ':vcs_info:git:*' formats '[ %F{11}%b%f ]: '
+#-------------------------------------------------------------------------------
 # Set fzf key bindings and fuzzy completion
+#-------------------------------------------------------------------------------
 . <(fzf --zsh)
-
+#-------------------------------------------------------------------------------
 # Autostart X at login
+#-------------------------------------------------------------------------------
 [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ] && startx
