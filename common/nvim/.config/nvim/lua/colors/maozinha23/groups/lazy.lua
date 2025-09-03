@@ -3,58 +3,55 @@ local hi = require("colors.maozinha23.highlight").highlight
 -- -----------------------------------------------------------------------------
 -- :help lazy.nvim-⚙️-configuration-🌈-highlight-groups
 -- -----------------------------------------------------------------------------
-hi("LazyButtonActive", { fg = c.bright_white, bg = c.blue, bold = true })
-hi("LazyH1", { fg = c.bright_white, bg = c.blue, bold = true })
-
 hi("LazyBold", { bold = true })
 hi("LazyButton", { link = "CursorLine" })
-hi("LazyButtonActive", { link = "Visual" })
+hi("LazyButtonActive", { link = "PmenuSel" })
 hi("LazyComment", { link = "Comment" })
 
--- commit ref
+-- Commit ref
 hi("LazyCommit", { link = "@variable.builtin" })
 
 hi("LazyCommitIssue", { link = "Number" })
 
--- conventional commit scope
+-- Conventional commit scope
 hi("LazyCommitScope", { link = "Italic" })
 
--- conventional commit type
+-- Conventional commit type
 hi("LazyCommitType", { link = "Title" })
 
--- property
+-- Property
 hi("LazyDimmed", { link = "Conceal" })
 
--- directory
+-- Directory
 hi("LazyDir", { link = "@markup.link" })
 
--- task errors
+-- Task errors
 hi("LazyError", { link = "DiagnosticError" })
 
--- home button
-hi("LazyH1", { link = "IncSearch" })
+-- Home button
+hi("LazyH1", { link = "PmenuSel" })
 
--- titles
+-- Titles
 hi("LazyH2", { link = "Bold" })
 
--- task errors
+-- Task errors
 hi("LazyInfo", { link = "DiagnosticInfo" })
 
-hi("LazyItalic", { link = "{ italic = true }" })
+hi("LazyItalic", { italic = true })
 hi("LazyLocal", { link = "Constant" })
 
--- unloaded icon for a plugin where cond() was false
+-- Unloaded icon for a plugin where cond() was false
 hi("LazyNoCond", { link = "DiagnosticWarn" })
 
 hi("LazyNormal", { link = "NormalFloat" })
 
--- progress bar done
+-- Progress bar done
 hi("LazyProgressDone", { link = "Constant" })
 
--- progress bar todo
+-- Progress bar todo
 hi("LazyProgressTodo", { link = "LineNr" })
 
--- property
+-- Property
 hi("LazyProp", { link = "Conceal" })
 
 hi("LazyReasonCmd", { link = "Operator" })
@@ -69,14 +66,14 @@ hi("LazyReasonSource", { link = "Character" })
 hi("LazyReasonStart", { link = "@variable.member" })
 hi("LazySpecial", { link = "@punctuation.special" })
 
--- task output
+-- Task output
 hi("LazyTaskOutput", { link = "MsgArea" })
 
--- url
+-- URL
 hi("LazyUrl", { link = "@markup.link" })
 
--- value of a property
+-- Value of a property
 hi("LazyValue", { link = "@string" })
 
--- task errors
+-- Task errors
 hi("LazyWarning", { link = "DiagnosticWarn" })
