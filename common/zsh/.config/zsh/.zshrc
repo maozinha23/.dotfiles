@@ -66,6 +66,18 @@ setopt printexitvalue
 # status
 setopt prompt_subst
 #-------------------------------------------------------------------------------
+# Keybinding
+#-------------------------------------------------------------------------------
+bindkey -v
+
+bindkey -M vicmd "^[[3~" vi-delete-char
+bindkey -M vicmd "^[[H" vi-beginning-of-line
+bindkey -M vicmd "^[[F" vi-end-of-line
+
+bindkey -M viins "^[[3~" vi-delete-char
+bindkey -M viins "^[[H" vi-beginning-of-line
+bindkey -M viins "^[[F" vi-end-of-line
+#-------------------------------------------------------------------------------
 # Prompt
 #-------------------------------------------------------------------------------
 # Load git information
