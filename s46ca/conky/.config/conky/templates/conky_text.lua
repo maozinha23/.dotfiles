@@ -29,5 +29,8 @@ ${template8 Capacity: @T.POWER.BAT.CAPACITY@ @T.POWER.BAT.CAPACITY.BAR@ @T.POWER
 ${template0 @T.OS.LABEL.POS@ @T.OS.LABEL@}
 ${template3 Name: @T.OS.NAME@ Kernel: @T.OS.KERNEL@ Update: @T.OS.UPDATE@}
 ${template3 Host: @T.OS.HOST@ User: @T.OS.USER@ Uptime: @T.OS.UPTIME@}
+${template2 Shell: @T.OS.SHELL@ Terminal: @T.OS.TERM@}
+${template3 Editor: @T.OS.EDITOR@ Pager: @T.OS.PAGER@ Visual: @T.OS.VISUAL@}
+${template2 Window\ system: @T.OS.WIN_SYSTEM@ Window\ manager: @T.OS.WIN_MANAGER@}
 ${image @T.BG@ -p 0,0}
 ]]
