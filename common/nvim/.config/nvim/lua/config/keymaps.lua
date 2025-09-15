@@ -12,11 +12,17 @@ vim.keymap.set("n", "<C-Tab>", "<CMD>bnext<CR>",
 vim.keymap.set("n", "<C-S-Tab>", "<CMD>bprev<CR>",
   { noremap = true, desc = "Previous buffer" })
 
+-- Inspect element under the cursor
 vim.keymap.set("n", "<Leader>i", "<CMD>Inspect<CR>",
   { noremap = true , desc = "Inspect object" })
 
+-- Close the current buffer
 vim.keymap.set("n", "<Leader>D", "<CMD>bdelete<CR>",
   { noremap = true , desc = "Close buffer" })
+
+-- Return to Normal mode in terminal
+vim.keymap.set("t", "<C-S-n>", [[<C-\><C-n>]],
+  { noremap = true , desc = "[TERM] Normal mode" })
 
  -- Resize window horizontal/vertical
 window_resize_percent = 5
