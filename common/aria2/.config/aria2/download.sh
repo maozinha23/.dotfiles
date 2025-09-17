@@ -7,6 +7,6 @@ DOWNLOAD_DIR=$( \
     printf "%s" "${HOME}"
   fi )
 
-files="$1"
-[ -z "${files}" ] && exit 1
-aria2c --dir="${DOWNLOAD_DIR}" "${files}"
+link="$1"
+[ -z "${link}" ] && exit 1
+aria2c --dir="${DOWNLOAD_DIR}" "${link}"
