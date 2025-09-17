@@ -8,3 +8,9 @@ alias startx='startx >/dev/null 2>&1'
 
 # Start SSH agent for github push
 alias ssh-github='eval $(ssh-agent -s); ssh-add ~/.ssh/github'
+
+# Download files with aria2
+alias download='~/.config/aria2/download.sh'
+
+# Start/stop services for virt-manager
+alias vm-services='~/.config/virt-manager/vm-services.sh'
