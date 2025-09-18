@@ -13,4 +13,4 @@ alias ssh-github='eval $(ssh-agent -s); ssh-add ~/.ssh/github'
 alias download='~/.config/aria2/download.sh'
 
 # Start/stop services for virt-manager
-alias vm-services='~/.config/virt-manager/vm-services.sh'
+# alias vm-services='~/.config/virt-manager/vm-services.sh'
