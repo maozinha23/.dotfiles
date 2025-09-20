@@ -20,6 +20,10 @@ vim.keymap.set("n", "<Leader>i", "<CMD>Inspect<CR>",
 vim.keymap.set("n", "<Leader>D", "<CMD>bdelete<CR>",
   { noremap = true , desc = "Close buffer" })
 
+-- Set the current working directory to current file's directory
+vim.keymap.set("n", "<Leader>cd", "<CMD>cd %:p:h<CR>",
+  { noremap = true , desc = "Set CWD to current file's dir" })
+
 -- Return to Normal mode in terminal
 vim.keymap.set("t", "<C-S-n>", [[<C-\><C-n>]],
   { noremap = true , desc = "[TERM] Normal mode" })
