@@ -10,3 +10,4 @@ Terminal=false
 Keywords=vmm;
 Keywords[pt_BR]=vmm;
 Categories=System;
+NoDisplay=true
