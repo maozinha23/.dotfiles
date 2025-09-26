@@ -20,6 +20,7 @@ assign [class="(?i)feh"] $WORKSPACE3
 assign [class="(?i)mpv"] $WORKSPACE3
 assign [class="(?i)gimp"] $WORKSPACE4
 assign [class="(?i)libreoffice-*"] $WORKSPACE4
+assign [class="(?i)obs"] $WORKSPACE4
 assign [class="(?i)arandr"] $WORKSPACE5
 assign [class="(?i)blueman-manager"] $WORKSPACE5
 assign [class="(?i)virt-manager"] $WORKSPACE5
