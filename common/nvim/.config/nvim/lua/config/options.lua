@@ -107,7 +107,14 @@ vim.g.mode_map = {
     t = 'Terminal',
 }
 
-vim.opt.statusline = "%m%r [Mode:%{mode_map[mode()]}]%< [Type:%Y] %=%-.([Line:%l / Column:%v]%) [Position:%p%%]"
+vim.opt.statusline =
+  "%{&modified ? '[ + ] ' : ''}" ..
+  "%{(&readonly || !filewritable(expand('%'))) ? '[ RO ] ' : ''}" ..
+  "[ %{toupper(mode_map[mode()])} ]%< " ..
+  "%{toupper(&filetype != '' ? '[ ' .. &filetype .. ' ] ' : '')}" ..
+  "[ %{toupper(&fileencoding != '' ? &fileencoding : &encoding)} ] " ..
+  "%=%-.([ LN:%l | COL:%v ]%) " ..
+  "[ %p%% ]"
 
 -- Number of spaces that a <Tab> in the file counts for
 vim.opt.tabstop = 2
