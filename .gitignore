@@ -8,7 +8,6 @@ common/firefox/.mozilla/firefox/default
 !common/firefox/.mozilla/firefox/default/prefsCleaner.sh
 !common/firefox/.mozilla/firefox/default/updater.sh
 !common/firefox/.mozilla/firefox/default/user-override.js
-!common/firefox/.mozilla/firefox/default/user.js
 common/firefox/.mozilla/firefox/Pending\ Pings
 common/firefox/.mozilla/firefox/Profile\ Groups
 
