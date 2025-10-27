@@ -1,8 +1,10 @@
 #!/bin/sh
 
 ICON_REMOVE="window-close"
-NOTIFICATION_TITLE="FEH"
-NOTIFICATION_MESSAGE="Wallpaper changed"
+NOTIFICATION_TITLE_CHANGE="FEH"
+NOTIFICATION_TITLE_REMOVE="HSETROOT"
+NOTIFICATION_MESSAGE_CHANGE="Wallpaper changed"
+NOTIFICATION_MESSAGE_REMOVE="Wallpaper removed"
 TEXT_REMOVE="REMOVE"
 
 wallpaper="$1"
@@ -11,11 +13,12 @@ wallpaper="$1"
 if [ -n "${wallpaper}" ]; then
   if [ "${wallpaper}" = "${TEXT_REMOVE}" ]; then
     hsetroot -solid black
+    notify-send "${NOTIFICATION_TITLE_REMOVE}" "${NOTIFICATION_MESSAGE_REMOVE}"
   else
     feh --bg-scale --no-fehbg "${wallpaper}"
+    notify-send "${NOTIFICATION_TITLE_CHANGE}" "${NOTIFICATION_MESSAGE_CHANGE}"
   fi
 
-  notify-send "${NOTIFICATION_TITLE}" "${NOTIFICATION_MESSAGE}"
   exit 0
 fi
 
