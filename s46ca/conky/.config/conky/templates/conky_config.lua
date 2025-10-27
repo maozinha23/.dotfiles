@@ -2,15 +2,15 @@
 
 conky.config = {
   -- Aligned position on screen, may be none or one of:
-  -- top_left (or tl)   	  top_middle (or tm)	      top_right (or tr)
-  -- middle_left (or ml)	  middle_middle (or mm)	    middle_right (or mr)
-  -- bottom_left (or bl)	  bottom_middle (or bm)	    bottom_right (or br)
+  -- top_left (or tl)       top_middle (or tm)        top_right (or tr)
+  -- middle_left (or ml)    middle_middle (or mm)	    middle_right (or mr)
+  -- bottom_left (or bl)    bottom_middle (or bm)	    bottom_right (or br)
   -- In case of panel and dock windows, it might make more sense to use one of
   -- the following aliases:
-  -- Alias	    Value
-  -- top	      top_middle
+  -- Alias      Value
+  -- top        top_middle
   -- left	      middle_left
-  -- right	    middle_right
+  -- right      middle_right
   -- bottom	    bottom_middle
   -- center	    middle_middle
   -- See also gap_x and gap_y settings.
@@ -129,8 +129,8 @@ conky.config = {
   -- being inserted into the stuff inside conky.text at the corresponding
   -- position, but before some substitutions are applied:
   -- \\n -> newline
-  -- \\ -> backslash
-  -- \\ -> space
+  -- \\  -> backslash
+  -- \\  -> space
   -- \\N -> template argument N (starting from 1)
   template0 = @C.TEMPLATE0@,
   template1 = @C.TEMPLATE1@,
@@ -142,12 +142,12 @@ conky.config = {
   template7 = @C.TEMPLATE7@,
   template8 = @C.TEMPLATE8@,
 
-  -- Width for $top name value (defaults to 15 characters).
+  -- Width for $top name value (defaults to 15 characters)
   top_name_width = @TOP_NAME_WIDTH@,
 
-  -- Update interval.
+  -- Update interval
   update_interval = @C.UPDATE_INTERVAL@,
 
-  -- Use Xft (anti-aliased font and stuff).
+  -- Use Xft (anti-aliased font and stuff)
   use_xft = @C.USE_XFT@,
 }
