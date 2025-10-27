@@ -26,10 +26,17 @@ vim.opt.incsearch = true
 
 -- The value of this option influences when the last window will have a status
 -- line:
---	 0: never
---	 1: only if there are at least two windows
---	 2: always
+--   0: never
+--   1: only if there are at least two windows
+--   2: always
 vim.opt.laststatus = 2
+
+-- List mode. Useful to see the difference between tabs and spaces and for
+-- trailing blanks
+vim.opt.list = true
+
+-- Strings to use in 'list' mode
+vim.opt.listchars = { tab = " →", trail = " " }
 
 -- Enable the use of the mouse in all modes
 vim.opt.mouse = "a"
