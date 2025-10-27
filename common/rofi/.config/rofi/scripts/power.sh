@@ -1,6 +1,5 @@
 #!/bin/sh
 
-# CONSTANTS
 ICON_QUIT="system-log-out"
 ICON_REBOOT="system-reboot"
 ICON_SHUTDOWN="system-shutdown"
@@ -8,7 +7,6 @@ TEXT_QUIT="Quit"
 TEXT_REBOOT="Reboot"
 TEXT_SHUTDOWN="Shutdown"
 
-# SCRIPT
 option="$1"
 
 case "${option}" in
