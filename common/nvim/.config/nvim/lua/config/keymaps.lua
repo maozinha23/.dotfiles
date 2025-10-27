@@ -6,6 +6,10 @@ vim.keymap.set("n", "<Leader>r", function()
   require("utils.reload").reload_config()
 end, { noremap = true, desc = "Reload config" })
 
+-- Stop highlighting for hlsearch
+vim.keymap.set("n", "<Leader>h", "<CMD>nohlsearch<CR>",
+  { noremap = true , desc = "Stop highlight (search)" })
+
 -- Cycle through open buffers
 vim.keymap.set("n", "<C-Tab>", "<CMD>bnext<CR>",
   { noremap = true , desc = "Next buffer" })
