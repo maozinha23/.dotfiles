@@ -27,11 +27,6 @@ hi("MiniSnippetsUnvisited", { sp = c.bright_yellow, underdouble = true })
 -- Visited tabstop(s)
 hi("MiniSnippetsVisited", { sp = c.bright_white, underdouble = true })
 -- -----------------------------------------------------------------------------
--- :help mini.surround
--- -----------------------------------------------------------------------------
--- Highlighting of requested surrounding
-hi("MiniSurround", { link = "IncSearch" })
--- -----------------------------------------------------------------------------
 -- :help mini.trailspace
 -- -----------------------------------------------------------------------------
 -- Highlight group for trailing space
