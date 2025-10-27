@@ -17,10 +17,7 @@ vim.opt.runtimepath:prepend(lazypath)
 require("lazy").setup({
   spec = {
     { import = "plugins.fzf-lua" },
-    -- { import = "plugins.mini-completion" },
     { import = "plugins.mini-move" },
-    -- { import = "plugins.mini-snippets" },
-    { import = "plugins.mini-surround" },
     { import = "plugins.mini-trailspace" },
     { import = "plugins.oil" },
   },
