@@ -1,7 +1,8 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=GNU Image Manipulation Program
+# Name=GNU Image Manipulation Program
+Name=GIMP
 #Name[pt_BR]=Programa de manipulação de imagem do GNU
 #GenericName=Image Editor
 #GenericName[pt_BR]=Editor de imagens
