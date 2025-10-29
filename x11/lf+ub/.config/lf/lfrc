@@ -1,0 +1,470 @@
+# lf documentation:
+# https://github.com/gokcehan/lf/blob/master/doc.md
+#-------------------------------------------------------------------------------
+# COMMANDS
+#-------------------------------------------------------------------------------
+# Move/scroll the current file selection upwards/downwards by one/half a
+# page/full page.
+# (default k and <up>)
+map k #up
+
+# (default <c-u>)
+map <c-u> #half-up
+map <c-left> half-up
+
+# (default <c-b> and <pgup>)
+map <c-b> #page-up
+map <c-up> page-up
+
+# (default <c-y>)
+map <c-y> #scroll-up
+
+# (default j and <down>)
+map j #down
+
+# (default <c-d>)
+map <c-d> #half-down
+map <c-right> half-down
+
+# (default <c-f> and <pgdn>)
+map <c-f> #page-down
+map <c-down> page-down
+
+# (default <c-e>)
+map <c-e> #scroll-down
+
+# Change the current working directory to the parent directory.
+# (default h and <left>)
+map h #updir
+
+# If the current file is a directory, then change the current directory to it,
+# otherwise, execute the open command. A default open command is provided to
+# call the default system opener asynchronously with the current file as the
+# argument. A custom open command can be defined to override this default.
+# (default l and <right>)
+map l #open
+map <right> #open
+map <enter> open
+
+# Change the current working directory to the next/previous jumplist item.
+# (default ])
+map ] #jump-next
+
+# (default [)
+map [ #jump-prev
+
+# Move the current file selection to the top/bottom of the directory. A count
+# can be specified to move to a specific line, for example, use 3G to move to
+# the third line.
+# (default gg and <home>)
+map gg #top
+map <home> top
+
+# (default G and <end>)
+map G #bottom
+map <end> bottom
+
+# Move the current file selection to the high/middle/low of the screen.
+# (default H)
+map H #high
+
+# (default M)
+map M #middle
+
+# (default L)
+map L #low
+
+# Switch to Visual mode. If already in Visual mode, discard the visual selection
+# and stay in Visual mode.
+# visual (default V)
+map v visual
+
+# Reverse the selection of all files in the current directory (i.e. toggle all
+# files). Selections in other directories are not affected by this command. You
+# can define a new command to select all files in the directory by combining
+# invert with unselect (i.e. cmd select-all :unselect; invert), though this will
+# also remove selections in other directories.
+# invert (default v)
+map i invert
+
+# Synchronize the terminal and redraw the screen.
+# (default <c-l>)
+map <c-l> #redraw
+
+# Remove the current file or selected file(s). A custom delete command can be
+# defined to override this default.
+# (modal)
+map <delete> #delete
+
+# (default ?)
+map ? #search-back
+
+# (default n)
+map <gt> search-next
+
+# (default N)
+map <lt> search-prev
+
+# Save the current directory as a bookmark assigned to the given key.
+# (modal) (default m)
+map m #mark-save
+
+# Change the current directory to the bookmark assigned to the given key. A
+# special bookmark ' holds the previous directory after a mark-load, cd, or
+# select command.
+# (modal) (default ')
+map "'" #mark-load
+
+# Remove a bookmark assigned to the given key.
+# (modal) (default ")
+map '"' #mark-remove
+
+# Tag a file with * or a single width character given in the argument if the
+# file is untagged, otherwise remove the tag.
+# (default t)
+map t #tag-toggle
+#-------------------------------------------------------------------------------
+# OPTIONS
+#-------------------------------------------------------------------------------
+# Set the path of a cleaner file. The file should be executable. This file is
+# called if previewing is enabled, the previewer is set, and the previously
+# selected file has its preview cache disabled. The following arguments are
+# passed to the file, (1) current file name, (2) width, (3) height,
+# (4) horizontal position, (5) vertical position of preview pane and
+# (6) next file name to be previewed respectively. Preview cleaning is disabled
+# when the value of this option is left empty.
+# (string) (default ``) (not called if empty)
+set cleaner '~/.config/lf/cleaner'
+
+# Format string of the indicator for files to be copied.
+# (string) (default \033[7;33m)
+set copyfmt "\033[7;32m"
+
+# Draw boxes around panes with box drawing characters.
+# (bool) (default false)
+set drawbox true
+
+# Format string of file name when creating duplicate files. With the default
+# format, copying a file abc.txt to the same directory will result in a
+# duplicate file called abc.txt.~1~. Special expansions are provided, %f as the
+# file name, %b for the basename (file name without extension), %e as the
+# extension (including the dot) and %n as the number of duplicates.
+# (string) (default %f.~%n~)
+set dupfilefmt '%b~%n%e'
+
+# Show hidden files. On Unix systems, hidden files are determined by the value
+# of hiddenfiles. On Windows, files with hidden attributes are also considered
+# hidden files.
+# (bool) (default false)
+set hidden true
+
+# Save command history.
+# (bool) (default true)
+set history false
+
+# Show icons before each item in the list.
+# (bool) (default false)
+set icons true
+
+# Jump to the first match after each keystroke during searching.
+# (bool) (default false)
+set incsearch true
+
+# A list of information that is shown for directory items at the right side of
+# the pane. Currently supported information types are size, time, atime, ctime,
+# perm, user and group. Information is only shown when the pane width is more
+# than twice the width of information.
+# ([]string) (default ``)
+set info 'size'
+
+# Format string of the file time shown in the info column when it matches this
+# year.
+# (string) (default Jan _2 15:04)
+set infotimefmtnew '02/01/2006'
+
+# Format string of the file time shown in the info column when it doesn't match
+# this year.
+# (string) (default Jan _2  2006)
+set infotimefmtold '02/01/2006'
+
+# Send mouse events as input.
+# (bool) (default false)
+set mouse true
+
+# Show the position number for directory items on the left side of the pane.
+# When the relativenumber option is enabled, only the current line shows the
+# absolute position and relative positions are shown for the rest.
+# (bool) (default false)
+set number true
+
+# Format string of the position number for each line.
+# (string) (default \033[33m)
+set numberfmt "\033[97m"
+
+# Set the path of a previewer file to filter the content of regular files for
+# previewing. The file should be executable. The following arguments are passed
+# to the file, (1) current file name, (2) width, (3) height, (4) horizontal
+# position, and (5) vertical position of preview pane respectively. SIGPIPE
+# signal is sent when enough lines are read. If the previewer returns a non-zero
+# exit code, then the preview cache for the given file is disabled. This means
+# that if the file is selected in the future, the previewer is called once
+# again. Preview filtering is disabled and files are displayed as they are when
+# the value of this option is left empty.
+# (string) (default ``) (not filtered if empty)
+set previewer '~/.config/lf/previewer'
+
+# Format string of the prompt shown in the top line. Special expansions are
+# provided, %u as the user name, %h as the hostname, %w as the working
+# directory, %d as the working directory with a trailing path separator, %f as
+# the file name, and %F as the current filter. %S may be used once and will
+# provide a spacer so that the following parts are right aligned on the screen.
+# The home folder is shown as ~ in the working directory expansion. Directory
+# names are automatically shortened to a single character starting from the
+# leftmost parent when the prompt does not fit the screen.
+# (string) (default \033[32;1m%u@%h\033[0m:\033[34;1m%d\033[0m\033[1m%f\033[0m)
+set promptfmt "[ %d%f ]"
+
+# Format string of the ruler shown in the bottom right corner. Special
+# expansions are provided, %a as the pressed keys, %p as the progress of file
+# operations, %m as the number of files to be cut (moved), %c as the number of
+# files to be copied, %s as the number of selected files, %f as the filter, %i
+# as the position of the cursor, %t as the number of files shown in the current
+# directory, %h as the number of files hidden in the current directory, and %d
+# as the amount of free disk space remaining. Additional expansions are provided
+# for environment variables exported by lf, in the form %{lf_<name>} (e.g.
+# %{lf_selmode}). This is useful for displaying the current settings. Expansions
+# are also provided for user-defined options, in the form %{lf_user_<name>}
+# (e.g. %{lf_user_foo}). The | character splits the format string into sections.
+# Any section containing a failed expansion (result is a blank string) is
+# discarded and not shown.
+# (string) (default   %a|  %p|  \033[7;31m %m \033[0m|  \033[7;33m %c \033[0m|  \033[7;35m %s \033[0m|  \033[7;34m %f \033[0m|  %i/%t)
+set rulerfmt "  %a|  %p|  \033[7;31m %m \033[0m|  \033[7;32m %c \033[0m|  \033[7;93m %s \033[0m|  \033[7;34m %f \033[0m|  %i/%t"
+
+# Format string of the indicator for files that are selected.
+# (string) (default \033[7;35m)
+set selectfmt "\033[7;93m"
+
+# Selection mode for commands. When set to all it will use the selected files
+# from all directories. When set to dir it will only use the selected files in
+# the current directory.
+# (string) (default all)
+set selmode 'dir'
+
+# Format string of the file info shown in the bottom left corner. Special
+# expansions are provided, %p as the file permissions, %c as the link count, %u
+# as the user, %g as the group, %s as the file size, %S as the file size but
+# with a fixed width of four characters (left-padded with spaces), %t as the
+# last modified time, and %l as the link target. The | character splits the
+# format string into sections. Any section containing a failed expansion (result
+# is a blank string) is discarded and not shown.
+# (string) (default \033[36m%p\033[0m| %c| %u| %g| %S| %t| -> %l)
+set statfmt "\033[36m%p\033[0m| / %u| / %g| / %S| / %t| / -> %l"
+
+# Format string of the file modification time shown in the bottom line.
+# (string) (default Mon Jan _2 15:04:05 2006)
+set timefmt '02/01/2006 15:04:05'
+
+# Format string of the indicator for files that are visually selected.
+# visualfmt (string) (default \033[7;36m)
+set visualfmt "\033[7;34m"
+#-------------------------------------------------------------------------------
+# FUNCTIONS
+#-------------------------------------------------------------------------------
+# Create a new directory
+cmd create_dir %{{
+  printf " new directory: "
+  read -r dir
+  mkdir --parents -- "${dir}"
+  lf -remote "send ${id} select \"$(printf '%s' "${dir}" \
+    | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+}}
+
+# Create a new file
+cmd create_file %{{
+  printf " new file: "
+  read -r file
+  touch -- "${file}"
+  lf -remote "send ${id} select \"$(printf '%s' "${file}" \
+    | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+}}
+
+# Define a custom 'delete' command
+cmd delete_custom %{{
+  # Single file
+  if [ -z "$fs" ]; then
+    printf " %s - delete? [y/n]: " "$f"
+    read -r answer
+
+    [ "${answer}" = "y" ] || [ "${answer}" = "Y" ] && trash "$f"
+
+  # Selection
+  else
+    num_files=$(printf "%s\n" "$fs" | wc --lines)
+
+    [ "${num_files}" -gt 1 ] \
+      && printf " delete the %s selected files? [y/n]: " "${num_files}" \
+      || printf " %s - delete? [y/n]: " "$fs"
+
+    read -r answer
+
+    if [ "${answer}" = "y" ] || [ "${answer}" = "Y" ]; then
+      printf "%s\n" "$fs" | while IFS= read -r -- file; do
+        trash "${file}"
+      done
+    fi
+  fi
+
+  lf -remote "send ${id} :reload"
+}}
+
+# Remove execute permission from the selected files
+cmd disable_exec %{{
+  # Single file
+  if [ -z "$fs" ]; then
+    printf " %s - remove execute permission? [y/n]: " "$f"
+    read -r answer
+
+    [ "${answer}" = "y" ] || [ "${answer}" = "Y" ] && chmod -x "$f"
+
+  # Selection
+  else
+    num_files=$(printf "%s\n" "$fs" | wc --lines)
+
+    [ "${num_files}" -gt 1 ] \
+      && printf " remove execute permission from the %s selected files? [y/n]: " "${num_files}" \
+      || printf " %s - remove execute permission? [y/n]: " "$fs"
+
+    read -r answer
+
+    if [ "${answer}" = "y" ] || [ "${answer}" = "Y" ]; then
+      printf "%s\n" "$fs" | while IFS= read -r -- file; do
+        chmod -x "${file}"
+      done
+    fi
+  fi
+
+  # Update statusfmt
+  lf -remote "send ${id} :reload"
+  lf -remote "send ${id} :reload"
+}}
+
+# Give execute permission to the selected files
+cmd enable_exec %{{
+  # Single file
+  if [ -z "$fs" ]; then
+    printf " %s - add execute permission? [y/n]: " "$f"
+    read -r answer
+
+    [ "${answer}" = "y" ] || [ "${answer}" = "Y" ] && chmod +x "$f"
+
+  # Selection
+  else
+    num_files=$(printf "%s\n" "$fs" | wc --lines)
+
+    [ "${num_files}" -gt 1 ] \
+      && printf " add execute permission to the %s selected files? [y/n]: " "${num_files}" \
+      || printf " %s - add execute permission? [y/n]: " "$fs"
+
+    read -r answer
+
+    if [ "${answer}" = "y" ] || [ "${answer}" = "Y" ]; then
+      printf "%s\n" "$fs" | while IFS= read -x -- file; do
+        chmod +r "${file}"
+      done
+    fi
+  fi
+
+  # Update statusfmt
+  lf -remote "send ${id} :reload"
+  lf -remote "send ${id} :reload"
+}}
+
+# Extract the current file with the right command
+cmd extract %{{
+  printf " %s - extract? [y/n]: " "$f"
+  read -r answer
+
+  if [ "${answer}" = "y" ] || [ "${answer}" = "Y" ]; then
+    case "$f" in
+      *.tar.bz|*.tar.bz2|*.tbz|*.tbz2) tar xjvf "$f" ;;
+      *.tar.gz|*.tgz) tar xzvf "$f" ;;
+      *.tar.xz|*.txz) tar xJvf "$f" ;;
+      *.zip|*.7z|*.rar) 7z x "$f" ;;
+      *) printf " not a valid archive file" ;;
+    esac
+  fi
+
+  printf "\n"
+}}
+
+# Fuzzy find files and directories
+cmd fuzzy_find ${{
+  selection=$(fzf --border-label=' FIND ' --preview='cat {}')
+
+  [ -n "${selection}" ] \
+    && lf -remote "send ${id} select \"$(printf '%s' "${selection}" \
+      | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+
+  exit 0
+}}
+
+# Follow symbolic links
+cmd follow_link %{{
+  lf -remote "send ${id} select \"$(readlink -- "$f" \
+    | sed 's/\\/\\\\/g;s/"/\\"/g')\""
+}}
+
+# Calculate the size of selected files or the current directory
+cmd size %{{
+  # Selection
+  if [ -n "$fs" ]; then
+    size=$(printf "%s" "$fs" \
+      | xargs du --total --human-readable \
+      | tail --lines=1 \
+      | awk '{ print $1 }')
+
+    printf " size (selection): %s\n" "${size}"
+
+  # Current directory
+  else
+    size=$(du --separate-dirs --human-readable --summarize | awk '{ print $1 }')
+    printf " size (current directory): %s\n" "${size}"
+  fi
+}}
+
+# Calculate the size of the current and sub directories
+cmd size_total %{{
+  size=$(du --human-readable --summarize | awk '{ print $1 }')
+  printf " size (total): %s\n" "${size}"
+}}
+
+# Toggle the preview column
+cmd toggle_preview %{{
+  [ "${lf_preview}" = 'true' ] \
+    && lf -remote "send ${id} :set preview false; set ratios 1:5" \
+    || lf -remote "send ${id} :set preview true; set ratios 1:2:3"
+}}
+#-------------------------------------------------------------------------------
+# MAPPING
+#-------------------------------------------------------------------------------
+map CX disable_exec
+map Cx enable_exec
+map <c-f> fuzzy_find
+map D delete_custom
+map <delete> delete_custom
+map g. cd ~/.dotfiles
+map gc cd ~/.config
+map gd cd ~/Downloads
+map gD cd ~/Documents
+map ge cd /etc
+map gl follow_link
+map gm cd ~/Media
+map gM cd /run/media
+map gp cd ~/Projects
+map gu cd /usr
+map N create_dir
+map n create_file
+map Ss size
+map SS size_total
+map x extract
+map zp toggle_preview
