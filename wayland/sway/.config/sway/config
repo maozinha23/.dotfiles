@@ -1,0 +1,56 @@
+### Output configuration
+# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
+# output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1366x768.png fill
+
+### Idle configuration
+# exec swayidle -w \
+#          timeout 300 'swaylock -f -c 000000' \
+#          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+#          before-sleep 'swaylock -f -c 000000'
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+
+# Status Bar:
+# Read `man 5 sway-bar` for more information about this section.
+bar {
+    position top
+
+    # When the status_command prints a new line to stdout, swaybar updates.
+    # The default just shows the current date and time.
+    status_command while date +'%Y-%m-%d %X'; do sleep 1; done
+
+    colors {
+        statusline #ffffff
+        background #323232
+        inactive_workspace #32323200 #32323200 #5c5c5c
+    }
+}
+# ------------------------------------------------------------------------------
+# VARIABLES
+# ------------------------------------------------------------------------------
+# Define names for default workspaces
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+# ------------------------------------------------------------------------------
+# CONFIG
+# ------------------------------------------------------------------------------
+# Include configuration files
+include /etc/sway/config.d/*
+include ${HOME}/.config/sway/*.conf
+
+# Set workspaces for some applications
+assign [app_id="foot"] $ws1
+assign [app_id="firefox"] $ws2
+# assign [app_id="feh"] $ws3
+# assign [class="(?i)mpv"] $ws3
+assign [app_id="gimp"] $ws4
+assign [app_id="libreoffice-*"] $ws4
+# assign [class="(?i)obs"] $ws4
+# assign [class="(?i)arandr"] $ws5
+# assign [class="(?i)blueman-manager"] $ws5
+# assign [class="(?i)virt-manager"] $ws5
+# assign [class="(?i)xarchiver"] $ws5
