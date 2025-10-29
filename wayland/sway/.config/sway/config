@@ -30,11 +30,10 @@ include ${HOME}/.config/sway/*.conf
 assign [app_id="foot"] $ws1
 assign [app_id="firefox"] $ws2
 # assign [app_id="feh"] $ws3
-# assign [class="(?i)mpv"] $ws3
+assign [app_id="mpv"] $ws3
 assign [app_id="gimp"] $ws4
 assign [app_id="libreoffice-*"] $ws4
-# assign [class="(?i)obs"] $ws4
-# assign [class="(?i)arandr"] $ws5
-# assign [class="(?i)blueman-manager"] $ws5
-# assign [class="(?i)virt-manager"] $ws5
-# assign [class="(?i)xarchiver"] $ws5
+# assign [app_id="(?i)arandr"] $ws5
+assign [app_id="blueman-manager"] $ws5
+assign [app_id="io.missioncenter.MissionCenter"] $ws5
+assign [app_id="xarchiver"] $ws5
