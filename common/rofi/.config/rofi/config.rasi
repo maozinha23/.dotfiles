@@ -21,7 +21,6 @@ configuration {
     scroll-method: 1;
     sidebar-mode: true;
     show-icons: true;
-    terminal: "alacritty";
     window-format: "{w} - {t}";
     window-thumbnail: true;
 
