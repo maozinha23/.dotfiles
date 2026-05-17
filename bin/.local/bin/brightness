@@ -1,0 +1,103 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------------------------------
+# CONSTANTS
+#-------------------------------------------------------------------------------
+readonly APP_BRIGHTNESS='brightnessctl'
+
+# Values in percentage
+readonly BRIGHTNESS_MAX=100
+readonly BRIGHTNESS_MIN=1
+
+readonly MSG_BRIGHT_CURRENT='Current brightness'
+readonly MSG_BRIGHT_PROMPT='Change to'
+readonly MSG_BRIGHT_SET='Brightness set to'
+readonly MSG_ERR_APP_NOT_FOUND='Error: application not found:'
+MSG_ERR_INPUT_INVALID="$(cat <<END
+Error: invalid input
+Valid range: $BRIGHTNESS_MIN - $BRIGHTNESS_MAX
+END
+)"
+readonly MSG_ERR_INPUT_INVALID
+readonly MSG_EXIT='Press "ENTER" to exit'
+#-------------------------------------------------------------------------------
+# FUNCTIONS
+#-------------------------------------------------------------------------------
+# Prints an error message
+err() {
+  printf '%s\n' "$*" >&2
+}
+
+# Get the system current brigthness in percentage
+get_cur_brightness() {
+  local bright_cur bright_cur_per bright_max
+  bright_cur="$(brightnessctl g)"
+  bright_max="$(brightnessctl m)"
+  bright_cur_per="$(( bright_cur * 100 / bright_max ))"
+  printf '%s' "$bright_cur_per"
+}
+
+# Get the brigthness value from command line argument or user input
+get_brightness_input() {
+  local brightness
+
+  if [[ -n "$1" ]]; then
+    brightness="$1"
+    printf '%s: %s\n' "$MSG_BRIGHT_PROMPT" "$brightness" >&2
+  else
+    printf '%s: ' "$MSG_BRIGHT_PROMPT" >&2
+    read -r brightness
+  fi
+
+  printf '%s' "$brightness"
+}
+
+# Checks if an application is available
+is_app_available() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+# Check if the brightness value is valid (positive integer between
+# BRIGHTNESS_MIN and BRIGHTNESS_MAX
+is_brightness_valid() {
+  local brightness
+  brightness="$1"
+
+  [[ "$brightness" =~ ^[0-9]+$  \
+   && "$brightness" -ge "$BRIGHTNESS_MIN" \
+   && "$brightness" -le "$BRIGHTNESS_MAX" ]]
+}
+
+# Set the brightness (percentage)
+set_brightness() {
+  brightnessctl --quiet set "$1"%
+}
+#-------------------------------------------------------------------------------
+# MAIN
+#-------------------------------------------------------------------------------
+main() {
+  local bright_cur_per brightness
+
+  if is_app_available "$APP_BRIGHTNESS"; then
+    # Show current brightness value
+    bright_cur_per="$(get_cur_brightness)"
+    printf '%s: %s%%\n' "$MSG_BRIGHT_CURRENT" "$bright_cur_per"
+
+    # Get new brightness value (argument or user input)
+    brightness="$(get_brightness_input "$1")"
+
+    # Set the new brightness
+    if is_brightness_valid "$brightness"; then
+      set_brightness "$brightness"
+      printf '%s: %s%%\n' "$MSG_BRIGHT_SET" "$brightness"
+    else
+      err "$MSG_ERR_INPUT_INVALID"
+    fi
+  else
+    err "$MSG_ERR_APP_NOT_FOUND"
+  fi
+
+  printf '\n%s ' "$MSG_EXIT"
+  read -r _
+}
+
+main "$@"

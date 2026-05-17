@@ -1,0 +1,5 @@
+# lf documentation:
+# https://github.com/gokcehan/lf/blob/master/doc.md
+source "~/.config/lf/lfrc_options"
+source "~/.config/lf/lfrc_commands"
+source "~/.config/lf/lfrc_keymaps"

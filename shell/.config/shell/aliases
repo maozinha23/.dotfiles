@@ -1,0 +1,8 @@
+# List directory first, hidden files and 1 file per line
+alias ls='ls --almost-all --classify --color --group-directories-first -1'
+
+# Start SSH agent for github push
+alias ssh-github='eval $(ssh-agent -s); ssh-add ~/.ssh/github'
+
+# Custom delete command por ncdu
+alias ncdu='ncdu --delete-command "trash --"'

@@ -1,0 +1,144 @@
+{
+  "case": {
+    "prefix": "case",
+    "body": [
+      "case \"\\${${1:expression}}\" in",
+      "  ${2:case1})",
+      "    ${3:content}",
+      "    ;;",
+      "  *)",
+      "    ${0:content}",
+      "    ;;",
+      "esac"
+    ],
+    "description": "Case statement with 1 normal case and a default case"
+  },
+  "constant": {
+    "prefix": "const",
+    "body": "readonly ${1:CONSTANT}=${0:value}",
+    "description": "Readonly variable's name and value"
+  },
+  "echo": {
+    "prefix": "echo",
+    "body": "echo '${0:message}'",
+    "description": "Echoes a message"
+  },
+  "else_if": {
+    "prefix": "elif",
+    "body": [
+      "elif [[ ${1:condition} ]]; then",
+      "  ${0:content}"
+    ],
+    "description": "elif statement"
+  },
+  "for": {
+    "prefix": "for",
+    "body": [
+      "for ${1:item} in \"\\${${2:list}}\"; do",
+      "  ${0:content}",
+      "done"
+    ],
+    "description": "for loop iterating in a list"
+  },
+  "function": {
+    "prefix": "fun",
+    "body": [
+      "${1:function_name}() {",
+      "  ${0:content}",
+      "}"
+    ],
+    "description": "Function's name and body"
+  },
+  "heredoc": {
+    "prefix": "here",
+    "body": [
+      "cat <<END",
+      "${0:content}",
+      "END"
+    ],
+    "description": "Here document using 'cat' and 'END' as delimiter"
+  },
+  "if": {
+    "prefix": "if",
+    "body": [
+      "if [[ ${1:condition} ]]; then",
+      "  ${0:content}",
+      "fi"
+    ],
+    "description": "if statement"
+  },
+  "if_and_or": {
+    "prefix": "ifao",
+    "body": "[[ ${1:condition} ]] && ${2:AND} || ${0:OR}",
+    "description": "Test condition followed by AND/OR commands"
+  },
+  "if_else": {
+    "prefix": "ife",
+    "body": [
+      "if [[ ${1:condition} ]]; then",
+      "  ${2:content}",
+      "else",
+      "  ${0:content}",
+      "fi"
+    ],
+    "description": "if/else statement"
+  },
+  "printf": {
+    "prefix": "print",
+    "body": [
+      "printf '${0:message}'"
+    ],
+    "description": "Prints a message"
+  },
+  "printf_variable": {
+    "prefix": "printv",
+    "body": "printf '${1:%s\\n}' \"\\${${0:variable}}\"",
+    "description": "Prints a variable"
+  },
+  "read": {
+    "prefix": "read",
+    "body": "read -r ${0:variable}",
+    "description": "Read input and store in a variable"
+  },
+  "section": {
+      "prefix": "sec",
+      "body": [
+        "#-------------------------------------------------------------------------------",
+        "# ${0:TITLE}",
+        "#-------------------------------------------------------------------------------"
+      ],
+      "description": "Section divider using comments"
+  },
+  "shebang": {
+    "prefix": "sh",
+    "body": "#!/bin/${0:shell}",
+    "description": "shebang"
+  },
+  "sub_shell": {
+    "prefix": "ss",
+    "body": "\"\\$(${0:command})\"",
+    "description": "sub shell command"
+  },
+  "variable": {
+    "prefix": "var",
+    "body": "\"\\${${0:variable}}\"",
+    "description": "Variable"
+  },
+  "variable_local": {
+    "prefix": "varl",
+    "body": [
+      "local ${1:variable}",
+      "${1}=${0:value}"
+    ],
+    "description": "Local variable's name and value"
+  },
+  "while": {
+    "prefix": "while",
+    "body": [
+      "while [[ ${1:condition} ]]; do",
+      "  ${0:content}",
+      "done"
+    ],
+    "description": "while loop"
+  }
+}

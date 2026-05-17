@@ -1,0 +1,501 @@
+# vim: set filetype=lf :
+
+# User option. Log file path
+set user_log_file "/tmp/lf.log"
+
+# User option. Text with a log entry in the format: date message
+# Where date: Y/m/d H:M:S
+set user_log_entry ""
+
+# User option. A file or directory name
+set user_filename ""
+
+# User option. Number of actions processed in the current command
+set user_count ""
+
+# User option. Number of failures in the current command
+set user_fail ""
+
+# User option. Number of actions skipped in the current command
+set user_skip ""
+
+# User option. Number of successes in the current command
+set user_success ""
+
+# Store the current or selected files in a archive file with minimum compression
+cmd archive_compress %{{
+  [[ -z "$fx" ]] && exit 1
+
+  lf -remote "send $id echo \"Arquive file name: \""
+  read -r archive
+  lf -remote "send $id echo ''"
+
+  # Trim whitespace before and after the filename, extension and other "."
+  archive="$(printf '%s' "$archive" \
+    | sed -E 's/^[[:space:]]*//;
+      s/[[:space:]]*$//;
+      s/[[:space:]]*\.[[:space:]]*/./g')"
+
+  # Remove the special characters < > : " ' \ | ? *
+  archive="$(printf '%s' "$archive" | sed 's/[<>:"'\''\\|?*]//g')"
+
+  [[ -z "$archive" ]] && exit 1
+
+  mapfile -t file_list <<< "$fx"
+  num_files="${#file_list[@]}"
+
+  lf -remote "send $id echo \"Store \033[36m${num_files}\033[0m selected file(s) in: \033[36m${archive}.zip\033[0m ? (Y)es/(N)o: \""
+  read -r answer
+  lf -remote "send $id echo ''"
+
+  if [[ "$answer" =~ ^[Yy]$ ]]; then
+    lf -remote "send $id \
+      :set user_filename \"${archive}\"; \
+      archive_compress_assync"
+  fi
+}}
+
+# Store the current or selected files in a archive file with minimum
+# compression. Run in the background assynchronously
+cmd archive_compress_assync &{{
+  [[ -z "$fx" ]] && exit 1
+  [[ -z "$lf_user_filename" ]] && exit 1 || archive="$lf_user_filename"
+
+  mapfile -t file_list <<< "$fx"
+
+  # 7z returns:
+  # 0: normal (no errors or warnings)
+  # 1: warning (non fatal errors)
+  # 2, 7, 8, 255: other errors
+  7z a -tzip -mx1 -- "$archive" "${file_list[@]}" \
+    && message="\033[32mFile(s) stored successfully in: ${archive}.zip\033[0m" \
+    || message="\033[31mFailed to store file(s) in: ${archive}.zip\033[0m"
+
+  lf -remote "send $id :unselect; clear_user_var; echo \"${message}\""
+}}
+
+# Extract files from the current archive file
+cmd archive_extract %{{
+  [[ -z "$f" ]] && exit 1
+
+  lf -remote "send $id echo \"Extract file(s) from: \033[36m${f}\033[0m ? (Y)es/(N)o: \""
+  read -r answer
+  lf -remote "send $id echo ''"
+
+  [[ "$answer" =~ ^[Yy]$ ]] && lf -remote "send $id archive_extract_assync"
+}}
+
+# Extract files from the current archive file. Run in the background
+# assynchronously
+cmd archive_extract_assync &{{
+  [[ -z "$f" ]] && exit 1
+
+  # 7z returns:
+  # 0: normal (no errors or warnings)
+  # 1: warning (non fatal errors)
+  # 2, 7, 8, 255: other errors
+  7z x -- "$f" \
+    && message="\033[32mFile(s) extracted successfully from: ${f}\033[0m" \
+    || message="\033[31mFailed to extract file(s) from: ${f}\033[0m"
+
+  lf -remote "send $id echo \"${message}\""
+}}
+
+# Clear install packages cache
+cmd clear_cache ${{
+  clear
+  printf 'Clear cache
+   1  - fontconfig
+   2  - mesa
+   3  - mpv
+   4  - Neovim
+   5  - pacman/yay
+   6  - thumbnails
+   7  - yt-dlp
+   8  - Zellij
+other - Exit
+Option: '
+  read -r option
+
+  printf '\nClear the cache from option: \033[36m%s\033[0m ? (Y)es/(N)o: ' "$option"
+  read -r answer
+
+  [[ ! "$answer" =~ ^[Yy]$ ]] && exit
+
+  case "$option" in
+    1) trash -- "$HOME"/.cache/fontconfig/* > /dev/null 2>&1 ;;
+    2) trash -- "$HOME"/.cache/mesa_shader_cache/* > /dev/null 2>&1 ;;
+    3) trash -- "$HOME"/.cache/mpv/* > /dev/null 2>&1 ;;
+    4) trash -- "$HOME"/.cache/nvim/* > /dev/null 2>&1 ;;
+    5) yay --sync --clean --clean ;;
+    6) trash -- "$HOME"/.cache/thumbnails/* > /dev/null 2>&1 ;;
+    7) trash -- "$HOME"/.cache/yt-dlp/* > /dev/null 2>&1 ;;
+    8) trash -- "$HOME"/.cache/zellij/* > /dev/null 2>&1 ;;
+    *) exit ;;
+  esac
+
+  [[ "$?" -eq 0 ]] \
+    && printf '\nCache cleared\nPress "ENTER" to exit\n' \
+    || printf '\nFail to clear the cache\nPress "ENTER" to exit\n'
+
+  read -r _
+}}
+
+# Clear all selections in the UI
+cmd clear_selection :clear; unselect; visual-unselect
+
+# Clear user variables (besides user log variables)
+cmd clear_user_var &{{
+  lf -remote "send $id \
+    :set user_filename ''; \
+    set user_count ''; \
+    set user_fail ''; \
+    set user_skip ''; \
+    set user_success ''"
+}}
+
+# Eject USB device
+cmd eject_usb ${{
+  clear
+  printf 'USB devices:\n'
+  usb_devices="$(df --human-readable --output=source,size,target \
+    | awk '/\/run\/media/ { count++; print count, "-", $1, "-", $2, "-",  $3 }')"
+
+  printf '%s\nUSB device to eject: ' "$usb_devices"
+  read -r device
+
+  mount_path="$(printf '%s\n' "$usb_devices" \
+    | awk -v device="$device" '$1==device { print $7 }')"
+
+  if [[ -d "$mount_path" ]]; then
+    udiskie-umount --detach -- "$mount_path"
+  else
+    printf 'Invalid device\n'
+  fi
+
+  printf '\nPress "ENTER" to exit\n'
+  read -r _
+}}
+
+# Create a new file or directory
+cmd file_create %{{
+  lf -remote "send $id echo \"Directory (ending with /) or file name: \""
+  read -r new_file
+  lf -remote "send $id echo ''"
+
+  # Trim whitespace before and after the filename and extension (and other .)
+  new_file="$(printf '%s' "$new_file" \
+    | sed -E 's/^[[:space:]]*//;
+      s/[[:space:]]*$//;
+      s/[[:space:]]*\.[[:space:]]*/./g')"
+
+  # Remove the special characters < > : " ' \ | ? *
+  new_file="$(printf '%s' "$new_file" | sed 's/[<>:"'\''\\|?*]//g')"
+
+  [[ -z "$new_file" ]] && exit 1
+
+  # Create a new file/directory if it doesn't already exists
+  if [[ -f "${PWD}/${new_file}" || -d "${PWD}/${new_file}" ]]; then
+    message="\033[31mFailed to create: $new_file . It already exists\033[0m"
+  else
+    lf -remote "send $id echo \"Create: \033[36m${new_file}\033[0m ? (Y)es/(N)o: \""
+    read -r answer
+    lf -remote "send $id echo ''"
+
+    # Create the new file/directory and the parent directories if needed
+    if [[ "$answer" =~ ^[Yy]$ ]]; then
+      if [[ "$new_file" == */ ]]; then
+        mkdir --parents -- "$new_file"
+      else
+        mkdir --parents -- "$(dirname -- "$new_file")" && touch -- "$new_file"
+      fi
+
+      status="$?"
+
+      if [[ "$status" -eq 0 ]]; then
+        # Select the new file, but it needs to reload first in a different
+        # "lf -remote" command
+        lf -remote "send $id reload"
+        lf -remote "send $id select \"$(readlink --canonicalize -- "$new_file")\""
+        message="\033[32mSuccessfully created: ${new_file}\033[0m"
+      else
+        message="\033[31mFailed to create: ${new_file}\033[0m"
+      fi
+    fi
+  fi
+
+  [[ -n "$message" ]] && lf -remote "send $id echo \"$message\""
+}}
+
+# Send the current or selected files to trash
+cmd file_trash %{{
+  [[ -z "$fx" ]] && exit 1
+
+  mapfile -t file_list <<< "$fx"
+  num_files="${#file_list[@]}"
+
+  file_count=0
+  fail=0
+  skip=0
+  success=0
+
+  for file in "${file_list[@]}"; do
+    (( file_count++ ))
+
+    lf -remote "send $id echo \"(${file_count}/${num_files}) Delete: \033[36m${file}\033[0m ? (Y)es/Yes to (a)ll/(N)o/(C)ancel: \""
+    read -r answer
+    lf -remote "send $id echo ''"
+
+    # Skip the current and following files
+    if [[ "$answer" =~ ^[Cc]$ ]]; then
+      skip=$(( skip + ( num_files - file_count ) + 1 ))
+      break
+    # Delete the current and following files (log the errors)
+    elif [[ "$answer" =~ ^[Aa]$ ]]; then
+      lf -remote "send $id \
+        :set user_count "$(( file_count - 1 ))"; \
+        set user_fail "$fail"; \
+        set user_skip "$skip"; \
+        set user_success "$success"; \
+        file_trash_assync"
+      exit
+    # Delete the current file (log the error)
+    elif [[ "$answer" =~ ^[Yy]$ ]]; then
+      if trash -- "$file"; then
+        (( success++ ))
+      else
+        (( fail++ ))
+        log_time="$(date +"%Y/%m/%d %H:%M:%S")"
+        log_message="USER LOG: Error (cmd file_trash): failed to delete: $file"
+        lf -remote "send $id \
+          :set user_log_entry \"${log_time} ${log_message}\"; \
+          log_write"
+      fi
+    # Skip the current file
+    else
+      (( skip++ ))
+    fi
+  done
+
+  num_files_valid=$(( num_files - skip ))
+
+  if [[ "$fail" -eq 0 && "$success" -gt 0 ]]; then
+    message="\033[32m${num_files_valid} file(s) deleted successfully\033[0m"
+  elif [[ "$fail" -gt 0 ]]; then
+    message="\033[31m${fail} error(s) deleting $num_files_valid file(s)\033[0m"
+  fi
+
+  lf -remote "send unselect"
+  [[ -n "$message" ]] && lf -remote "send $id echo \"${message}\""
+}}
+
+# Send the current or selected files to trash. Run in the background
+# assynchronously
+cmd file_trash_assync &{{
+  [[ -z "$fx" ]] && exit 1
+  [[ -z "$lf_user_count" ]] && exit 1 || file_count="$lf_user_count"
+  [[ -z "$lf_user_fail" ]] && exit 1 || fail="$lf_user_fail"
+  [[ -z "$lf_user_skip" ]] && exit 1 || skip="$lf_user_skip"
+  [[ -z "$lf_user_success" ]] && exit 1 || success="$lf_user_success"
+  lf -remote "send $id clear_user_var"
+
+  mapfile -t file_list <<< "$fx"
+  num_files="${#file_list[@]}"
+
+  for file in "${file_list[@]:$file_count}"; do
+    (( file_count++ ))
+    lf -remote "send $id echo \"Deleting: ${file_count}/${num_files}\""
+
+    if trash -- "$file"; then
+      (( success++ ))
+    else
+      (( fail++ ))
+      log_time="$(date +"%Y/%m/%d %H:%M:%S")"
+      log_message="USER LOG: Error (cmd file_trash_assync): failed to delete: $file"
+      lf -remote "send $id \
+        :set user_log_entry \"${log_time} ${log_message}\"; \
+        log_write"
+    fi
+  done
+
+  num_files_valid=$(( num_files - skip ))
+
+  if [[ "$fail" -eq 0 && "$success" -gt 0 ]]; then
+    message="\033[32m${num_files_valid} file(s) deleted successfully\033[0m"
+  elif [[ "$fail" -gt 0 ]]; then
+    message="\033[31m${fail} error(s) deleting $num_files_valid file(s)\033[0m"
+  fi
+
+  lf -remote "send unselect"
+  [[ -n "$message" ]] && lf -remote "send $id echo \"${message}\""
+}}
+
+# Fuzzy find files
+cmd find_fuzzy ${{
+  file="$(fzf --border-label=' FIND ')"
+
+  if [[ -f "$file" ]]; then
+    lf -remote "send $id select \"$(readlink --canonicalize -- "$file")\""
+  fi
+}}
+
+# Create symbolic links (in the current directory) to the selected files
+cmd link_create %{{
+  [[ -z "$fs" ]] && exit 1
+
+  mapfile -t file_list <<< "$fs"
+  num_files="${#file_list[@]}"
+
+  file_count=0
+  fail=0
+  skip=0
+  success=0
+
+  for file in "${file_list[@]}"; do
+    (( file_count++ ))
+
+    # Skip the prompt if the option "Yes to all" was chosen
+    if [[ ! "$answer" =~ ^[Aa]$ ]]; then
+      lf -remote "send $id echo \"(${file_count}/${num_files}) Create a link for \033[36m${file}\033[0m ? (Y)es/Yes to (a)ll/(N)o/(C)ancel: \""
+      read -r answer
+      lf -remote "send $id echo ''"
+    fi
+
+    # Skip the current and following files
+    if [[ "$answer" =~ ^[Cc]$ ]]; then
+      skip=$(( skip + ( num_files - file_count ) + 1 ))
+      break
+    # Create a link and log the errors
+    elif [[ "$answer" =~ ^[AaYy]$ ]]; then
+      if ln --symbolic -- "$file" .; then
+        (( success++ ))
+      else
+        (( fail++ ))
+        log_time="$(date +"%Y/%m/%d %H:%M:%S")"
+        log_message="USER LOG: Error (cmd link_create): failed to create link: $file in: $PWD"
+        lf -remote "send $id \
+          :set user_log_entry \"${log_time} ${log_message}\"; \
+          log_write"
+      fi
+    # Skip the current file
+    else
+      (( skip ++ ))
+    fi
+  done
+
+  num_files_valid=$(( num_files - skip ))
+
+  if [[ "$fail" -eq 0 && "$success" -gt 0 ]]; then
+    message="\033[32m${num_files_valid} link(s) created successfully\033[0m"
+  elif [[ "$fail" -gt 0 ]]; then
+    message="\033[31m${fail} error(s) creating $num_files_valid link(s)\033[0m"
+  fi
+
+  lf -remote 'send unselect'
+  [[ -n "$message" ]] && lf -remote "send $id echo \"${message}\""
+}}
+
+# Follow symbolic links
+cmd link_follow %{{
+  [[ -L "$f" ]] && lf -remote "send $id select \"$(readlink -- "$f")\""
+}}
+
+# Show error entries in the log
+cmd log_show_error ${{
+  [[ -z "$lf_user_log_file" ]] && exit 1
+
+  tac "$lf_user_log_file" \
+    | grep "USER LOG: Error" \
+    | grep --invert-match "recv" \
+    | "$PAGER"
+}}
+
+# Write a new entry in the log file
+cmd log_write &{{
+  [[ -z "$lf_user_log_file" || -z "$lf_user_log_entry" ]] && exit 1
+  printf '%s\n' "$lf_user_log_entry" >> "$lf_user_log_file"
+  lf -remote "send $id :set user_log_entry ''"
+}}
+
+# Open a file with a specific program
+cmd open &{{
+  [[ "$TERM" == 'linux' ]] && exit 1
+
+  mime_type="$(file --dereference --brief --mime-type "$f")"
+
+  case "$mime_type" in
+    # mpv
+    audio/* | video/*)
+      mpv --force-window=yes "$f" > /dev/null 2>&1 &
+      ;;
+    # swayimg
+    image/*bmp | image/gif | image/*jpeg | image/jpg | image/*png \
+      | image/svg+xml | image/tiff | image/webp | image/x-targa | image/x-tga)
+
+      swayimg "$f" > /dev/null 2>&1 &
+      ;;
+    # Firefox
+    *html* | application/pdf)
+      firefox "$f" > /dev/null 2>&1 &
+      ;;
+    # Libre Office
+    *rtf \
+      | *officedocument* \
+      | *ms-word | *msword | *opendocument.text \
+      | *ms-excel | *msexcel | *spreadsheet* \
+      | *ms-powerpoint | *mspowerpoint | *opendocument.presentation)
+
+      libreoffice "$f" > /dev/null 2>&1 &
+      ;;
+    # Neovim
+    text/* | application/json)
+      foot nvim "$f" > /dev/null 2>&1 &
+      ;;
+  esac
+}}
+
+# Show the size of the current directory (all files, but excluding directories)
+cmd size_dir %{{
+  size="$(du --apparent-size --human-readable --separate-dirs --summarize \
+    | awk '{ print $1 }')"
+
+  message="Size (files in current directory): $size"
+  [[ "$size" -lt 1000 ]] && message+='B'
+  lf -remote "send $id echo \"${message}\""
+}}
+
+# Show the size of the selected files and/or directories
+cmd size_files %{{
+  size="$(printf '%s\n' "$fx" \
+    | xargs --delimiter="\n" du --apparent-size --human-readable --total \
+    | tail --lines=1 \
+    | awk '{ print $1 }')"
+
+  message="Size (selection): $size"
+  [[ "$size" -lt 1000 ]] && message+='B'
+  lf -remote "send $id echo \"${message}\""
+}}
+
+# Show the size of the root partition "/"
+cmd size_total %{{
+  size="$(df --human-readable / \
+    | tail --lines=1 \
+    | awk '{ printf "Used: %s / Total: %s", $3, $2 }')"
+
+  lf -remote "send $id echo \"Size (root partition): ${size}\""
+}}
+
+# Toggle the preview column
+cmd toggle_preview %{{
+  if [[ "$lf_preview" == "true" ]]; then
+    lf -remote "send $id :set preview false; set ratios 1"
+  else
+    lf -remote "send $id :set ratios 2:3; set preview true"
+  fi
+}}
+
+# Clean trash files
+cmd trash_clean $ trash-empty; printf '\nPress "ENTER" to exit\n'; read -r _
+
+# Restore trash files
+cmd trash_restore $ trash-restore; printf '\nPress "ENTER" to exit\n'; read -r _

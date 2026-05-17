@@ -1,0 +1,55 @@
+/**
+Create a configuration file from current setup
+rofi -dump-config > ~/.config/rofi/config.rasi
+*/
+configuration {
+    disable-history: true;
+    display-applications: "APPLICATIONS";
+    display-capture: "CAPTURE";
+    display-combi: "COMBI";
+    display-drun: "DRUN";
+    display-filebrowser: "FILE BROWSER";
+    display-keys: "KEYS";
+    display-power: "POWER";
+    display-run: "RUN";
+    display-settings: "SETTINGS";
+    display-ssh: "SSH";
+    display-window: "WINDOW";
+    display-windowcd: "WINDOWCD";
+    fixed-num-lines: true;
+    run-command: "{cmd}";
+    run-shell-command: "{terminal} {cmd}";
+    scroll-method: 1;
+    sidebar-mode: true;
+    show-icons: true;
+    window-format: "{w}{t}";
+    window-thumbnail: true;
+
+    filebrowser {
+        /** Directory the file browser starts in. */
+        directory: ".";
+        /**
+          * Sorting method. Can be set to:
+          *   - "name"
+          *   - "mtime" (modification time)
+          *   - "atime" (access time)
+          *   - "ctime" (change time)
+          */
+        sorting-method: "name";
+        /** Group directories before files. */
+        directories-first: true;
+        /** Show hidden files. */
+        show-hidden: true;
+        /** return 1 on cancel. */
+        cancel-returns-1: true;
+        /** command */
+        command: "xdg-open";
+    }
+
+    timeout {
+        action: "kb-cancel";
+        delay:  0;
+    }
+}
+
+@theme "themes/vgacolors-theme"

@@ -1,0 +1,128 @@
+themes {
+    vgacolors {
+        text_unselected {
+            base 7
+            background 0
+            emphasis_0 7
+            emphasis_1 7
+            emphasis_2 7
+            emphasis_3 7
+        }
+        text_selected {
+            base 7
+            background 4
+            emphasis_0 7
+            emphasis_1 7
+            emphasis_2 7
+            emphasis_3 7
+        }
+        ribbon_unselected {
+            base 0
+            background 7
+            emphasis_0 0
+            emphasis_1 7
+            emphasis_2 0
+            emphasis_3 0
+        }
+        ribbon_selected {
+            base 7
+            background 4
+            emphasis_0 7
+            emphasis_1 7
+            emphasis_2 7
+            emphasis_3 7
+        }
+        table_title {
+            base 7
+            background 4
+            emphasis_0 7
+            emphasis_1 7
+            emphasis_2 7
+            emphasis_3 7
+        }
+        table_cell_unselected {
+            base 8
+            background 0
+            emphasis_0 8
+            emphasis_1 8
+            emphasis_2 8
+            emphasis_3 8
+        }
+        table_cell_selected {
+            base 7
+            background 4
+            emphasis_0 7
+            emphasis_1 7
+            emphasis_2 7
+            emphasis_3 7
+        }
+        list_unselected {
+            base 8
+            background 0
+            emphasis_0 8
+            emphasis_1 8
+            emphasis_2 8
+            emphasis_3 8
+        }
+        list_selected {
+            base 7
+            background 4
+            emphasis_0 7
+            emphasis_1 7
+            emphasis_2 7
+            emphasis_3 7
+        }
+        frame_unselected {
+            base 8
+            background 0
+            emphasis_0 0
+            emphasis_1 0
+            emphasis_2 0
+            emphasis_3 0
+        }
+        frame_selected {
+            base 7
+            background 0
+            emphasis_0 0
+            emphasis_1 0
+            emphasis_2 0
+            emphasis_3 0
+        }
+        frame_highlight {
+            base 6
+            background 0
+            emphasis_0 0
+            emphasis_1 0
+            emphasis_2 0
+            emphasis_3 0
+        }
+        exit_code_success {
+            base 2
+            background 0
+            emphasis_0 0
+            emphasis_1 0
+            emphasis_2 0
+            emphasis_3 0
+        }
+        exit_code_error {
+            base 1
+            background 0
+            emphasis_0 0
+            emphasis_1 0
+            emphasis_2 0
+            emphasis_3 0
+        }
+        multiplayer_user_colors {
+            player_1 0
+            player_2 0
+            player_3 0
+            player_4 0
+            player_5 0
+            player_6 0
+            player_7 0
+            player_8 0
+            player_9 0
+            player_10 0
+        }
+    }
+}

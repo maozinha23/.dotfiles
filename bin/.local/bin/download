@@ -1,0 +1,289 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------------------------------
+# CONSTANTS
+#-------------------------------------------------------------------------------
+readonly APP_HTTP='curl'
+readonly APP_PAGER='less'
+readonly APP_TORRENT='aria2c'
+readonly APP_XDG_DIR='xdg-user-dir'
+readonly APP_YOUTUBE='yt-dlp'
+
+readonly CONNECTION_TIMEOUT=5
+
+readonly MSG_CONTINUE='Press "ENTER" to continue'
+readonly MSG_ERR_APP_NOT_FOUND='Error: application not found:'
+readonly MSG_ERR_TORRENT_CONVERSION='Error: unable to convert: magnet > torrent'
+readonly MSG_ERR_URI_INVALID='Error: invalid URI'
+readonly MSG_EXIT='Press "ENTER" to exit'
+readonly MSG_TORRENT_INFO='To select files, note down the indexes'
+MSG_TORRENT_PROMPT="$(cat <<'END'
+Syntax:
+Individual files: 1,2,7
+Range:1-5,8-11
+Mixed: 1,6-13,19
+All files: blank
+
+Files to download
+END
+)"
+readonly MSG_TORRENT_PROMPT
+readonly MSG_URI_PROMPT='Download URI'
+
+readonly OUTPUT_DIR_DEFAULT="${HOME}/Downloads"
+
+readonly TORRENT_MIME='application/x-bittorrent'
+
+readonly URI_ERROR=0
+readonly URI_HTTP=1
+readonly URI_MAGNET=2
+readonly URI_TORRENT=3
+readonly URI_YOUTUBE=4
+
+readonly YOUTUBE_OUTPUT_TEMPLATE='%(uploader)s-%(title)s.%(ext)s'
+readonly YOUTUBE_PRESET='mp4'
+#-------------------------------------------------------------------------------
+# FUNCTIONS
+#-------------------------------------------------------------------------------
+# Convert a magnet link to a .torrent file
+convert_magnet_to_torrent() {
+  local dl_dir uri
+  uri="$1"
+  dl_dir="$(get_output_dir)"
+
+  aria2c \
+    --bt-save-metadata=true \
+    --bt-metadata-only=true \
+    --dir="$dl_dir" \
+    "$uri"
+}
+
+# Download files from a magnet link
+download_from_magnet() {
+  local dl_dir uri
+  uri="$1"
+  dl_dir="$(get_output_dir)"
+
+  # Convert the magnet link to a "hash.torrent" file and download it
+  if convert_magnet_to_torrent "$uri"; then
+    uri="${dl_dir}/$(get_magnet_hash "$uri").torrent"
+    download_from_torrent "$uri"
+  else
+    err "$MSG_ERR_TORRENT_CONVERSION"
+  fi
+}
+
+# Download files from a torrent file
+download_from_torrent() {
+  local dl_dir file_list uri
+  uri="$1"
+  dl_dir="$(get_output_dir)"
+  file_list="$(get_torrent_filelist "$uri")"
+
+  aria2c \
+    --dir="$dl_dir" \
+    --select-file="$file_list" \
+    --bt-remove-unselected-file=true \
+    --seed-time=0 \
+    "$uri"
+}
+
+# Download files from a URL
+download_from_url() {
+  local dl_dir uri
+  uri="$1"
+  dl_dir="$(get_output_dir)"
+
+  curl \
+    --follow \
+    --connect-timeout "$CONNECTION_TIMEOUT" \
+    --output-dir "$dl_dir" \
+    --remote-name \
+    "$uri"
+}
+
+# Download a video from a YouTube link
+download_from_youtube() {
+  local dl_dir uri
+  uri="$1"
+  dl_dir="$(get_output_dir)"
+
+  yt-dlp \
+    --preset-alias "$YOUTUBE_PRESET" \
+    --no-playlist \
+    --output "${dl_dir}/${YOUTUBE_OUTPUT_TEMPLATE}" \
+    "$uri"
+}
+
+# Prints an error message
+err() {
+  printf '%s\n' "$*" >&2
+}
+
+# Get the hex encoded info hash from a magnet link
+get_magnet_hash() {
+  local magnet_hash magnet_link
+  magnet_link="$1"
+
+  if is_magnet_link "$magnet_link"; then
+    # Extract the text between "btih:" and "&"
+    magnet_hash="${magnet_link#*btih:}"
+    magnet_hash="${magnet_hash%%&*}"
+  else
+    magnet_hash=''
+  fi
+
+  printf '%s' "$magnet_hash"
+}
+
+# Get the download directory path
+# Priority:
+# 1) xdg-user-dir DOWNLOAD
+# 2) $HOME/Downloads
+# 3) pwd (current directory)
+get_output_dir() {
+  local output_dir
+
+  if is_app_available "$APP_XDG_DIR"; then
+    output_dir="$(xdg-user-dir DOWNLOAD 2>/dev/null)"
+  elif [[ -d "$OUTPUT_DIR_DEFAULT" ]]; then
+    output_dir="$OUTPUT_DIR_DEFAULT"
+  else
+    output_dir="$(pwd)"
+  fi
+
+  printf '%s' "$output_dir"
+}
+
+# Get the list of selected files from a torrent
+get_torrent_filelist() {
+  local file_list uri
+  uri="$1"
+
+  printf '%s\n\n%s ' "$MSG_TORRENT_INFO" "$MSG_CONTINUE" >&2
+  read -r _
+  show_torrent_files "$uri"
+  printf '\n%s: ' "$MSG_TORRENT_PROMPT" >&2
+  read -r file_list
+
+  printf '%s' "$file_list"
+}
+
+# Get the URI string from command line argument or user input
+get_uri() {
+  local uri
+
+  if [[ -n "$1" ]]; then
+    uri="$1"
+    printf '%s: %s\n' "$MSG_URI_PROMPT" "$uri" >&2
+  else
+    printf '%s: ' "$MSG_URI_PROMPT" >&2
+    read -r uri
+  fi
+
+  printf '%s' "$uri"
+}
+
+# Get the URI type:
+# YouTube link
+# Generic URL (http/https/www)
+# Torrent file
+# Magnet link
+get_uri_type() {
+  local uri uri_type
+  uri="$1"
+
+  if is_youtube_video "$uri"; then
+    uri_type="$URI_YOUTUBE"
+  elif is_url "$uri"; then
+    uri_type="$URI_HTTP"
+  elif is_torrent_file "$uri"; then
+    uri_type="$URI_TORRENT"
+  elif is_magnet_link "$uri"; then
+    uri_type="$URI_MAGNET"
+  else
+    uri_type="$URI_ERROR"
+  fi
+
+  printf '%s' "$uri_type"
+}
+
+# Checks if an application is available
+is_app_available() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+# Checks if the string matches the format of a magnet link
+is_magnet_link() {
+  [[ "$1" =~ ^magnet:\? ]]
+}
+
+# Checks if the file has the BitTorrent MIME type
+is_torrent_file() {
+  local file mime_type
+  [[ -f "$1" ]] && file="$1" || return 1
+  mime_type="$(file --dereference --brief --mime-type "$file")"
+  [[ "$mime_type" == "$TORRENT_MIME" ]]
+}
+
+# Checks if the string matches the format of a URL
+is_url() {
+  [[ "$1" =~ ^(https?://|www\.) ]]
+}
+
+# Checks if the string matches the format of a YouTube URL
+is_youtube_video() {
+  [[ "$1" =~ ^https?://(www\.)?(youtube\.com/|youtu\.be/) ]]
+}
+
+# Show the list of files from a torrent
+show_torrent_files() {
+  local pager uri
+  uri="$1"
+  pager="${PAGER:-${APP_PAGER}}"
+  aria2c --show-files "$uri" | "$pager" >&2
+}
+#-------------------------------------------------------------------------------
+# MAIN
+#-------------------------------------------------------------------------------
+main() {
+  local uri uri_type
+  uri="$(get_uri "$1")"
+  uri_type="$(get_uri_type "$uri")"
+
+  case "$uri_type" in
+    "$URI_HTTP")
+      if is_app_available "$APP_HTTP"; then
+        download_from_url "$uri"
+      else
+        err "${MSG_ERR_APP_NOT_FOUND}" "$APP_HTTP"
+      fi
+      ;;
+    "$URI_MAGNET")
+      if is_app_available "$APP_TORRENT"; then
+        download_from_magnet "$uri"
+      else
+        err "$MSG_ERR_APP_NOT_FOUND" "$APP_TORRENT"
+      fi
+      ;;
+    "$URI_TORRENT")
+      if is_app_available "$APP_TORRENT"; then
+        download_from_torrent "$uri"
+      else
+        err "$MSG_ERR_APP_NOT_FOUND" "$APP_TORRENT"
+      fi
+      ;;
+    "$URI_YOUTUBE")
+      if is_app_available "$APP_YOUTUBE"; then
+        download_from_youtube "$uri"
+      else
+        err "$MSG_ERR_APP_NOT_FOUND" "$APP_YOUTUBE"
+      fi
+      ;;
+    "$URI_ERROR") err "$MSG_ERR_URI_INVALID" ;;
+  esac
+
+  printf '\n%s ' "$MSG_EXIT"
+  read -r _
+}
+
+main "$@"

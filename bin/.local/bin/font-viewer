@@ -1,0 +1,132 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------------------------------
+# CONSTANTS
+#-------------------------------------------------------------------------------
+readonly APP_REQUIRED=('chafa' 'fc-list' 'magick')
+
+readonly MSG_ERR_APP_NOT_FOUND='Error: application not found:'
+readonly MSG_ERR_FONT_PATH='Error: invalid font file path'
+readonly MSG_ERR_FONT_SIZE='Error: invalid font size'
+readonly MSG_ERR_IMG_NOT_FOUND='Error: preview image not found:'
+readonly MSG_EXIT='Press "ENTER" to exit'
+readonly MSG_TEXT_PREVIEW_FONT='Font'
+readonly MSG_TEXT_PREVIEW_PROMPT='Size'
+
+TEXT_PREVIEW="$(cat <<'END'
+A a B b C c D d E e F f G g H h
+I i J j K k L l M m N n O o P p
+Q q R r S s T t U u V v W w X x
+Y y Z z     0 1 2 3 4 5 6 7 8 9
+\# \$ \% \& \@ \! \? \* \= \+ \- \_ \/ \\ \| "
+\. \, \: \; \< \> \( \) \[ \] \{ \} \' \` \~ \^
+Lorem ipsum dolor sit amet,
+consectetur adipiscing elit,
+sed do eiusmod tempor
+incididunt ut labore et
+dolore magna aliqua.
+END
+)"
+readonly TEXT_PREVIEW
+readonly TEXT_PREVIEW_FILE='/tmp/font-viewer_preview.png'
+readonly TEXT_PREVIEW_FONT_SIZE_MAX=48
+#-------------------------------------------------------------------------------
+# FUNCTIONS
+#-------------------------------------------------------------------------------
+# Check if all required apps are available
+check_required_apps() {
+  local status
+  status=0
+
+  for app in "${APP_REQUIRED[@]}"; do
+    if ! is_app_available "$app"; then
+      err "$MSG_ERR_APP_NOT_FOUND" "$app"
+      status=1
+    fi
+  done
+
+  return "$status"
+}
+
+# Create an image of a text rendered using the specified font
+create_preview_img() {
+  local font_path font_size
+  [[ -n "$1" ]] && font_path="$1" || exit 1
+  [[ -n "$2" ]] && font_size="$2" || exit 1
+
+  magick \
+    -font "$font_path" \
+    -pointsize "$font_size" \
+    label:"$TEXT_PREVIEW" \
+    "$TEXT_PREVIEW_FILE"
+}
+
+# Prints an error message
+err() {
+  printf '%s\n' "$*" >&2
+}
+
+# Get the sorted list of installed TTF fonts
+get_font_list() {
+  fc-list :scalable=true file | sed 's/: $//' | sort
+}
+
+# Checks if an application is available
+is_app_available() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+# Checks if the font size is valid
+is_font_size_valid() {
+  local size
+  size="$1"
+  [[ "$size" =~ ^[0-9]+$ && "$size" -le "$TEXT_PREVIEW_FONT_SIZE_MAX" ]]
+}
+
+# Interactive search of installed TTF fonts
+search_font() {
+  # Output the list of fonts to fzf (preview option disabled)
+  get_font_list | fzf --exact --ignore-case --preview ''
+}
+
+# Show the text preview image
+show_preview_img() {
+  local chafa_pid
+  if [[ -f "${TEXT_PREVIEW_FILE}" ]]; then
+    # Start showing the image and wait until it finishes
+    chafa "${TEXT_PREVIEW_FILE}" &
+    chafa_pid="$!"
+    wait "${chafa_pid}"
+  else
+    err "${MSG_ERR_IMG_NOT_FOUND}" "${TEXT_PREVIEW_FILE}"
+  fi
+}
+#-------------------------------------------------------------------------------
+# MAIN
+#-------------------------------------------------------------------------------
+main() {
+  if check_required_apps; then
+    local font_path font_size
+    font_path="$(search_font)"
+
+    if [[ -f "$font_path" ]]; then
+      printf '%s: %s\n%s: ' \
+        "$MSG_TEXT_PREVIEW_FONT" \
+        "$font_path" \
+        "$MSG_TEXT_PREVIEW_PROMPT"
+      read -r font_size
+
+      if is_font_size_valid "$font_size"; then
+        create_preview_img "$font_path" "$font_size" && show_preview_img
+      else
+        err "$MSG_ERR_FONT_SIZE"
+      fi
+    else
+      err "$MSG_ERR_FONT_PATH"
+    fi
+  fi
+
+  printf '\n%s ' "$MSG_EXIT"
+  read -r _
+}
+
+main "$@"

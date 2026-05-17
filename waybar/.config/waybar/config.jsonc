@@ -1,0 +1,169 @@
+// -*- mode: jsonc -*-
+{
+  "layer": "bottom",
+  "exclusive": false,
+  "height": 38,
+  "spacing": 0,
+
+  // Modules order
+  "modules-left": [
+    "custom/launcher",
+    "sway/workspaces",
+    "sway/mode"
+  ],
+
+  "modules-center": [
+    "sway/window"
+  ],
+
+  "modules-right": [
+    "custom/separator",
+    "battery",
+    "backlight",
+    "pulseaudio",
+    "network",
+    "clock"
+  ],
+
+  // Modules configuration
+  "backlight": {
+    "format": "{icon}  {percent:3}%",
+    "format-icons": ["", "", "", "", "", "", "", "", ""],
+    "interval": 2,
+    "max-length": 7,
+    "tooltip": false
+  },
+
+  "battery": {
+    "format": "{icon}   {capacity:3}%",
+    "format-charging": "{icon}󱐋  {capacity:3}%",
+    "format-icons": ["󰂎", "󰁻", "󰁽", "󰁿", "󰂁", "󰁹"],
+    "interval": 30,
+    "max-length": 8,
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "tooltip": false
+  },
+
+  "clock": {
+    "format": "󰥔   {:8L%X} ",
+    "format-alt": "󰸗  {:10L%x}",
+    "interval": 1,
+    "max-length": 13,
+    "tooltip": false
+  },
+
+  "cpu": {
+    "format": "  {usage:3}%",
+    "interval": 10,
+    "max-length": 7,
+    "states": {
+      "critical": 95
+    },
+    "tooltip": false
+  },
+
+  "custom/launcher": {
+    "format": " ",
+    "interval": "once",
+    "max-length": 2,
+    "on-click": "rofi -modes applications,settings,power -show",
+    "tooltip": false
+  },
+
+  "custom/separator": {
+    "format": " ",
+    "interval": "once",
+    "max-length": 1,
+    "tooltip": false
+  },
+
+  "disk": {
+    "format": "󰋊  {percentage_used:3}%",
+    "interval": 30,
+    "max-length": 7,
+    "states": {
+      "critical": 80
+    },
+    "tooltip": false
+  },
+
+  "memory": {
+    "format": "  {percentage:3}%",
+    "interval": 10,
+    "max-length": 7,
+    "states": {
+      "critical": 80
+    },
+    "tooltip": false
+  },
+
+  "network": {
+    "format": "󰛳 ",
+    "format-disabled": "󰲛 ",
+    "format-disconnected": "󰅛 ",
+    "interval": 10,
+    "max-length": 2,
+    "tooltip": false
+  },
+
+  "pulseaudio": {
+    "format": "{icon}  {volume:3}%",
+    "format-alt": "{format_source}",
+    "format-alt-source-muted": "{format_source}",
+    "format-icons": {
+      "headphone": "",
+      "default": ["", "", ""]
+    },
+    "format-muted": "  {volume:3}%",
+    "format-source": "  {volume:3}%",
+    "format-source-muted": "  {volume:3}%",
+    "max-length": 7,
+    "tooltip": false
+  },
+
+  "sway/mode": {
+    "format": "{}",
+    "max-length": 6,
+    "tooltip": false
+  },
+
+  "sway/window": {
+    "format": "{title}",
+    "max-length": 70,
+    "tooltip": false
+  },
+
+  "sway/workspaces": {
+    "all-outputs": true,
+    "disable-scroll": true,
+    "format": "{icon} ",
+    "format-icons": {
+      "1": "󰞷",
+      "2": "󰖟",
+      "3": "",
+      "4": "",
+      "5": "",
+      "6": "󰍹"
+    },
+    "persistent-workspaces": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": [],
+      "5": []
+    },
+    "tooltip": false
+  },
+
+  "temperature": {
+    "critical-threshold": 80,
+    "format": "{icon}  {temperatureC:3}°C",
+    "format-icons": ["", "", "", "", ""],
+    "interval": 10,
+    "max-length": 8,
+    "tooltip": false
+  }
+}

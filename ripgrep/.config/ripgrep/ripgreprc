@@ -1,0 +1,11 @@
+--hidden
+--ignore-case
+--smart-case
+--follow
+--colors=path:fg:0xaa,0xaa,0xaa
+--colors=path:bg:0x00,0x00,0xaa
+--colors=line:none
+--colors=column:none
+--colors=match:fg:0x00,0xaa,0xaa
+--colors=match:bg:black
+--colors=match:style:nobold

@@ -1,0 +1,106 @@
+@import "colors.css";
+
+* {
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  font-family: IBM VGA Nerd Font;
+  font-size: 20px;
+  text-shadow: none;
+  transition: none;
+}
+
+button:hover {
+  border-color: transparent;
+}
+
+tooltip {
+  background-color: @black;
+  border: 2px solid @white;
+  color: @white;
+}
+
+window {
+  background-color: @black;
+  border: 2px solid @white;
+  color: @white;
+}
+
+.module {
+  border-bottom: 2px solid @white;
+  border-top: 2px solid @white;
+  border-right: 2px solid @white;
+  padding: 0 6px 0 6px;
+}
+
+.critical, .disabled, .disconnected, .muted, .source-muted {
+  background-color: @red;
+  color: @white;
+}
+
+#battery.charging {
+  background-color: @green;
+  color: @white;
+}
+
+#battery.critical:not(.charging) {
+  background-color: @red;
+  color: @white;
+}
+
+#battery.warning:not(.charging) {
+  background-color: @bright_yellow;
+  color: @black;
+}
+
+#custom-launcher {
+  background-color: @green;
+  border: 2px solid @white;
+  color: @black;
+  min-width: 18px;
+  padding: 0 10px 0 10px;
+}
+
+#custom-separator {
+  font-size: 2px;
+  padding: 0;
+}
+
+#mode {
+  background-color: @blue;
+}
+
+#window {
+  background-color: @blue;
+  border-left: 2px solid @white;
+}
+
+#window label {
+  font-size: 20px;
+  min-width: 570px;
+}
+
+#workspaces {
+  border-bottom: 2px solid @white;
+  border-top: 2px solid @white;
+  border-left: 0;
+  border-right: 0;
+  padding: 0;
+}
+
+#workspaces button {
+  background-color: @bright_black;
+  border-right: 2px solid @white;
+  color: @white;
+  padding: 0 10px 0 10px;
+}
+
+#workspaces button.focused {
+  background-color: @blue;
+  color: @white;
+}
+
+#workspaces button.urgent {
+  background-color: @red;
+  color: @white;
+}

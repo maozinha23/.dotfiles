@@ -1,0 +1,107 @@
+auto_layout false
+default_layout "compact"
+show_release_notes false
+show_startup_tips false
+simplified_ui true
+styled_underlines false
+theme "vgacolors"
+
+plugins {
+    compact-bar location="zellij:compact-bar"
+    session-manager location="zellij:session-manager"
+    tab-bar location="zellij:tab-bar"
+}
+
+keybinds clear-defaults=true {
+    locked {
+        bind "Ctrl g" { SwitchToMode "normal"; }
+    }
+    pane {
+        bind "Ctrl p" { SwitchToMode "normal"; }
+        bind "x" { CloseFocus; SwitchToMode "normal"; }
+        bind "r" { SwitchToMode "renamepane"; PaneNameInput 0; }
+        bind "f" { ToggleFocusFullscreen; SwitchToMode "normal"; }
+        bind "v" { NewPane "right"; SwitchToMode "normal"; }
+        bind "h" { NewPane "down"; SwitchToMode "normal"; }
+        bind "Left" { MovePane "left"; }
+        bind "Down" { MovePane "down"; }
+        bind "Up" { MovePane "up"; }
+        bind "Right" { MovePane "right"; }
+        bind "[" { Resize "Increase left"; }
+        bind "-" { Resize "Increase down"; }
+        bind "=" { Resize "Increase up"; }
+        bind "+" { Resize "Increase up"; }
+        bind "]" { Resize "Increase right"; }
+    }
+    renamepane {
+        bind "Esc" { UndoRenamePane; SwitchToMode "pane"; }
+    }
+    tab {
+        bind "Ctrl t" { SwitchToMode "normal"; }
+        bind "n" { NewTab; SwitchToMode "normal"; }
+        bind "x" { CloseTab; SwitchToMode "normal"; }
+        bind "r" { SwitchToMode "renametab"; TabNameInput 0; }
+        bind "s" { ToggleActiveSyncTab; SwitchToMode "normal"; }
+        bind "b" { BreakPane; SwitchToMode "normal"; }
+        bind "[" { BreakPaneLeft; SwitchToMode "normal"; }
+        bind "]" { BreakPaneRight; SwitchToMode "normal"; }
+        bind "Left" { MoveTab "left"; }
+        bind "Right" { MoveTab "right"; }
+    }
+    renametab {
+        bind "Esc" { UndoRenameTab; SwitchToMode "tab"; }
+    }
+    resize {
+        bind "Ctrl n" { SwitchToMode "normal"; }
+    }
+    session {
+        bind "Ctrl s" { SwitchToMode "normal"; }
+        bind "d" { Detach; }
+        bind "w" {
+            LaunchOrFocusPlugin "session-manager" {
+                floating true
+                move_to_focused_tab true
+            }
+            SwitchToMode "normal"
+        }
+        bind "l" {
+            LaunchOrFocusPlugin "zellij:layout-manager" {
+                floating true
+                move_to_focused_tab true
+            }
+            SwitchToMode "normal"
+        }
+    }
+    shared {
+        bind "Alt p" { SwitchFocus; }
+        bind "Alt t" { GoToNextTab; }
+        bind "Alt 1" { GoToTab 1; SwitchToMode "normal"; }
+        bind "Alt 2" { GoToTab 2; SwitchToMode "normal"; }
+        bind "Alt 3" { GoToTab 3; SwitchToMode "normal"; }
+        bind "Alt 4" { GoToTab 4; SwitchToMode "normal"; }
+        bind "Alt 5" { GoToTab 5; SwitchToMode "normal"; }
+        bind "Alt 6" { GoToTab 6; SwitchToMode "normal"; }
+        bind "Alt 7" { GoToTab 7; SwitchToMode "normal"; }
+        bind "Alt 8" { GoToTab 8; SwitchToMode "normal"; }
+        bind "Alt 9" { GoToTab 9; SwitchToMode "normal"; }
+    }
+    shared_except "locked" {
+        bind "Ctrl g" { SwitchToMode "locked"; }
+        bind "Ctrl q" { Quit; }
+    }
+    shared_except "locked" "pane" {
+        bind "Ctrl p" { SwitchToMode "pane"; }
+    }
+    shared_except "locked" "tab" {
+        bind "Ctrl t" { SwitchToMode "tab"; }
+    }
+    shared_except "locked" "session" {
+        bind "Ctrl s" { SwitchToMode "session"; }
+    }
+    shared_except "normal" "locked" {
+        bind "Enter" { SwitchToMode "normal"; }
+    }
+    shared_except "normal" "locked" "renametab" "renamepane" {
+        bind "Esc" { SwitchToMode "normal"; }
+    }
+}

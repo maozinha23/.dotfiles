@@ -1,0 +1,11 @@
+program_options:
+  tray: false
+  automount: true
+  notify: true
+
+notifications:
+  # How long the notifications are shown. Possible values are:
+  # positive number: timeout in seconds
+  # false: disable
+  # -1: use the libnotify default timeout
+  timeout: -1

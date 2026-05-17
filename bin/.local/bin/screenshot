@@ -1,0 +1,130 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------------------------------
+# CONSTANTS
+#-------------------------------------------------------------------------------
+readonly APP_REQUIRED=('grim' 'jq' 'slurp' 'swaymsg' 'wl-copy')
+readonly APP_XDG_DIR='xdg-user-dir'
+
+readonly MSG_ERR_APP_NOT_FOUND='Error: application not found:'
+readonly MSG_ERR_OPTION_INVALID='Error: invalid argument. Options:'
+
+readonly NOTIFICATION_MESSAGE='Screenshot has been taken'
+readonly NOTIFICATION_TITLE='GRIM'
+
+readonly OPTIONS=('area' 'screen' 'window')
+
+readonly OUTPUT_DATE_FORMAT='+%Y-%m-%d_%H-%M-%S'
+readonly OUTPUT_DIR_DEFAULT="${HOME}/Pictures"
+readonly OUTPUT_IMAGE_FORMAT='png'
+#-------------------------------------------------------------------------------
+# FUNCTIONS
+#-------------------------------------------------------------------------------
+# Capture all available outputs
+capture_screen() {
+  local file
+  file="$1"
+  grim - | tee "$file" | wl-copy
+}
+
+# Capture a rectangular area
+capture_area() {
+  local area file
+  file="$1"
+  area="$(slurp)"
+  grim -g "$area" - | tee "$file" | wl-copy
+}
+
+# Capture a window (no borders)
+capture_window() {
+  local file window
+  file="$1"
+  window="$(swaymsg -t get_tree \
+    | jq -r '.. | select(.pid? and .visible?) | "\(.rect.x+.window_rect.x),\(.rect.y+.window_rect.y) \(.window_rect.width)x\(.window_rect.height)"' \
+    | slurp)"
+  grim -g "$window" - | tee "$file" | wl-copy
+}
+
+# Check if all required apps are available
+check_required_apps() {
+  local status
+  status=0
+
+  for app in "${APP_REQUIRED[@]}"; do
+    if ! is_app_available "$app"; then
+      err "$MSG_ERR_APP_NOT_FOUND" "$app"
+      status=1
+    fi
+  done
+
+  return "$status"
+}
+
+# Prints an error message
+err() {
+  printf '%s\n' "$*" >&2
+}
+
+# Get the screenshot directory path
+# Priority:
+# 1) xdg-user-dir PICTURES
+# 2) $HOME/Pictures
+# 3) pwd (current directory)
+get_output_dir() {
+  local output_dir
+
+  if is_app_available "$APP_XDG_DIR"; then
+    output_dir="$(xdg-user-dir PICTURES 2>/dev/null)"
+  elif [[ -d "$OUTPUT_DIR_DEFAULT" ]]; then
+    output_dir="$OUTPUT_DIR_DEFAULT"
+  else
+    output_dir="$(pwd)"
+  fi
+
+  printf '%s' "$output_dir"
+}
+
+# Get the screenshot filename
+# Format: date_host_user.extension
+get_output_filename() {
+  printf '%s_%s_%s.%s' \
+    "$(date "$OUTPUT_DATE_FORMAT")" \
+    "$(uname --nodename)" \
+    "$(whoami)" \
+    "$OUTPUT_IMAGE_FORMAT"
+}
+
+# Checks if an application is available
+is_app_available() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+# Checks if the argument passed to the script is a valid option
+is_option_valid() {
+  local option
+  option="$1"
+
+  for opt in "${OPTIONS[@]}"; do
+    [[ "$opt" == "$option" ]] && return 0
+  done
+
+  return 1
+}
+#-------------------------------------------------------------------------------
+# MAIN
+#-------------------------------------------------------------------------------
+main() {
+  local file option
+  option="$1"
+
+  if check_required_apps; then
+    if is_option_valid "${option}"; then
+      file="$(get_output_dir)/$(get_output_filename)"
+      capture_"$option" "$file"
+      notify-send "$NOTIFICATION_TITLE" "$NOTIFICATION_MESSAGE"
+    else
+      err "$MSG_ERR_OPTION_INVALID" "${OPTIONS[@]}"
+    fi
+  fi
+}
+
+main "$@"

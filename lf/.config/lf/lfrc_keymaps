@@ -1,0 +1,217 @@
+# vim: set filetype=lf :
+
+# Move/scroll the current file selection upwards/downwards by one/half a
+# page/full page.
+# (default k and <up>)
+map k #up
+
+# (default <c-u>)
+map <c-u> #half-up
+map <c-left> half-up
+
+# (default <c-b> and <pgup>)
+map <c-b> #page-up
+map <c-up> page-up
+
+# (default <c-y>)
+map <c-y> #scroll-up
+
+# (default j and <down>)
+map j #down
+
+# (default <c-d>)
+map <c-d> #half-down
+map <c-right> half-down
+
+# (default <c-f> and <pgdn>)
+map <c-f> #page-down
+map <c-down> page-down
+
+# (default <c-e>)
+map <c-e> #scroll-down
+
+# Change the current working directory to the parent directory.
+# (default h and <left>)
+map h #updir
+
+# If the current file is a directory, then change the current directory to it,
+# otherwise, execute the open command. A default open command is provided to
+# call the default system opener asynchronously with the current file as the
+# argument. A custom open command can be defined to override this default.
+# (default l and <right>)
+map l #open
+map <right> open
+map <enter> open
+
+# Change the current working directory to the next/previous jumplist item.
+# (default ])
+map ] #jump-next
+
+# (default [)
+map [ #jump-prev
+
+# Move the current file selection to the top/bottom of the directory. A count
+# can be specified to move to a specific line, for example, use 3G to move to
+# the third line.
+# (default gg and <home>)
+map gg top
+map <home> top
+
+# (default G and <end>)
+map G bottom
+map <end> bottom
+
+# Move the current file selection to the high/middle/low of the screen.
+# (default H)
+map H #high
+
+# (default M)
+map M #middle
+
+# (default L)
+map L #low
+
+# Switch to Visual mode. If already in Visual mode, discard the visual selection
+# and stay in Visual mode.
+# visual (default V)
+map v visual
+
+# Reverse the selection of all files in the current directory (i.e. toggle all
+# files). Selections in other directories are not affected by this command. You
+# can define a new command to select all files in the directory by combining
+# invert with unselect (i.e. cmd select-all :unselect; invert), though this will
+# also remove selections in other directories.
+# invert (default v)
+map i invert
+
+# Remove the selection of all files in all directories.
+# unselect (default u)
+map u #unselect
+
+# Clear file paths in the clipboard.
+# clear (default c)
+map c #clear
+
+# Synchronize the terminal and redraw the screen.
+# (default <c-l>)
+map <c-l> #redraw
+
+# Remove the current file or selected file(s). A custom delete command can be
+# defined to override this default.
+# (modal)
+map <delete> #delete
+
+# Read a pattern to search for a filename match in the forward/backward
+# direction and jump to the next/previous match
+# (default ?)
+map ? #search-back
+
+# (default n)
+map n #search-next
+map <gt> search-next
+
+# (default N)
+map N #search-prev
+map <lt> search-prev
+
+# Save the current directory as a bookmark assigned to the given key.
+# (modal) (default m)
+map m #mark-save
+
+# Change the current directory to the bookmark assigned to the given key. A
+# special bookmark ' holds the previous directory after a mark-load, cd, or
+# select command.
+# (modal) (default ')
+map "'" #mark-load
+
+# Remove a bookmark assigned to the given key.
+# (modal) (default ")
+map '"' #mark-remove
+
+# Tag a file with * or a single width character given in the argument if the
+# file is untagged, otherwise remove the tag.
+# (default t)
+map t #tag-toggle
+
+# Defaults
+map E $$EDITOR "$f"
+map W $$SHELL
+map za #set info size:time
+map zh #set hidden!
+map zn #set info
+map zr #set reverse!
+map zs #set info size
+map zt #set info time
+map sa #:set sortby atime; set info atime
+map sb #:set sortby btime; set info btime
+map sc #:set sortby ctime; set info ctime
+
+# Archive files
+map ac archive_compress
+map ae archive_extract
+
+# Clear all selections
+map <esc> clear_selection
+map c clear_selection
+
+# Remove cache files
+map Cc clear_cache
+
+# Delete (trash) files or directories
+map D file_trash
+map <delete> file_trash
+
+# Eject devices
+map eu eject_usb
+
+# Fuzzy find using fzf
+map F find_fuzzy
+
+# Move between directories
+map g. cd ~/.dotfiles
+map gc cd ~/.config
+map gd cd ~/Downloads
+map gD cd ~/Documents
+map ge cd /etc
+map gm cd ~/Media
+map gM cd /run/media
+map gp cd ~/Projects
+map gr cd /
+map gt cd /tmp
+map gu cd /usr
+
+# Set info column
+map Ia set info size:time
+map In set info
+map Is set info size
+map It set info time
+
+# Follow symbolic link
+map lc link_create
+map lf link_follow
+
+# Show log info
+map Le log_show_error
+
+# Create new file or directories
+map n file_create
+
+# Sort files
+map se :set sortby ext; set info size
+map sn :set sortby natural; set info size
+map ss :set sortby size; set info size
+map st :set sortby time; set info time
+
+# Show disk usage
+map Sd size_dir
+map Sf size_files
+map St size_total
+
+# Toggle options
+map th set hidden!
+map tp toggle_preview
+map tr set reverse!
+
+# Trash options
+map Tc trash_clean
+map Tr trash_restore

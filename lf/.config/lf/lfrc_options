@@ -1,0 +1,148 @@
+# vim: set filetype=lf :
+
+# Format string of the indicator for files to be copied.
+# (string) (default \033[7;33m)
+set copyfmt "\033[42;30m"
+
+# Format strings for highlighting the cursor.
+# cursoractivefmt: applies in the current directory pane
+# cursorparentfmt: applies in panes that show parents of the current directory
+# cursorpreviewfmt: applies in panes that preview directories.
+# The default is to make the active cursor and the parent directory cursor
+# inverted. The preview cursor is underlined.
+# Some other possibilities to consider for the preview or parent cursors: an
+# empty string for no cursor, \033[7;2m for dimmed inverted text (visibility
+# varies by terminal), \033[7;90m for inverted text with grey (aka
+# "brightblack") background.
+# If the format string contains the characters %s, it is interpreted as a format
+# string for fmt.Sprintf. Such a string should end with the terminal reset
+# sequence. For example, \033[4m%s\033[0m has the same effect as \033[4m.
+# (string) (default \033[7m)
+set cursoractivefmt "\033[44;37m"
+# (string) (default \033[7m)
+set cursorparentfmt "\033[44;37m"
+# (string) (default \033[4m)
+set cursorpreviewfmt "\033[44;37m"
+
+# Format string of the indicator for files to be cut.
+# (string) (default \033[7;31m)
+set cutfmt "\033[41;37m"
+
+# Draw boxes around panes with box drawing characters.
+# (bool) (default false)
+set drawbox true
+
+# Format string of file name when creating duplicate files. With the default
+# format, copying a file abc.txt to the same directory will result in a
+# duplicate file called abc.txt.~1~. Special expansions are provided, %f as the
+# file name, %b for the basename (file name without extension), %e as the
+# extension (including the dot) and %n as the number of duplicates.
+# (string) (default %f.~%n~)
+set dupfilefmt '%b~%n%e'
+
+# Show hidden files. On Unix systems, hidden files are determined by the value
+# of hiddenfiles. On Windows, files with hidden attributes are also considered
+# hidden files.
+# (bool) (default false)
+set hidden true
+
+# Save command history.
+# (bool) (default true)
+set history false
+
+# Jump to the first match after each keystroke during searching.
+# (bool) (default false)
+set incsearch true
+
+# A list of information that is shown for directory items at the right side of
+# the pane. Currently supported information types are size, time, atime, ctime,
+# perm, user and group. Information is only shown when the pane width is more
+# than twice the width of information.
+# ([]string) (default ``)
+set info 'size'
+
+# Format string of the file time shown in the info column when it matches this
+# year.
+# (string) (default Jan _2 15:04)
+set infotimefmtnew '02/01/2006'
+
+# Format string of the file time shown in the info column when it doesn't match
+# this year.
+# (string) (default Jan _2  2006)
+set infotimefmtold '02/01/2006'
+
+# Send mouse events as input.
+# (bool) (default false)
+set mouse true
+
+# Show the position number for directory items on the left side of the pane.
+# When the relativenumber option is enabled, only the current line shows the
+# absolute position and relative positions are shown for the rest.
+# (bool) (default false)
+set number true
+
+# Format string of the position number for each line.
+# (string) (default \033[33m)
+set numberfmt "\033[37m"
+
+# Set the interval in seconds for periodic checks of directory updates. This
+# works by periodically calling the load command. Note that directories are
+# already updated automatically in many cases. This option can be useful when
+# there is an external process changing the displayed directory and you are not
+# doing anything in lf. Periodic checks are disabled when the value of this
+# option is set to zero.
+# period (int) (default 0)
+set period 1
+
+# Show previews of files and directories at the rightmost pane. If the file has
+# more lines than the preview pane, the rest of the lines are not read. Files
+# containing the null character (U+0000) in the read portion are considered
+# binary files and displayed as binary.
+# preview (bool) (default true)
+set preview false
+
+# Set the path of a previewer file to filter the content of regular files for
+# previewing. The file should be executable. The following arguments are passed
+# to the file, (1) current file name, (2) width, (3) height, (4) horizontal
+# position, and (5) vertical position of preview pane respectively. SIGPIPE
+# signal is sent when enough lines are read. If the previewer returns a non-zero
+# exit code, then the preview cache for the given file is disabled. This means
+# that if the file is selected in the future, the previewer is called once
+# again. Preview filtering is disabled and files are displayed as they are when
+# the value of this option is left empty.
+# (string) (default ``) (not filtered if empty)
+set previewer '~/.config/lf/previewer'
+
+# Format string of the prompt shown in the top line. Special expansions are
+# provided, %u as the user name, %h as the hostname, %w as the working
+# directory, %d as the working directory with a trailing path separator, %f as
+# the file name, and %F as the current filter. %S may be used once and will
+# provide a spacer so that the following parts are right aligned on the screen.
+# The home folder is shown as ~ in the working directory expansion. Directory
+# names are automatically shortened to a single character starting from the
+# leftmost parent when the prompt does not fit the screen.
+# (string) (default \033[32;1m%u@%h\033[0m:\033[34;1m%d\033[0m\033[1m%f\033[0m)
+set promptfmt "\033[44;37m %d%f%S \033[0m"
+
+# List of ratios of pane widths. Number of items in the list determines the
+# number of panes in the UI. When the preview option is enabled, the rightmost
+# number is used for the width of the preview pane.
+# ratios ([]int) (default 1:2:3)
+set ratios 1
+
+# Set the path of the ruler file. If not set, then a default template will be
+# used for the ruler
+# rulerfile (string) (default "")
+set rulerfile '~/.config/lf/ruler'
+
+# Format string of the indicator for files that are selected.
+# (string) (default \033[7;35m)
+set selectfmt "\033[47;30m"
+
+# Format string of the file modification time shown in the bottom line.
+# (string) (default Mon Jan _2 15:04:05 2006)
+set timefmt '02/01/2006 15:04:05'
+
+# Format string of the indicator for files that are visually selected.
+# visualfmt (string) (default \033[7;36m)
+set visualfmt "\033[44;37m"

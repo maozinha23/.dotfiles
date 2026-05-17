@@ -1,0 +1,159 @@
+* {
+    black: #000000;
+    red: #aa0000;
+    green: #00aa00;
+    yellow: #aa5500;
+    blue: #0000aa;
+    magenta: #aa00aa;
+    cyan: #00aaaa;
+    white: #aaaaaa;
+    bright-black: #555555;
+    bright-red: #ff5555;
+    bright-green: #55ff55;
+    bright-yellow: #ffff55;
+    bright-blue: #5555ff;
+    bright-magenta: #ff55ff;
+    bright-cyan: #55ffff;
+    bright-white: #ffffff;
+
+    font-normal: "IBM VGA Nerd Font Mono 16";
+
+    window-width: 640px;
+    border-normal: 2px;
+    padding-normal: 2px;
+    padding-large: 4px;
+    vertical-align-center: 0.5;
+
+    element-spacing: 8px;
+    listview-lines: 10;
+    listview-margin: 2px 0 2px 0;
+    textbox-margin: 4px 2px 4px 2px;
+    scrollbar-handle-width: 12px;
+}
+
+button {
+    background-color: @bright-black;
+    padding: @padding-normal;
+    text-color: @white;
+}
+
+button.selected {
+    background-color: @blue;
+    text-color: @white;
+}
+
+element {
+    children: [element-icon, element-text];
+    padding: @padding-normal;
+    spacing: @element-spacing;
+}
+
+element-icon, element-text {
+    background-color: inherit;
+    text-color: inherit;
+    vertical-align: @vertical-align-center;
+}
+
+element alternate.active, element normal.active, element selected.active {
+    background-color: @bright-yellow;
+    text-color: @black;
+}
+
+element alternate.normal, element normal.normal {
+    background-color: @black;
+    text-color: @white;
+}
+
+element selected.normal {
+    background-color: @blue;
+    text-color: @white;
+}
+
+element alternate.urgent, element normal.urgent, element selected.urgent {
+    background-color: @red;
+    text-color: @white;
+}
+
+entry {
+    background-color: inherit;
+    text-color: inherit;
+}
+
+inputbar {
+    background-color: @black;
+    border: @border-normal;
+    border-color: @white;
+    children: [prompt, textbox-prompt-sep, entry, num-filtered-rows, textbox-num-sep, num-rows];
+    foreground-color: @white;
+    padding: @padding-normal;
+    text-color: @white;
+}
+
+listview {
+    background-color: @black;
+    border: @border-normal;
+    border-color: @white;
+    dynamic: false;
+    fixed-height: true;
+    lines: @listview-lines;
+    margin: @listview-margin;
+    padding: @padding-normal;
+    scrollbar: true;
+}
+
+mainbox {
+    background-color: @black;
+    padding: @padding-large;
+}
+
+mode-switcher {
+    background-color: @white;
+    border: @border-normal;
+    border-color: @white;
+}
+
+num-filtered-rows {
+    background-color: inherit;
+    text-color: inherit;
+}
+
+num-rows {
+    background-color: inherit;
+    text-color: inherit;
+}
+
+prompt {
+    background-color: inherit;
+    text-color: inherit;
+}
+
+scrollbar {
+    background-color: @bright-black;
+    handle-color: @white;
+    handle-width: @scrollbar-handle-width;
+}
+
+textbox {
+    margin: @textbox-margin;
+}
+
+textbox-num-sep {
+    background-color: inherit;
+    content: "/";
+    expand: false;
+    text-color: inherit;
+}
+
+textbox-prompt-sep {
+    background-color: inherit;
+    content: ":";
+    expand: false;
+    text-color: inherit;
+}
+
+window {
+    border: @border-normal;
+    border-color: @white;
+    font: @font-normal;
+    width: @window-width;
+}

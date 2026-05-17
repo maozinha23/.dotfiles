@@ -1,0 +1,248 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------------------------------
+# CONSTANTS
+#-------------------------------------------------------------------------------
+# lf passes the following arguments of the preview pane:
+# (1) current file name
+# (2) width
+# (3) height
+# (4) horizontal position
+# (5) vertical position
+PREVIEW_FILE="$(readlink --canonicalize "$1")"
+readonly PREVIEW_FILE
+readonly PREVIEW_WIDTH="$2"
+readonly PREVIEW_HEIGHT="$3"
+readonly PREVIEW_BG='#000000'
+readonly PREVIEW_ANIMATE='off'
+readonly PREVIEW_POLITE='on'
+readonly PREVIEW_THRESHOLD='1'
+
+# Number of lines to remove from the text preview output
+readonly PREVIEW_REMOVE_HEAD_7Z=12
+readonly PREVIEW_REMOVE_HEAD_ARIA2=3
+readonly PREVIEW_REMOVE_HEAD_EXIFTOOL=11
+
+# XDG specification for thumbnails
+# Directory: XDG_CACHE_HOME or ${HOME}/.cache
+#   /thumbnails/normal: 128x128 px
+#   /thumbnails/large: 256x256 px
+#   /thumbnails/x-large: 512x512 px
+#   /thumbnails/xx-large: 1024x1024 px
+# Image: 8bit, non-interlaced PNG with full alpha transparency
+readonly THUMB_BASEDIR="${XDG_CACHE_HOME:-${HOME}/.cache}/thumbnails"
+readonly THUMB_DIR="${THUMB_BASEDIR}/x-large"
+readonly THUMB_SIZE='512'
+readonly THUMB_EXTENSION='png'
+readonly THUMB_BITS='8'
+readonly THUMB_INTERLACE='none'
+readonly THUMB_ALPHA='set'
+# Thumbnail metadata to track information of the source file
+readonly THUMB_METADATA_URI='ThumbURI'
+readonly THUMB_METADATA_MTIME='ThumbMTime'
+readonly THUMB_METADATA_SIZE='ThumbSize'
+# Directory used to store temporary images required to generate some thumbnails
+readonly THUMB_TEMP_DIR='/tmp'
+#-------------------------------------------------------------------------------
+# FUNCTIONS
+#-------------------------------------------------------------------------------
+# Draw an image at the preview pane
+draw() {
+  local img
+  [[ -f "$1" ]] && img="$1" || exit 1
+
+  chafa --size "${PREVIEW_WIDTH}x${PREVIEW_HEIGHT}" \
+    --animate "$PREVIEW_ANIMATE" \
+    --polite "$PREVIEW_POLITE" \
+    --threshold "$PREVIEW_THRESHOLD" \
+    --bg "$PREVIEW_BG" \
+    "$img"
+}
+
+# Get time of last data modification, seconds since Epoch
+get_file_modification() {
+  local file
+  [[ -f "$1" ]] && file="$1" || exit 1
+
+  printf '%s' "$(stat --format=%Y "$file")"
+}
+
+# Get file total size in bytes
+get_file_size() {
+  local file
+  [[ -f "$1" ]] && file="$1" || exit 1
+
+  printf '%s' "$(stat --format=%s "$file")"
+}
+
+# Generate hash for thumbnails (MD5 over URI)
+gen_hash() {
+  local file uri
+  [[ -f "$1" ]] && file="$1" || exit 1
+
+  uri="$(gen_uri "$file")"
+  printf '%s' "$uri" | md5sum | awk '{ print $1 }'
+}
+
+# Generate the thumbnail file path based on XDG specification
+gen_thumb_path() {
+  local file
+  [[ -f "$1" ]] && file="$1" || exit 1
+
+  printf '%s/%s.%s' "$THUMB_DIR" "$(gen_hash "$file")" "$THUMB_EXTENSION"
+}
+
+# Convert document->image and then generate the thumbnail from that image
+gen_thumb_from_doc() {
+  local basename doc temp thumb
+  [[ -f "$1" ]] && doc="$1" || exit 1
+  [[ -n "$2" ]] && thumb="$2" || exit 1
+
+  # Path of the image that will be converted by LibreOffice from the source
+  # document. Preserve the original file name, but change the file extension
+  basename="$(basename "$doc" | sed 's/\.[^.]*$//')"
+  temp="${THUMB_TEMP_DIR}/${basename}.${THUMB_EXTENSION}"
+
+  libreoffice \
+    --headless \
+    --convert-to $THUMB_EXTENSION \
+    --outdir "$THUMB_TEMP_DIR" \
+    "$doc" \
+    > /dev/null \
+  && gen_thumb_from_img "$temp" "$thumb"
+}
+
+# Generate a thumbnail from an image file
+gen_thumb_from_img() {
+  local img_src m_mtime m_size m_uri thumb
+  [[ -f "$1" ]] && img_src="$1" || exit 1
+  [[ -n "$2" ]] && thumb="$2" || exit 1
+
+  m_uri="$(gen_uri "$PREVIEW_FILE")"
+  m_mtime="$(get_file_modification "$PREVIEW_FILE")"
+  m_size="$(get_file_size "$PREVIEW_FILE")"
+
+  # Generate the thumbnail with a specific size, from the first frame of the
+  # image, using some image preferences and important metadata to identify when
+  # the source file was modified
+  magick \
+    "${img_src}[0]" \
+    -alpha $THUMB_ALPHA \
+    -depth "$THUMB_BITS" \
+    -interlace "$THUMB_INTERLACE" \
+    -set "$THUMB_METADATA_URI" "$m_uri" \
+    -set "$THUMB_METADATA_MTIME" "$m_mtime" \
+    -set "$THUMB_METADATA_SIZE" "$m_size" \
+    -thumbnail "${THUMB_SIZE}x${THUMB_SIZE}" \
+    "$thumb"
+}
+
+# Generate URI: file:// + canonical file path
+gen_uri() {
+  local file
+  [[ -f "$1" ]] && file="$1" || exit 1
+
+  printf 'file://%s' "$(readlink --canonicalize "$file")"
+}
+
+# Check if the thumbnail needs to be updated (modification in the source file)
+# Return 0 (need update)
+# Return non zero (don't need update)
+need_thumb_update() {
+  local preview_mtime preview_size thumb thumb_meta_mtime thumb_meta_size
+  [[ -f "$1" ]] && thumb="$1" || return 0
+
+  thumb_meta_mtime="$(exiftool \
+    -short \
+    -veryShort \
+    -"$THUMB_METADATA_MTIME" \
+    "$thumb")"
+  thumb_meta_size="$(exiftool \
+    -short \
+    -veryShort \
+    -"$THUMB_METADATA_SIZE" \
+    "$thumb")"
+  preview_mtime="$(get_file_modification "$PREVIEW_FILE")"
+  preview_size="$(get_file_size "$PREVIEW_FILE")"
+
+  # The thumbnail needs to be updated if:
+  # 1) There is no metadata in the thumbnail file about the modification time
+  # and size of the source file
+  # 2) The metadata (modification time and size) stored in the thumbnail is
+  # different of the information present in the source file
+  [[ -z "$thumb_meta_mtime" \
+    || -z "$thumb_meta_size" \
+    || ! "$thumb_meta_mtime" == "$preview_mtime" \
+    || ! "$thumb_meta_size" == "$preview_size" ]]
+}
+#-------------------------------------------------------------------------------
+# MAIN
+#-------------------------------------------------------------------------------
+main() {
+  local mime_type preview_dir thumb
+  # Create the cache directory for thumbnails (if it doesn't exist)
+  mkdir --parents "$THUMB_DIR"
+
+  # Preview the file based on its mime type
+  mime_type="$(file --dereference --brief --mime-type "$PREVIEW_FILE")"
+
+  case "$mime_type" in
+    audio/*)
+      exiftool -veryShort "$PREVIEW_FILE" \
+        | tail --lines=+"$PREVIEW_REMOVE_HEAD_EXIFTOOL"
+      ;;
+    image/* | video/* | application/pdf)
+      # Show metadata information if the preview image is located at the
+      # thumbnail's cache directory
+      preview_dir="$(dirname "$PREVIEW_FILE")"
+
+      if printf "%s" "$preview_dir" | grep --silent "$THUMB_BASEDIR"; then
+        exiftool -veryShort "$PREVIEW_FILE" \
+          | tail --lines=+"$PREVIEW_REMOVE_HEAD_EXIFTOOL"
+      else
+        # If a thumbnail doesn't exist in cache, or if need a update, generate
+        # it. Then show the thumbnail image
+        thumb="$(gen_thumb_path "$PREVIEW_FILE")"
+
+        if [[ ! -f "$thumb" ]] || need_thumb_update "$thumb"; then
+          gen_thumb_from_img "$PREVIEW_FILE" "$thumb"
+        fi
+
+        draw "$thumb"
+      fi
+      ;;
+    *rtf \
+      | *officedocument* \
+      | *ms-word | *msword | *opendocument.text \
+      | *ms-excel | *msexcel | *spreadsheet* \
+      | *ms-powerpoint | *mspowerpoint | *opendocument.presentation)
+
+      # If a thumbnail doesn't exist in cache, or if need a update, generate it.
+      # Then show the thumbnail image
+      thumb="$(gen_thumb_path "$PREVIEW_FILE")"
+
+      if [[ ! -f "$thumb" ]] || need_thumb_update "$thumb"; then
+          gen_thumb_from_doc "$PREVIEW_FILE" "$thumb"
+      fi
+
+      draw "$thumb"
+      ;;
+    *zip* | *7z* | *tar* | *rar)
+      7z l "$PREVIEW_FILE" | tail --lines=+"$PREVIEW_REMOVE_HEAD_7Z"
+      ;;
+    application/x-bittorrent)
+      aria2c --show-files "$PREVIEW_FILE" \
+        | tail --lines=+"$PREVIEW_REMOVE_HEAD_ARIA2"
+      ;;
+    application/vnd.efi.iso | application/x-iso9660-image)
+      iso-info --no-header --iso9660 "$PREVIEW_FILE"
+      ;;
+    text/* | application/json)
+      cat "$PREVIEW_FILE"
+      ;;
+    *)
+      printf '%s\n' "$mime_type"
+      ;;
+  esac
+}
+
+main "$@"
