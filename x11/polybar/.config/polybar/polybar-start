@@ -1,8 +1,0 @@
-#!/bin/sh
-
-# Terminate already running bar instances
-pkill --exact polybar
-
-# Launch bar top and bar bottom
-polybar top & disown
-polybar bottom & disown

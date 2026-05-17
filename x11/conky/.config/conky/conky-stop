@@ -1,4 +1,0 @@
-#!/bin/sh
-
-# Terminate already running conky instances
-pkill --exact conky
