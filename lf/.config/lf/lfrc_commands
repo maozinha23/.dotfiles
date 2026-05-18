@@ -168,7 +168,7 @@ cmd eject_usb ${{
     | awk -v device="$device" '$1==device { print $7 }')"
 
   if [[ -d "$mount_path" ]]; then
-    udiskie-umount --detach -- "$mount_path"
+    udiskie-umount --detach "$mount_path"
   else
     printf 'Invalid device\n'
   fi
