@@ -135,7 +135,9 @@ map t #tag-toggle
 
 # Defaults
 map E $$EDITOR "$f"
+map e #
 map W $$SHELL
+map w #
 map za #set info size:time
 map zh #set hidden!
 map zn #set info
