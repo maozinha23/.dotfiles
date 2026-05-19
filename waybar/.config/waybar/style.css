@@ -39,7 +39,7 @@ window {
 }
 
 #battery.charging {
-  background-color: @green;
+  background-color: @blue;
   color: @white;
 }
 
@@ -49,7 +49,7 @@ window {
 }
 
 #battery.warning:not(.charging) {
-  background-color: @bright_yellow;
+  background-color: @cyan;
   color: @black;
 }
 
