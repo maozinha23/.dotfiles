@@ -1,5 +1,8 @@
+-- Set language as english
+vim.cmd("language C.UTF-8")
+
 -- Colorscheme
-require("colors.maozinha23")
+vim.cmd.colorscheme("vgacolors")
 
 -- Config files
 require("config.options")
@@ -8,6 +11,3 @@ require("config.diagnostics")
 require("config.keymaps")
 require("config.lsp")
 require("config.plugins")
-
--- Set language as english
-vim.cmd("language C.UTF-8")
