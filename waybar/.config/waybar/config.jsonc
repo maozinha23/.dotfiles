@@ -41,8 +41,8 @@
     "interval": 30,
     "max-length": 8,
     "states": {
-      "warning": 30,
-      "critical": 15
+      "warning": 40,
+      "critical": 20
     },
     "tooltip": false
   },
